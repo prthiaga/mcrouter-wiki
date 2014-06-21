@@ -1,6 +1,3 @@
-Mcrouter
------------------
-
 Mcrouter is a memcache protocol routing layer. It abstracts request routing,
 connection pooling, failover, and many other features from the client, which
 can simply talk to Mcrouter over a TCP connection using the memcache protocol.
