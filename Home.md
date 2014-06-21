@@ -1,21 +1,17 @@
 Mcrouter is a memcache protocol routing layer. It abstracts request routing,
 connection pooling, failover, and many other features from the client, which
-can simply talk to Mcrouter over a TCP connection using the memcache protocol.
-Typically, minimal or no client changes are needed to make use of Mcrouter's
+can simply talk to mcrouter over a TCP connection using the memcache protocol.
+
+Typically, minimal or no client changes are needed to make use of mcrouter's
 features, which is set up as a drop-in proxy between the client and memcached
-hosts. At Facebook, Mcrouter is a core component of a distributed cache
-infrastructure that spans over a large number of individual Memcached boxes.
+hosts.
+
+At Facebook, mcrouter is a core component of a distributed cache
+infrastructure that spans over a large number of individual memcached boxes.
 
 To install Mcrouter, see [Installation](Installation.md).
 
-### Overview
-
-Essentially, Mcrouter takes in a memcache request, applies rules defined by the
-configs, and sends it on. The complexity resides in defining and subscribing to
-the configuration rules properly. Configuration allows for flexible
-specification of special handling and failover behavior.
-
-### Command line arguments
+### Quick start
 
 Assuming you have a memcached instance on the local host running on port 5001,
 the simplest Mcrouter setup is (::1 is IPv6 loopback address; IPv6 addresses
@@ -33,13 +29,15 @@ echo -ne "get key\r\n" | nc 0 5000
 
 For a complete list of command line arguments, check `./mcrouter --help`.
 
-### Routing
+### Next steps
 
-Mcrouter supports typical memcache protocol commands like get, set, delete, etc.
-and specific commands to access stats, version and so on.
-More about routing and specific Mcrouter commands read [here](Routing.md).
+Essentially, Mcrouter takes in a memcache request, applies rules defined by the
+configs, and sends it on. The complexity resides in defining and subscribing to
+the configuration rules properly. Configuration allows for flexible
+specification of special handling and failover behavior.
 
-### Configuration
+Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`, etc.
+and specific commands to access stats, version and so on. See [Routing](Routing.md) for more.
 
 See [Configuration](Configuration.md) for information about how Mcrouter is
 configured. Mcrouter config is JSON file(s) primarily consisting of pool and
