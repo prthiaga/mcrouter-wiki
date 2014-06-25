@@ -17,14 +17,14 @@ For a detailed introduction to mcrouter, see [Overview](Overview).
  * Failover support
  * Shadow testing support
 
-## Getting Started
-To install Mcrouter, see [Installation](mcrouter-installation).
 
 ## News 
  * mcrouter v1.0 Released (September, 2014) 
  * etc. 
 
-## Quick start
+## Getting Started
+To install Mcrouter, see [Installation](mcrouter-installation).
+
 Assuming you have a memcached instance on the local host running on port 5001, the simplest Mcrouter setup is (::1 is IPv6 loopback address; IPv6 addresses must be specified in square brackets. You can also use "127.0.0.1:5001" or "localhost:5001"):
 
 ```Shell
