@@ -9,7 +9,7 @@ hosts.
 At Facebook, mcrouter is a core component of a distributed cache
 infrastructure that spans over a large number of individual memcached boxes.
 
-To install Mcrouter, see [Installation](Installation.md).
+To install Mcrouter, see [Installation](mcrouter-installation).
 
 ### Quick start
 
