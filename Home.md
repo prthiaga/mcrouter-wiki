@@ -37,8 +37,8 @@ the configuration rules properly. Configuration allows for flexible
 specification of special handling and failover behavior.
 
 Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`, etc.
-and specific commands to access stats, version and so on. See [Routing](Routing.md) for more.
+and specific commands to access stats, version and so on. See [Routing](Routing) for more.
 
-See [Configuration](Configuration.md) for information about how Mcrouter is
+See [Configuration](mcrouter-configuration) for information about how Mcrouter is
 configured. Mcrouter config is JSON file(s) primarily consisting of pool and
 route information.
