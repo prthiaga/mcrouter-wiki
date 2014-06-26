@@ -8,7 +8,7 @@ Essentially, mcrouter takes in Memcache requests, applies rules defined by mcrou
 
 ###Command line arguments
 
-Assuming you have a memcached instance on the local host running on port 5001, the simplest mcrouter setup is <code>(::1,/code>, which is the IPv6 loopback address. IPv6 addressesmust be specified in square brackets. You may also use IPv4 addressing, e.g, "127.0.0.1:5001" or specify a port on localhost, e.g., <code>"localhost:5001"):</code>.
+Assuming you have a memcached instance on the local host running on port 5001, the simplest mcrouter setup is <code>(::1,/code>, which is the IPv6 loopback address. IPv6 addresses must be specified in square brackets. You may also use IPv4 addressing, e.g, "127.0.0.1:5001" or specify a port on localhost, e.g., <code>"localhost:5001"):</code>.
 
 ```Shell
 ./mcrouter --config-str='{"pools":{"A":{"servers":["[::1]:5001"]}},"route":"PoolRoute|A"}' -p 5000
@@ -25,11 +25,8 @@ For a complete list of command line arguments, see `./mcrouter --help`.
 
 ###Routing
 
-Mcrouter supports typical Memcache protocol commands like get, set, delete, et cetera,
-and commands to access stats, version and so on.
-For more information on routing and other Mcrouter commands, see [here](Routing.md).
+Mcrouter supports typical Memcache protocol commands like get, set, delete, et cetera, and commands to access stats, version and so on. For more information on routing and other Mcrouter commands, see [here](Routing.md).
 
 ###Configuration
 
-Mcrouter is configured with JSON files called mcrouter configs, which primarily consist of pool and
-route information.  See [Configuration](Configuration) for information. 
+Mcrouter is configured with JSON files called mcrouter configs, which primarily consist of pool and route information.  See [Configuration](mcrouter-configuration) for information. 
