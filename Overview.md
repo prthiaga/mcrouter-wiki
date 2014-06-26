@@ -25,7 +25,7 @@ For a complete list of command line arguments, see `./mcrouter --help`.
 
 ###Routing
 
-Mcrouter supports typical Memcache protocol commands like get, set, delete, et cetera, and commands to access stats, version and so on. For more information on routing and other Mcrouter commands, see [here](Routing.md).
+Mcrouter supports typical Memcache protocol commands like get, set, delete, et cetera, and commands to access stats, version and so on. For more information on routing and other Mcrouter commands, see [here](Routing).
 
 ###Configuration
 
