@@ -8,12 +8,12 @@ Mcrouter config files specify where mcrouter route requests and how they should 
 Configuration object contains two properties: `pools` (optional), and `routes`
 or `route`.
 `pools` specifies destination addresses for mcrouter requests, (memcached hosts or other mcrouter instances). 
-`routes` (or `route`) specifies special handling (e.g, failover rules, address prefix handling). Mcrouter supports dynamic reconfiguration so  you don't need to restart
-mcrouter to apply config changes.
+`routes` (or `route`) specifies special handling (e.g, failover rules, address prefix handling). Mcrouter supports dynamic reconfiguration so  you don't need to restart mcrouter to apply config changes.
 
 ###Quick examples
 
 Too boring. I want to use it right now!
+
 Okay, here are some common use cases (mcrouter is capable of much more):
 
 - Example: Split load between several memcache boxes
@@ -31,11 +31,9 @@ Okay, here are some common use cases (mcrouter is capable of much more):
  "route": "PoolRoute|A"
  }
 ```
-_Explanation_: Requests will be routed to boxes based on a consistent hashing of address keys.
-For more on consistent
-Hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
+_Explanation_: Requests will be routed to boxes based on a consistent hashing of address keys. For more on consistent hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
 
-- - Example: Failover requests to several boxes
+- Example: Failover requests to several boxes
 ```JSON
  {
  "pools": { /* same as before */ },
@@ -49,10 +47,9 @@ Hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
  }
  }
 ```
-_Explanation_: Deletes and sets are sent to all hosts in pool, Gets are sent to the first host in pool. If a get request fails, it is automatically
-sent (retried) to the second host in pool, then the third, and so on.
+_Explanation_: Deletes and sets are sent to all hosts in pool, Gets are sent to the first host in pool. If a get request fails, it is automatically sent (retried) to the second host in pool, then the third, and so on.
 
-- - Example: Shadow production traffic to test hosts
+- Example: Shadow production traffic to test hosts
 ```JSON
  {
  "pools": {
@@ -78,10 +75,9 @@ sent (retried) to the second host in pool, then the third, and so on.
  }
  }
 ```
-_Explanation_: All requests go to the 'production' pool., 10% of requests 
-sent to the first and second host are **also** sent to the 'dev' pool.
+_Explanation_: All requests go to the 'production' pool., 10% of requests sent to the first and second host are **also** sent to the 'dev' pool.
 
-- - Example: Send to different hosts based on routing prefix.
+- Example: Send to different hosts based on routing prefix.
 ```JSON
  {
  "pools": {
@@ -109,18 +105,11 @@ sent to the first and second host are **also** sent to the 'dev' pool.
  ]
  }
 ```
-_Explanation_: Routing prefixes may be used to choose between sets
-of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key"
-and "get /A/A/other_key" are served by servers in pool A (as "get key"
-and "get other_key" respectively), while "get /b/b/yet_another_key" will be
-served by servers in pool B (which will see "get yet_another_key"). Note that destination hosts need not know which Memcache host set they are in. 
+_Explanation_: Routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key"). Note that destination hosts need not know which Memcache host set they are in. 
 
 ###Defining pools
 
-The `pools` property is a dictionary which uses pool names as keys and pool objects as
-values. Each pool object contains an ordered list of destination servers,
-together with some additional optional properties. Here is a list of
-pool properties:
+The `pools` property is a dictionary which uses pool names as keys and pool objects as values. Each pool object contains an ordered list of destination servers, together with some additional optional properties. Here is a list of pool properties:
 
 * `servers` (required)
  list of 'host:port' ips:
@@ -138,19 +127,13 @@ pool properties:
 
 ####Route handles
 
-Routes are composed of smaller blocks called "route handles". Each route handle
-encapsulates some piece of routing logic, such as “send a request to a single
-destination host” or “provide failover.”
+Routes are composed of smaller blocks called "route handles". Each route handle encapsulates some piece of routing logic, such as “send a request to a single destination host” or “provide failover.”
 
-Route handles form a tree with each route handle as a node. A route handle
-'receives' a request from a parent route handle, processes it, and 'sends' it on to
-child route handles. Each request is routed from root to the leafor leaves of the tree. Replies travel through route handle trees in the opposite direction.
+Route handles form a tree with each route handle as a node. A route handle 'receives' a request from a parent route handle, processes it, and 'sends' it on to child route handles. Each request is routed from root to the leafor leaves of the tree. Replies travel through route handle trees in the opposite direction.
 
 ####Representing route handles in JSON
 
-`routes` property is a list of route handle trees and `aliases`.
-`aliases` is a list of routing prefixes used for a given route handle
-tree. For example:
+`routes` property is a list of route handle trees and `aliases`. `aliases` is a list of routing prefixes used for a given route handle tree. For example:
 
 ```JSON
  {
@@ -174,9 +157,7 @@ tree. For example:
 In this example, all keys with the `/regionA/clusterA/` and `/regionA/clusterB/`
 routing prefixes are routed to the regionA route handle tree.
 
-Use `route` instead of
-`routes` if routing prefixes are not used. Semantically, it is equivalent to specifying the default route (given as
-a command line parameter) as the single alias:
+Use `route` instead of `routes` if routing prefixes are not used. Semantically, it is equivalent to specifying the default route (given as a command line parameter) as the single alias:
 
 ```JSON
  {
@@ -196,6 +177,7 @@ is the same as:
 ```
 
 Route handles may be represented in JSON in either long form or short form.
+
 Long form:
 ```JSON
  {
@@ -208,9 +190,7 @@ Equivalent short form:
  "HashRoute|Pool|MyPool"
 ```
 
-Long form is used to specify additional options, while short form is
-a shortcut with all options set to default. The previous example may be read as
-'Create HashRoute that will route to pool MyPool'.
+Long form is used to specify additional options, while short form is a shortcut with all options set to default. The previous example may be read as 'Create HashRoute that will route to pool MyPool'.
 
 ####List of route handles
 
@@ -500,22 +480,13 @@ Example:
  ]
  }
 ```
-_Explanation_: requests with routing prefix "/a/a/" and key prefix "a"
-(but not "ab"!) will be sent to pool A, requests with routing "/a/a/" and key
-prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/"
-will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd");
-"/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
+_Explanation_: requests with routing prefix "/a/a/" and key prefix "a" (but not "ab"!) will be sent to pool A, requests with routing "/a/a/" and key prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/" will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd"); "/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
 
 ####Named handles
 
-You may wish to use the same route handle in different parts of the config.
-To avoid duplication,  add `name` to route handle object and then refer to this
-route handle by its name. If two route handles have the same name, only the
-first is parsed -  the second one is treated as a duplicate and is not parsed
-(even if it has different properties). I nstead, the first route handle is
-substituted in its place.
-Route handles may also be defined in the `named_handles` property of
-the config. Example:
+You may wish to use the same route handle in different parts of the config. To avoid duplication,  add `name` to route handle object and then refer to this route handle by its name. If two route handles have the same name, only the first is parsed -  the second one is treated as a duplicate and is not parsed (even if it has different properties). I nstead, the first route handle is substituted in its place.
+
+Route handles may also be defined in the `named_handles` property of the config. Example:
 ```JSON
  {
  "pools": { /* define pool A and pool B */ },
@@ -560,9 +531,7 @@ the config. Example:
  ]
  }
 ```
-In this example, we specify two pools with different rate limits. Requests with
-the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests 
-with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
+In this example, we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests  with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
 
 ###JSONM
 One can also use macros in JSON to do something similar. For more information about JSONM and macros, see  [here](JSONM.md).
