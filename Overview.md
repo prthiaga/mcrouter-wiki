@@ -1,6 +1,10 @@
 Essentially, mcrouter takes in Memcache requests, applies rules defined by mcrouter configs, and sends them on. Configuration allows for flexible specification of special handling and failover behavior.
 
-[Definitely recommend expanding this section with diagrams and more on system architecture, more of an explanation of design goals, details (what language is mcrouter written in? is it used as a library?)]
+###Architecture 
+
+
+###Typical Use Cases
+
 
 ###Command line arguments
 
