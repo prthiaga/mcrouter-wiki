@@ -16,6 +16,7 @@ Assuming you have a memcached instance on the local host running on port 5001, t
 
 To verify mcrouter works, send a request to port 5000. For example, using
 Netcat (http://netcat.sourceforge.net/):
+
 ```Shell
 echo -ne "get key\r\n" | nc 0 5000
 ```
@@ -31,4 +32,4 @@ For more information on routing and other Mcrouter commands, see [here](Routing.
 ###Configuration
 
 Mcrouter is configured with JSON files called mcrouter configs, which primarily consist of pool and
-route information.  See [Configuration](Configuration.md) for information. 
+route information.  See [Configuration](Configuration) for information. 
