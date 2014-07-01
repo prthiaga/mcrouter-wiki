@@ -1,6 +1,6 @@
 #### [mcrouter Wiki](Home)
  * [Overview](Overview)
- * [Installation]
+ * [Installation](Installation)
  * [Configuration](Configuration)
  * [Routing](Routing)
  * [JSONM](JSONM)
