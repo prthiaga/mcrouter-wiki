@@ -20,96 +20,96 @@ Too boring. I want to use it right now!
 
 Okay, here are some common use cases (mcrouter is capable of much more):
 
-- Example: Split load between several memcache boxes
+####Example: split load between several memcache boxes
 ```javascript
-  {
-    "pools": {
-      "A": {
-        "servers": [
-          // your memcache/mcrouter boxes here, e.g.:
-          "127.0.0.1:12345",
-          "[::1]:12346"
-        ]
-      }
-    },
-    "route": "PoolRoute|A"
-  }
-```
-_Explanation_: Requests will be routed to boxes based on a consistent hashing of address keys. For more on consistent hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
-
-- Example: Failover requests to several boxes
-```JSON
-  {
-    "pools": { /* same as before */ },
-    "route": {
-      "type": "PrefixPolicyRoute",
-      "operation_policies": {
-        "get": "FailoverRoute|Pool|A",
-        "set": "AllSyncRoute|Pool|A",
-        "delete": "AllSyncRoute|Pool|A"
-      }
-    }
-  }
-```
-_Explanation_: Deletes and sets are sent to all hosts in pool, Gets are sent to the first host in pool. If a get request fails, it is automatically sent (retried) to the second host in pool, then the third, and so on.
-
-- Example: Shadow production traffic to test hosts
-```JSON
-  {
-    "pools": {
-      "production": {
-        "servers": [ /* your production memcache boxes here */ ]
-      },
-      "dev": {
-        "servers": [ /* your memcache boxes for testing purposes */ ]
-      }
-    },
-    "route": {
-      "type": "PoolRoute",
-      "pool": "production",
-      "shadows": [
-        {
-          "target": "PoolRoute|dev",
-          // shadow traffic from first and second hosts in 'production' pool
-          "index_range": [0, 1],
-          // shadow 10% of requests based on key hash
-          "key_fraction_range": [0, 0.1]
-        }
+{
+  "pools": {
+    "A": {
+      "servers": [
+        // your target memcached boxes here, e.g.:
+        "127.0.0.1:12345",
+        "[::1]:12346"
       ]
     }
-  }
+  },
+  "route": "PoolRoute|A"
+}
 ```
-_Explanation_: All requests go to the 'production' pool., 10% of requests sent to the first and second host are **also** sent to the 'dev' pool.
+_Explanation_: requests will be routed to boxes based on a consistent hashing of keys. For more on consistent hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
 
-- Example: Send to different hosts based on routing prefix.
-```JSON
-  {
-    "pools": {
-      "A": {
-        "servers": [ /* hosts of pool A */ ]
-      },
-      "B": {
-        "servers": [ /* hosts of pool B */ ]
-      }
+####Example: failover requests to several boxes
+```javascript
+{
+  "pools": { /* same as before */ },
+  "route": {
+    "type": "PrefixPolicyRoute",
+    "operation_policies": {
+      "get": "FailoverRoute|Pool|A",
+      "set": "AllSyncRoute|Pool|A",
+      "delete": "AllSyncRoute|Pool|A"
+    }
+  }
+}
+```
+_Explanation_: deletes and sets are sent to all hosts in pool, Gets are sent to the first host in pool. If a get request fails, it is automatically sent (retried) to the second host in pool, then the third, and so on.
+
+####Example: shadow production traffic to test hosts
+```javascript
+{
+  "pools": {
+    "production": {
+      "servers": [ /* your production memcache boxes */ ]
     },
-    "routes": [
+    "test": {
+      "servers": [ /* your test memcache boxes */ ]
+    }
+  },
+  "route": {
+    "type": "PoolRoute",
+    "pool": "production",
+    "shadows": [
       {
-        "aliases": [
-          "/a/a/",
-          "/A/A/"
-        ],
-        "route": "PoolRoute|A"
-      },
-      {
-        "aliases": [
-          "/b/b/"
-        ],
-        "route": "PoolRoute|B"
+        "target": "PoolRoute|test",
+        // shadow traffic that would go to first and second hosts in 'production' pool
+        "index_range": [0, 1],
+        // shadow requests for 10% of keys based on key hash
+        "key_fraction_range": [0, 0.1]
       }
     ]
   }
+}
 ```
-_Explanation_: Routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key"). Note that destination hosts need not know which Memcache host set they are in. 
+_Explanation_: all requests go to the 'production' pool.; requests for 10% of keys sent to the first and second host are **also** sent to the 'test' pool.
+
+####Example: send to different hosts based on routing prefix
+```javascript
+{
+  "pools": {
+    "A": {
+      "servers": [ /* hosts of pool A */ ]
+    },
+    "B": {
+      "servers": [ /* hosts of pool B */ ]
+    }
+  },
+  "routes": [
+    {
+      "aliases": [
+        "/a/a/",
+        "/A/A/"
+      ],
+      "route": "PoolRoute|A"
+    },
+    {
+      "aliases": [
+        "/b/b/"
+      ],
+      "route": "PoolRoute|B"
+    }
+  ]
+}
+```
+_Explanation_: routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key"). Note that destination hosts need not know which Memcache host set they are in. 
 
 ###Defining pools
 
