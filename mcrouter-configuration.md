@@ -18,92 +18,92 @@ Okay, here are some common use cases (mcrouter is capable of much more):
 
 - Example: Split load between several memcache boxes
 ```JSON
- {
- "pools": {
- "A": {
- "servers": [
- // your memcache/mcrouter boxes here, e.g.:
- "127.0.0.1:12345",
- "[::1]:12346"
- ]
- }
- },
- "route": "PoolRoute|A"
- }
+  {
+    "pools": {
+      "A": {
+        "servers": [
+          // your memcache/mcrouter boxes here, e.g.:
+          "127.0.0.1:12345",
+          "[::1]:12346"
+        ]
+      }
+    },
+    "route": "PoolRoute|A"
+  }
 ```
 _Explanation_: Requests will be routed to boxes based on a consistent hashing of address keys. For more on consistent hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
 
 - Example: Failover requests to several boxes
 ```JSON
- {
- "pools": { /* same as before */ },
- "route": {
- "type": "PrefixPolicyRoute",
- "operation_policies": {
- "get": "FailoverRoute|Pool|A",
- "set": "AllSyncRoute|Pool|A",
- "delete": "AllSyncRoute|Pool|A"
- }
- }
- }
+  {
+    "pools": { /* same as before */ },
+    "route": {
+      "type": "PrefixPolicyRoute",
+      "operation_policies": {
+        "get": "FailoverRoute|Pool|A",
+        "set": "AllSyncRoute|Pool|A",
+        "delete": "AllSyncRoute|Pool|A"
+      }
+    }
+  }
 ```
 _Explanation_: Deletes and sets are sent to all hosts in pool, Gets are sent to the first host in pool. If a get request fails, it is automatically sent (retried) to the second host in pool, then the third, and so on.
 
 - Example: Shadow production traffic to test hosts
 ```JSON
- {
- "pools": {
- "production": {
- "servers": [ /* your production memcache boxes here */ ]
- },
- "dev": {
- "servers": [ /* your memcache boxes for testing purposes */ ]
- }
- },
- "route": {
- "type": "PoolRoute",
- "pool": "production",
- "shadows": [
- {
- "target": "PoolRoute|dev",
- // shadow traffic from first and second hosts in 'production' pool
- "index_range": [0, 1],
- // shadow 10% of requests based on key hash
- "key_fraction_range": [0, 0.1]
- }
- ]
- }
- }
+  {
+    "pools": {
+      "production": {
+        "servers": [ /* your production memcache boxes here */ ]
+      },
+      "dev": {
+        "servers": [ /* your memcache boxes for testing purposes */ ]
+      }
+    },
+    "route": {
+      "type": "PoolRoute",
+      "pool": "production",
+      "shadows": [
+        {
+          "target": "PoolRoute|dev",
+          // shadow traffic from first and second hosts in 'production' pool
+          "index_range": [0, 1],
+          // shadow 10% of requests based on key hash
+          "key_fraction_range": [0, 0.1]
+        }
+      ]
+    }
+  }
 ```
 _Explanation_: All requests go to the 'production' pool., 10% of requests sent to the first and second host are **also** sent to the 'dev' pool.
 
 - Example: Send to different hosts based on routing prefix.
 ```JSON
- {
- "pools": {
- "A": {
- "servers": [ /* hosts of pool A */ ]
- },
- "B": {
- "servers": [ /* hosts of pool B */ ]
- }
- },
- "routes": [
- {
- "aliases": [
- "/a/a/",
- "/A/A/"
- ],
- "route": "PoolRoute|A"
- },
- {
- "aliases": [
- "/b/b/"
- ],
- "route": "PoolRoute|B"
- }
- ]
- }
+  {
+    "pools": {
+      "A": {
+        "servers": [ /* hosts of pool A */ ]
+      },
+      "B": {
+        "servers": [ /* hosts of pool B */ ]
+      }
+    },
+    "routes": [
+      {
+        "aliases": [
+          "/a/a/",
+          "/A/A/"
+        ],
+        "route": "PoolRoute|A"
+      },
+      {
+        "aliases": [
+          "/b/b/"
+        ],
+        "route": "PoolRoute|B"
+      }
+    ]
+  }
 ```
 _Explanation_: Routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key"). Note that destination hosts need not know which Memcache host set they are in. 
 
@@ -136,22 +136,22 @@ Route handles form a tree with each route handle as a node. A route handle 'rece
 `routes` property is a list of route handle trees and `aliases`. `aliases` is a list of routing prefixes used for a given route handle tree. For example:
 
 ```JSON
- {
- "routes": [
- {
- "aliases": [
- "/regionA/clusterA/",
- "/regionA/clusterB/"
- ],
- "route" : {
- // route handle tree for regionA
- }
- },
- {
- // other route here
- }
- ]
- }
+  {
+    "routes": [
+      {
+        "aliases": [
+          "/regionA/clusterA/",
+          "/regionA/clusterB/"
+        ],
+        "route" : {
+          // route handle tree for regionA
+        }
+      },
+      {
+        // other route here
+      }
+    ]
+  }
 ```
 
 In this example, all keys with the `/regionA/clusterA/` and `/regionA/clusterB/`
@@ -160,30 +160,31 @@ routing prefixes are routed to the regionA route handle tree.
 Use `route` instead of `routes` if routing prefixes are not used. Semantically, it is equivalent to specifying the default route (given as a command line parameter) as the single alias:
 
 ```JSON
- {
- "routes": [
- {
- "aliases": [ /* default routing prefix, passed to mcrouter */ ],
- "route": /* some route handle tree */
- }
- ]
- }
+  {
+    "routes": [
+      {
+        "aliases": [ /* default routing prefix, passed to mcrouter */ ],
+        "route": /* some route handle tree */
+      }
+    ]
+  }
 ```
 is the same as:
 ```JSON
- {
- "route": /* some route handle tree */
- }
+  {
+    "route": /* some route handle tree */
+  }
 ```
 
 Route handles may be represented in JSON in either long form or short form.
 
 Long form:
 ```JSON
- {
- "type" : "HashRoute",
- "children" : "Pool|MyPool",
- // some options for route here, e.g., hash function, salt }
+  {
+    "type" : "HashRoute",
+    "children" : "Pool|MyPool",
+    // some options for route here e.g. hash function, salt, etc.
+  }
 ```
 Equivalent short form:
 ```JSON
@@ -463,22 +464,22 @@ follows:
 
 Example:
 ```JSON
- {
- "pools": { /* define pool A, B and C */ }
- "routes": [
- {
- "aliases": [ "/a/a/" ],
- "route": {
- "type": "PrefixSelectorRoute",
- "policies": {
- "a": "PoolRoute|A",
- "ab": "PoolRoute|B"
- },
- "wildcard": "PoolRoute|C"
- }
- }
- ]
- }
+  {
+    "pools": { /* define pool A, B and C */ }
+    "routes": [
+      {
+        "aliases": [ "/a/a/" ],
+        "route": {
+          "type": "PrefixSelectorRoute",
+          "policies": {
+            "a": "PoolRoute|A",
+            "ab": "PoolRoute|B"
+          },
+          "wildcard": "PoolRoute|C"
+        }
+      }
+    ]
+  }
 ```
 _Explanation_: requests with routing prefix "/a/a/" and key prefix "a" (but not "ab"!) will be sent to pool A, requests with routing "/a/a/" and key prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/" will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd"); "/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
 
@@ -488,48 +489,48 @@ You may wish to use the same route handle in different parts of the config. To a
 
 Route handles may also be defined in the `named_handles` property of the config. Example:
 ```JSON
- {
- "pools": { /* define pool A and pool B */ },
- "named_handles": [
- {
- "type": "PoolRoute",
- "name": "ratedA",
- "pool": "A",
- "rates": {
- "sets_rate" : 10
- }
- }
- ],
- "routes": [
- {
- "aliases": [ "/a/a/" ],
- "route": {
- "type": "FailoverRoute",
- "children": [
- "ratedA",
- {
- "type": "PoolRoute",
- "name": "ratedB",
- "pool": "B",
- "rates": {
- "sets_rate": 100
- }
- }
- ]
- }
- },
- {
- "aliases": [ "/b/b/" ],
- "route": {
- "type": "FailoverRoute",
- "children": [
- "ratedB",
- "ratedA"
- ]
- }
- }
- ]
- }
+  {
+    "pools": { /* define pool A and pool B */ },
+    "named_handles": [
+      {
+        "type": "PoolRoute",
+        "name": "ratedA",
+        "pool": "A",
+        "rates": {
+          "sets_rate" : 10
+        }
+      }
+    ],
+    "routes": [
+      {
+        "aliases": [ "/a/a/" ],
+        "route": {
+          "type": "FailoverRoute",
+          "children": [
+            "ratedA",
+            {
+              "type": "PoolRoute",
+              "name": "ratedB",
+              "pool": "B",
+              "rates": {
+                "sets_rate": 100
+              }
+            }
+          ]
+        }
+      },
+      {
+        "aliases": [ "/b/b/" ],
+        "route": {
+          "type": "FailoverRoute",
+          "children": [
+            "ratedB",
+            "ratedA"
+          ]
+        }
+      }
+    ]
+  }
 ```
 In this example, we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests  with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
 
