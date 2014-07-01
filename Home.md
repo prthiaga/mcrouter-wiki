@@ -26,7 +26,9 @@ To install Mcrouter, see [Installation](mcrouter-installation).
 Assuming you have a memcached instance on the local host running on port 5001, the simplest Mcrouter setup is as following (Note, "::1" is the IPv6 loopback address; IPv6 addresses must be specified in square brackets. You can also use "127.0.0.1:5001" or "localhost:5001"):
 
 ```Shell
-./mcrouter --config-str='{"pools":{"A":{"servers":["[::1]:5001"]}},"route":"PoolRoute|A"}' -p 5000
+./mcrouter \
+    --config-str='{"pools":{"A":{"servers":["[::1]:5001"]}},"route":"PoolRoute|A"}' \
+    -p 5000
 ```
 
 To test, send a request to port 5000. For example, using Netcat (http://netcat.sourceforge.net/):
