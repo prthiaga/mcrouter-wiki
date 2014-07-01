@@ -1,14 +1,18 @@
 ###What is a mcrouter config?
 
-Mcrouter config files specify where mcrouter route requests and how they should be routed A mcrouter config is a JSON file with some extensions:
+Mcrouter config files specify where and how mcrouter should route requests.
 
-* Comments are allowed (both `/* */` and `\\`)
-* Macros are allowed (see [JSONM](JSON.md))
+A mcrouter config is JSON with some extensions:
 
-Configuration object contains two properties: `pools` (optional), and `routes`
+* C++-style comments are allowed (both `/* */` and `\\`)
+* Macros are supported (see [JSONM](JSON.md))
+
+The configuration object contains two properties: `pools` (optional), and `routes`
 or `route`.
-`pools` specifies destination addresses for mcrouter requests, (memcached hosts or other mcrouter instances). 
-`routes` (or `route`) specifies special handling (e.g, failover rules, address prefix handling). Mcrouter supports dynamic reconfiguration so  you don't need to restart mcrouter to apply config changes.
+
+`pools` specifies groups of destination addresses for mcrouter requests, i.e. memcached hosts or other mcrouter instances.
+`routes` (or `route`) specifies special handling (e.g, failover rules, key prefix handling). Mcrouter supports dynamic reconfiguration so  you don't need to restart mcrouter to apply config changes.
+
 
 ###Quick examples
 
@@ -17,7 +21,7 @@ Too boring. I want to use it right now!
 Okay, here are some common use cases (mcrouter is capable of much more):
 
 - Example: Split load between several memcache boxes
-```JSON
+```javascript
   {
     "pools": {
       "A": {
