@@ -5,13 +5,15 @@ Mcrouter config files specify where and how mcrouter should route requests.
 A mcrouter config is JSON with some extensions:
 
 * C++-style comments are allowed (both `/* */` and `\\`)
-* Macros are supported (see [JSONM](JSON.md))
+* Macros are supported (see [JSONM](JSON))
 
-The configuration object contains two properties: `pools` (optional), and `routes`
+Otherwise the file must conform to JSON (http://json.org/) - unfortunately this means no trailing commas in lists or objects.
+
+The top-level configuration object contains two properties: `pools` (optional), and `routes`
 or `route`.
 
 `pools` specifies groups of destination addresses for mcrouter requests, i.e. memcached hosts or other mcrouter instances.
-`routes` (or `route`) specifies special handling (e.g, failover rules, key prefix handling). Mcrouter supports dynamic reconfiguration so  you don't need to restart mcrouter to apply config changes.
+`routes` (or `route`) specifies special handling (e.g, failover rules, key prefix handling). Mcrouter supports dynamic reconfiguration so you don't need to restart mcrouter to apply config changes.
 
 
 ###Quick examples
@@ -109,93 +111,97 @@ _Explanation_: all requests go to the 'production' pool.; requests for 10% of ke
   ]
 }
 ```
-_Explanation_: routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key"). Note that destination hosts need not know which Memcache host set they are in. 
+_Explanation_: routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key").
+
 
 ###Defining pools
 
-The `pools` property is a dictionary which uses pool names as keys and pool objects as values. Each pool object contains an ordered list of destination servers, together with some additional optional properties. Here is a list of pool properties:
+The `pools` property is a dictionary with pool names as keys and pool objects as values. Each pool object contains an ordered list of destination servers, together with some additional optional properties. Some of the pool properties are:
 
 * `servers` (required)
- list of 'host:port' ips:
- ```JSON
- "servers": [ "127.0.0.1:12345", "[::1]:5000" ]
- ```
- defines destination servers
-* `protocol` : "ascii" or "umbrella" (optional, default 'ascii')
- which protocol to use (for more about protocols, see [Routing](Routing.md))
-* `keep_routing_prefix` : bool (optional, default 'false')
- if true, do not strip routing prefix from key when sending request
- to this pool. Useful when making a mcrouter talk to other mcrouter.
+List of `"host:port"` strings. Note that IPv6 addresses must be specified in square brackets.
+```javascript
+  "servers": [ "127.0.0.1:12345", "[::1]:5000", "memcached123.somedomain:4000" ]
+```
+Defines the pool's destination servers.
+
+* `protocol` (optional): `"ascii"` (default) or `"umbrella"`
+Which protocol to use. Ascii is the text Memcache protocol, Umbrella is an out of order binary protocol in use at Facebook. (see [Routing](Routing.md)).
+
+* `keep_routing_prefix` (optional): bool (default `false`)
+If true, do not strip the routing prefix from keys when sending request to this pool. Useful for making a mcrouter talk to another mcrouter.
+
 
 ###Defining `routes`
 
 ####Route handles
 
-Routes are composed of smaller blocks called "route handles". Each route handle encapsulates some piece of routing logic, such as “send a request to a single destination host” or “provide failover.”
+Routes are composed of blocks called "route handles". Each route handle encapsulates some piece of routing logic, such as "send a request to a single destination host" or "provide failover."
 
-Route handles form a tree with each route handle as a node. A route handle 'receives' a request from a parent route handle, processes it, and 'sends' it on to child route handles. Each request is routed from root to the leafor leaves of the tree. Replies travel through route handle trees in the opposite direction.
+A route handle receives a request from a parent route handle, processes it, and potentially sends it on to child route handles; it then processes the replies and responds back with its own reply to the original request.
+
+In a given config, route handles form a directed acyclic graph with each route handle as a node. They're freely composeable and an arbitrary graph can be represented in the config. 
 
 ####Representing route handles in JSON
 
 `routes` property is a list of route handle trees and `aliases`. `aliases` is a list of routing prefixes used for a given route handle tree. For example:
 
-```JSON
-  {
-    "routes": [
-      {
-        "aliases": [
-          "/regionA/clusterA/",
-          "/regionA/clusterB/"
-        ],
-        "route" : {
-          // route handle tree for regionA
-        }
-      },
-      {
-        // other route here
+```javascript
+{
+  "routes": [
+    {
+      "aliases": [
+        "/regionA/clusterA/",
+        "/regionA/clusterB/"
+      ],
+      "route" : {
+        // route handle tree for regionA
       }
-    ]
-  }
+    },
+    {
+      // other route here
+    }
+  ]
+}
 ```
 
-In this example, all keys with the `/regionA/clusterA/` and `/regionA/clusterB/`
-routing prefixes are routed to the regionA route handle tree.
+In this example, all keys with the `/regionA/clusterA/` and `/regionA/clusterB/` routing prefixes are routed to the regionA route handle tree.
 
-Use `route` instead of `routes` if routing prefixes are not used. Semantically, it is equivalent to specifying the default route (given as a command line parameter) as the single alias:
+Use `route` instead of `routes` if routing prefixes are not used. Semantically, it is equivalent to specifying the default route (given as a command line parameter) as the single alias, i.e.
 
-```JSON
-  {
-    "routes": [
-      {
-        "aliases": [ /* default routing prefix, passed to mcrouter */ ],
-        "route": /* some route handle tree */
-      }
-    ]
-  }
-```
-is the same as:
-```JSON
-  {
-    "route": /* some route handle tree */
-  }
+```javascript
+{
+  "route": /* some route handle tree */
+}
 ```
 
-Route handles may be represented in JSON in either long form or short form.
-
-Long form:
-```JSON
-  {
-    "type" : "HashRoute",
-    "children" : "Pool|MyPool",
-    // some options for route here e.g. hash function, salt, etc.
-  }
+is equivalent to
+```javascript
+{
+  "routes": [
+    {
+      "aliases": [ /* default routing prefix specified on mcrouter command line */ ],
+      "route": /* some route handle tree */
+    }
+  ]
+}
 ```
-Equivalent short form:
-```JSON
+
+A route handle specification looks like this:
+```javascript
+{
+  "type" : "HashRoute",
+  "children" : "Pool|MyPool",
+  ... // additional options, e.g. hash function, salt, etc.
+}
+```
+
+For simplicity, there's an equivalent short form which sets all options to default values:
+```javascript
  "HashRoute|Pool|MyPool"
 ```
+You can read this as 'Create HashRoute that will route to pool MyPool'.
 
-Long form is used to specify additional options, while short form is a shortcut with all options set to default. The previous example may be read as 'Create HashRoute that will route to pool MyPool'.
 
 ####List of route handles
 
