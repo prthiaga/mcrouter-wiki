@@ -207,92 +207,87 @@ See [List of Route Handles](List of Route Handles) for a more detailed descripti
 
 ####Prefix route selector
 
-In addition to selection by routing prefix, mcrouter also allows selection by
-key prefix. For example, you might want to route all keys beginning with foo_ to pool A, and all keys starting with bar_ to
-pool B. Note that key prefixes are not stripped, unlike routing prefixes.
+In addition to selection by routing prefix, mcrouter also allows selection by key prefix. For example, you might want to route all keys beginning with foo_ to pool A, and all keys starting with bar_ to pool B. Note that key prefixes are not stripped, unlike routing prefixes.
 
-To enable this logic, the root of the route handle tree should be a special
-route handle with the type set to "PrefixSelectorRoute" and the properties as
-follows:
+To enable this logic, the root of the route handle tree should be a special route handle with the type set to "PrefixSelectorRoute" and the properties as follows:
 
 * `policies`
- Object with prefix as key and route handle as value. If a key matches
- multiple prefixes, the longest one is selected.
+ Object with the string prefix as keys and the route handles as values. If a key matches multiple prefixes, the longest prefix is selected.
 * `wildcard`
- If key prefix doesn't match any prefix in `policies`, requests 
- go here.
+ A default route handle object. If a key doesn't match any prefix in `policies`, requests for it will go here.
 
 Example:
-```JSON
-  {
-    "pools": { /* define pool A, B and C */ }
-    "routes": [
-      {
-        "aliases": [ "/a/a/" ],
-        "route": {
-          "type": "PrefixSelectorRoute",
-          "policies": {
-            "a": "PoolRoute|A",
-            "ab": "PoolRoute|B"
-          },
-          "wildcard": "PoolRoute|C"
-        }
+```javascript
+{
+  "pools": { /* define pool A, B and C */ }
+  "routes": [
+    {
+      "aliases": [ "/a/a/" ],
+      "route": {
+        "type": "PrefixSelectorRoute",
+        "policies": {
+          "a": "PoolRoute|A",
+          "ab": "PoolRoute|B"
+        },
+        "wildcard": "PoolRoute|C"
       }
-    ]
-  }
+    }
+  ]
+}
 ```
-_Explanation_: requests with routing prefix "/a/a/" and key prefix "a" (but not "ab"!) will be sent to pool A, requests with routing "/a/a/" and key prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/" will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd"); "/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
+_Explanation_: requests with routing prefix "/a/a/" and key prefix "a" (but not "ab"!) will be sent to pool A, requests with routing prefix "/a/a/" and key prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/" will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd"); "/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
+
 
 ####Named handles
 
-You may wish to use the same route handle in different parts of the config. To avoid duplication,  add `name` to route handle object and then refer to this route handle by its name. If two route handles have the same name, only the first is parsed -  the second one is treated as a duplicate and is not parsed (even if it has different properties). I nstead, the first route handle is substituted in its place.
+You may wish to use the same route handle in different parts of the config. To avoid duplication, add `name` to route handle object and then refer to this route handle by its name. If two route handles have the same name, only the first one is parsed - the second one is treated as a duplicate and is not parsed (even if it has different properties - these differences would be silently ignored). Instead, the first route handle is substituted in its place.
 
 Route handles may also be defined in the `named_handles` property of the config. Example:
-```JSON
-  {
-    "pools": { /* define pool A and pool B */ },
-    "named_handles": [
-      {
-        "type": "PoolRoute",
-        "name": "ratedA",
-        "pool": "A",
-        "rates": {
-          "sets_rate" : 10
-        }
+```javascript
+{
+  "pools": { /* define pool A and pool B */ },
+  "named_handles": [
+    {
+      "type": "PoolRoute",
+      "name": "ratedA",
+      "pool": "A",
+      "rates": {
+        "sets_rate" : 10
       }
-    ],
-    "routes": [
-      {
-        "aliases": [ "/a/a/" ],
-        "route": {
-          "type": "FailoverRoute",
-          "children": [
-            "ratedA",
-            {
-              "type": "PoolRoute",
-              "name": "ratedB",
-              "pool": "B",
-              "rates": {
-                "sets_rate": 100
-              }
+    }
+  ],
+  "routes": [
+    {
+      "aliases": [ "/a/a/" ],
+      "route": {
+        "type": "FailoverRoute",
+        "children": [
+          "ratedA",
+          {
+            "type": "PoolRoute",
+            "name": "ratedB",
+            "pool": "B",
+            "rates": {
+              "sets_rate": 100
             }
-          ]
-        }
-      },
-      {
-        "aliases": [ "/b/b/" ],
-        "route": {
-          "type": "FailoverRoute",
-          "children": [
-            "ratedB",
-            "ratedA"
-          ]
-        }
+          }
+        ]
       }
-    ]
-  }
+    },
+    {
+      "aliases": [ "/b/b/" ],
+      "route": {
+        "type": "FailoverRoute",
+        "children": [
+          "ratedB",
+          "ratedA"
+        ]
+      }
+    }
+  ]
+}
 ```
-In this example, we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests  with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
+In this example, we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
 
 ###JSONM
-One can also use macros in JSON to do something similar. For more information about JSONM and macros, see  [here](JSONM.md).
+You can use macros to avoid repetition when writing large complicated configs. For more information about JSONM and macros, see [JSONM](JSONM).
