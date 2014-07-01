@@ -19,20 +19,20 @@ user-friendly JSONM by processing all macros and substituting all constants. .
 JSONM is JSON object with two special optional keys: `consts` and `macros`:
 
 ```JSON
- {
- "consts": {
- "constName1": constDefinition,
- "constName2": constDefinition,
- …
- },
- "macros": {
- "macroName1": macroDefinition,
- "macroName2": macroDefinition,
- …
- },
- "customProperty1": valueWithMacros,
- "customProperty2": valueWithMacros
- }
+  {
+    "consts": {
+      "constName1": constDefinition,
+      "constName2": constDefinition,
+      …
+    },
+    "macros": {
+      "macroName1": macroDefinition,
+      "macroName2": macroDefinition,
+      …
+    },
+    "customProperty1": valueWithMacros,
+    "customProperty2": valueWithMacros
+  }
 ```
 
 <dl>
@@ -115,41 +115,41 @@ The "macros" property should be object with macro definitions. Syntax is as foll
 Example:
 
 ```JSON
- {
- "pair": {
- "type": "macroDef",
- "params": [ "key", "value" ],
- "result": {
- "%key%": "%value%"
- }
- },
- "fullName": {
- "type": "macroDef",
- "params": [ "first", "last" ],
- "result": [ "@pair(first,%first%)", "@pair(last,%last%)" ]
- }
- }
+  {
+    "pair": {
+      "type": "macroDef",
+      "params": [ "key", "value" ],
+      "result": {
+        "%key%": "%value%"
+      }
+    },
+    "fullName": {
+      "type": "macroDef",
+      "params": [ "first", "last" ],
+      "result": [ "@pair(first,%first%)", "@pair(last,%last%)" ]
+    }
+  }
 ```
 
 Parameters may include specified defaults. Example:
 
 ```JSON
 {
- "car": {
- "type": "macroDef",
- "params": [
- "model",
- // parameter with default
- {
- "name": "color",
- "default": "green"
- }
- ],
- "result": {
- "model": "%model%",
- "color": "%color%"
- }
- }
+  "car": {
+    "type": "macroDef",
+    "params": [
+      "model",
+      // parameter with default
+      {
+        "name": "color",
+        "default": "green"
+      }
+    ],
+    "result": {
+      "model": "%model%",
+      "color": "%color%"
+    }
+  }
 }
 ```
 
@@ -158,25 +158,25 @@ Given an object with the macros from  our previous examples, other
 properties may call macros like this:
 
 ```JSON
- {
- "person": "@fullName(John,Doe)",
- "car": "@car(Mercedes)"
- }
+  {
+    "person": "@fullName(John,Doe)",
+    "car": "@car(Mercedes)"
+  }
 ```
 
 After preprocessing:
 
 ```JSON
- {
- "person": {
- "first": "John",
- "last": "Doe"
- },
- "car": {
- "model": "Mercedes",
- "color": "green"
- }
- }
+  {
+    "person": {
+      "first": "John",
+      "last": "Doe"
+    },
+    "car": {
+      "model": "Mercedes",
+      "color": "green"
+    }
+  }
 ```
 
 ###Escaping
@@ -187,21 +187,21 @@ Two backslashes are required because JSON uses a single backslash (\) as an esca
 Example:
 
 ```JSON
- {
- "email": "fake\\@fake.fake",
- "valid": "100\\%",
- "backslash": "\\\\"
- }
+  {
+    "email": "fake\\@fake.fake",
+    "valid": "100\\%",
+    "backslash": "\\\\"
+  }
 ```
 
 After preprocessing:
 
 ```JSON
- {
- "email": "fake@fake.fake",
- "valid": "100%",
- "backslash": "\\"
- }
+  {
+    "email": "fake@fake.fake",
+    "valid": "100%",
+    "backslash": "\\"
+  }
 ```
 
 _Note: "backslash" is JSON property, so it will be interpreted as only one backslash_.
@@ -214,11 +214,11 @@ Merge combines multiple lists or objects into one.
 
 ```JSON
 "list": {
- "type": "merge",
- "params": [
- [1, 2],
- [3, 4]
- ]
+  "type": "merge",
+  "params": [
+    [1, 2],
+    [3, 4]
+  ]
 }
 ```
 
@@ -231,37 +231,37 @@ After preprocessing:
 If params contains a list of objects, they it will also be merged :
 
 ```JSON
- "object": {
- "type": "merge",
- "params": [
- {"a": 1, "b": 2},
- {"b": 3, "c": 4}
- ]
- }
+  "object": {
+    "type": "merge",
+    "params": [
+      {"a": 1, "b": 2},
+      {"b": 3, "c": 4}
+    ]
+  }
 ```
 
 After preprocessing:
 
 ```JSON
- "object": {
- "a": 1,
- "b": 3,
- "c": 4
- }
+  "object": {
+    "a": 1,
+    "b": 3,
+    "c": 4
+  }
 ```
  
 ####select
 Returns element from list/object.
 
 ```JSON
- "value": {
- "type": "select",
- "key": "a",
- "dictionary": {
- "a": 1,
- "b": 2
- }
- }
+  "value": {
+    "type": "select",
+    "key": "a",
+    "dictionary": {
+      "a": 1,
+      "b": 2
+    }
+  }
 ```
 
 After preprocessing: 
@@ -274,10 +274,10 @@ After preprocessing:
 Randomly shuffles list.
 
 ```JSON
- "list": {
- "type": "shuffle",
- "dictionary": [1, 2, 3, 4]
- }
+  "list": {
+    "type": "shuffle",
+    "dictionary": [1, 2, 3, 4]
+  }
 ```
 
 After preprocessing, (one possible example):
@@ -291,12 +291,12 @@ After preprocessing, (one possible example):
 Returns a slice (subrange) of list/object.
 
 ```JSON
- "list": {
- "type": "slice",
- "from": 1,
- "to": 2,
- "dictionary": [1, 2, 3, 4]
- }
+  "list": {
+    "type": "slice",
+    "from": 1,
+    "to": 2,
+    "dictionary": [1, 2, 3, 4]
+  }
 ```
 
 After preprocessing:
@@ -313,23 +313,23 @@ are `valueWithMacros` and may use these additional parameters: `item` (`key` and
 `item` in case of dictionary).
 
 ```JSON
- "transform": {
- "type": "transform",
- "keyTransform": "%item%",
- "itemTransform": "%key%",
- "dictionary": {
- "a": "b",
- "b": "c"
- }
- }
+  "transform": {
+    "type": "transform",
+    "keyTransform": "%item%",
+    "itemTransform": "%key%",
+    "dictionary": {
+      "a": "b",
+      "b": "c"
+    }
+  }
 ```
 
 After preprocessing: 
 ```JSON
- {
- "b": "a",
- "c": "b"
- }
+  {
+    "b": "a",
+    "c": "b"
+  }
 ```
 
 ###Consts
@@ -337,21 +337,21 @@ Consts are `valueWithMacros` that may be substituted everywhere. One may use
 built-in macros and built-in types in consts.
 
 ```JSON
- {
- "consts": [
- {
- "type": "constDef",
- "name": "author",
- "value": "John Doe"
- },
- {
- "type": "constDef",
- "name": "copyright",
- "value": "%author% owns it"
- }
- ],
- "file": "%copyright%. Some content"
- }
+  {
+    "consts": [
+      {
+        "type": "constDef",
+        "name": "author",
+        "value": "John Doe"
+      },
+      {
+        "type": "constDef",
+        "name": "copyright",
+        "value": "%author% owns it"
+      }
+    ],
+    "file": "%copyright%. Some content"
+  }
 ```
 
 After preprocessing: 
@@ -367,23 +367,23 @@ Allows loading JSONM from external source. Example:
 
 > File: cities.json
 ```JSON
- {
- "cities": [
- "New York",
- "Washington"
- ]
- }
+  {
+    "cities": [
+      "New York",
+      "Washington"
+    ]
+  }
 ```
 
 > File: city.json
 ```JSON
- {
- "city": {
- "type": "select",
- "key": 0,
- "dictionary": "@import(cities.json) "
- }
- }
+  {
+    "city": {
+      "type": "select",
+      "key": 0,
+      "dictionary": "@import(cities.json) "
+    }
+  }
 ```
 
 After preprocessing, `city.json` becomes:
@@ -431,16 +431,16 @@ context, then in the global context. If no parameter is found in either the macr
 The scope of the macro context is total  result of macro definition:
 
 ```JSON
- "macros": {
- "sample": {
- "type": "macroDef",
- "params": [ "param" ],
- "result" {
- // one can use %param% here - that is the scope of
- // ‘sample' macro context.
- }
- }
- }
+  "macros": {
+    "sample": {
+      "type": "macroDef",
+      "params": [ "param" ],
+      "result" {
+        // one can use %param% here. That's the scope of
+        // ‘sample' macro context.
+      }
+    }
+  }
 ```
 
 Here is a more complex example, with the corresponding preprocessor steps.
@@ -449,47 +449,47 @@ Here is a more complex example, with the corresponding preprocessor steps.
 
 ```JSON
  {
- "constA": "a"
+   "constA": "a"
  }
 ```
 
 > File: macrosFileA
 ```JSON
- {
- "callInner": {
- "type": "macroDef",
- "params": [ "inner" ],
- "result": "@%inner%(%constA%)"
- }
- }
+  {
+    "callInner": {
+      "type": "macroDef",
+      "params": [ "inner" ],
+      "result": "@%inner%(%constA%)"
+    }
+  }
 ```
 
 > File: mainFile
 ```JSON
- {
- "consts": "@import(constsFile)",
- "macros": {
- "type": "merge",
- "params": [
- "@import(macrosFile%constA%)",
- {
- "list": {
- "type": "macroDef",
- "params": [ "param" ],
- "result": [ "%param%" ]
- }
- }
- ]
- },
- "list": "@callInner(list)"
- }
+  {
+    "consts": "@import(constsFile)",
+    "macros": {
+      "type": "merge",
+      "params": [
+        "@import(macrosFile%constA%)",
+        {
+          "list": {
+            "type": "macroDef",
+            "params": [ "param" ],
+            "result": [ "%param%" ]
+          }
+        }
+      ]
+    },
+    "list": "@callInner(list)"
+  }
 ```
 
 Affter preprocessing, mainFile becomes:
 
 ```JSON
  {
- "list": [ "a" ]
+   "list": [ "a" ]
  }
 ```
 
