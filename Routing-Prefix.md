@@ -65,7 +65,7 @@ A request will be routed according to the `aliases` list in the config. Let's wo
 
 
 ### Pattern matching
-You can also specify a _prefix pattern_ as part of the key.  Pattern matching follows same rules as `fnmatch(3)` (i.e. shell glob matching).  Examples:
+You can also specify a _prefix pattern_ as part of the routing prefix.  Pattern matching supports single special character '*' which means 'any number of `[A-Za-z0-9_-]` characters'.  Examples:
 
 1. `set /datacenter/*/a`: will resolve as two requests, `set /datacenter/cluster0/a` and `set /datacenter/cluster1/a`, so the same value will be set into both clusters.
-2. `set /datacenter/cluster?/a`: same result (`?` matches a single character).
+2. `set /*/cluster*/a`: same result.
