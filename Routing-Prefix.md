@@ -27,7 +27,7 @@ The mcrouter config looks like
   "routes": [
     {
       "aliases": [
-        "/datacenter/cluster0/",
+        "/datacenter/cluster0/"
       ],
       "route": {
         "type": "PrefixSelectorRoute",
