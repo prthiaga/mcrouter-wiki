@@ -3,7 +3,7 @@ Mcrouter is a Memcache protocol routing layer that enables the easy expansion of
 
 Typically, little or no client modification is needed to use mcrouter, which was designed to be a drop-in proxy between the client and memcached hosts. At Facebook and Instagram, mcrouter is a core component of a distributed cache infrastructure that spans a very large number of individual memcached boxes.
 
-Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`, etc. and specific commands to access stats, version and so on. See [Routing](Routing) for more.
+Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`, etc. and specific commands to access stats, version and so on. See [Routing](List-of-Route-Handles) for more.
 
 For a detailed introduction to mcrouter, see [Overview](Overview). 
 
