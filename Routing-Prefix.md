@@ -69,3 +69,45 @@ You can also specify a _prefix pattern_ as part of the routing prefix.  Pattern 
 
 1. `set /datacenter/*/a`: will resolve as two requests, `set /datacenter/cluster0/a` and `set /datacenter/cluster1/a`, so the same value will be set into both clusters.
 2. `set /*/cluster*/a`: same result.
+
+### Advanced: using macros to reduce config duplication
+The config file above has a lot of repetition in it. Repetition is usually bad - it increases file size, reduces readability, increases probability of mistakes - so mcrouter supports a way to reuse common parts of the config. Let's look at what this will look like, this time with macros:
+
+```javascript
+{
+  "pools": {
+    "cluster0.local_pool": {
+      "servers": [ /* hosts of pool */ ]
+    },
+    "cluster1.local_pool": {
+      "servers": [ /* hosts of pool */ ]
+    },
+    "shared_pool": {
+      "servers": [ /* hosts of pool */ ]
+    }
+  },
+  "macros": {
+    "cluster_route": {
+      "type": "macroDef",
+      "params": [ "id" ],
+      "result": {
+        "aliases": [
+          "/datacenter/cluster%id%/"
+        ],
+        "route": {
+          "type": "PrefixSelectorRoute",
+          "policies": {
+            "shr": "PoolRoute|shared_pool"
+          },
+          "wildcard": "PoolRoute|cluster%id%.local_pool"
+        }
+      }
+    }
+  },
+  "routes": [
+    "@cluster_route(0)",
+    "@cluster_route(1)"
+  ]
+}
+```
+Remember, macro expansion happens before the config is parsed by mcrouter, and is completely agnostic of mcrouter's config semantics.  The expanded config will look very similar to the no macro version above (the only difference is the pool names).
