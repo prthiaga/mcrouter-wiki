@@ -3,8 +3,11 @@ Essentially, mcrouter takes in Memcache requests, applies rules defined by mcrou
 ###Architecture 
 
 
-###Typical Use Cases
-
+###Typical Use Cases (need documenting)
+* Failover
+* Shadow Testing
+* automatic configuration via Zookeeper
+* cold pool warmup 
 
 ###Command line arguments
 
