@@ -1,0 +1,1 @@
+Placeholder for page to be linked from blog post
