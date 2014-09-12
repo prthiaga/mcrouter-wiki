@@ -1,5 +1,5 @@
 # Welcome to mcrouter
-Mcrouter is a Memcache protocol routing layer that enables the easy expansion of memcached deployments to distributed pools of arbitrary side, providing request routing, connection pooling, failover, and many other features. Because the routing and feature logic are abstracted from the client in mcrouter deployments, the client may simply communicate with destination hosts through mcrouter over a TCP connection using standard Memcache protocol. 
+Mcrouter is a memcached protocol routing layer that enables the easy expansion of memcached deployments to distributed pools of arbitrary side, providing request routing, connection pooling, failover, and many other features. Because the routing and feature logic are abstracted from the client in mcrouter deployments, the client may simply communicate with destination hosts through mcrouter over a TCP connection using standard memcached protocol. 
 
 Typically, little or no client modification is needed to use mcrouter, which was designed to be a drop-in proxy between the client and memcached hosts. At Facebook and Instagram, mcrouter is a core component of a distributed cache infrastructure that spans a very large number of individual memcached boxes.
 
