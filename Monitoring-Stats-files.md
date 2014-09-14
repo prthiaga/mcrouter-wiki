@@ -1,0 +1,3 @@
+Mcrouter creates and automatically updates several files useful to monitor its state. These files are created under `/var/mcrouter/` folder by default and have names `libmcrouter.mcrouter.<port number>.startup_options`, `libmcrouter.mcrouter.<port number>.config_sources_info`, `libmcrouter.mcrouter.<port number>.stats`. Root folder for stats files is configured with `--stats-root` command line option.
+
+###startup_options
