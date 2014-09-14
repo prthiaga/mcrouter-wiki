@@ -41,7 +41,7 @@ Properties:
  * `children`: list of child route handles
 
 
-* **FailoverWithExptimeRoute**
+###FailoverWithExptimeRoute
  Failover with additional settings. Sends request to `normal` route handle
  If it responds with an error, checks `settings` and failovers to `failover`
  if necessary.
@@ -57,23 +57,25 @@ Properties:
  * `settings` (object, optional)
  This object allows tweaking failover logic, such as specifying which errors from `normal`
  route handle are returned immediately, without sending to `failover` hosts.
- ```JSON
- {
- "tko": {
- "gets": bool (optional, default true)
- "updates": bool (optional, default true)
- "deletes": bool (optional, default false)
- },
- "connectTimeout": { /* same as tko */ },
- "dataTimeout": { /* same as tko */ }
- }
+     
+ ```javascript
+  {
+    "tko": {
+      "gets": boolean (optional, default true)
+      "updates": boolean (optional, default true)
+      "deletes": boolean (optional, default false)
+    },
+    "connectTimeout": { /* same as tko */ },
+    "dataTimeout": { /* same as tko */ }
+  }
  ```
+
  "tko", "connectTimeout" and "dataTimeout" correspond to reply errors;
  "gets", "updates", "deletes" correspond to operations. `true` configures 
  mcrouter to failover the request, `false` to return the
  error immediately. For more about errors and operations, see  [here](Routing.md).
 
-* **HashRoute**
+###HashRoute
  Routes to the destination based on key hash.
  Properties:
  * `children`
@@ -84,28 +86,30 @@ Properties:
  Which hashing function to use: "Ch3", "Crc32" or "WeightedCh3"
  **TODO!!!!** explain what each function does.
  * `weights` (list of doubles, valid only when hash_func is 'WeightedCh3')
- Weight for each destination. Must not have fewer elements than the number of
- children. Only the first (number of children) weights are used, though. [??? Clarify last]
+ Weight for each destination. If `weights` has more elements than `children`,
+ extra values are ignored. If `weights` has fewer elements than number of
+ children, missing values are assumed to be 0.5.
 
 
-* **HostIdRoute**
- Routes to destination based on client host ID.
+###HostIdRoute
+ Routes to one destination chosen based on client host ID.
  Properties:
  * `children`
  List of child route handles.
 
 
-* **LatestRoute**
+###LatestRoute
  Attempts to "behave well" in how many new targets it connects to.
  Creates a FailoverRoute with at-most `failover_count` child handles chosen
  pseudo-randomly based on client host ID.
  Properties:
  * `children`
- List of child route handles. * `failover_count` (int, optional, default 5)
+ List of child route handles.
+ * `failover_count` (int, optional, default 5)
  Number of route handles to route to.
 
 
-* **MigrateRoute**
+###MigrateRoute
  This route handle changes behavior based on Migration mode.
  1. Before migration starts, sends all requests to `from` route handle.
  2. Between start_time and (start_time + interval), sends all requests except
@@ -128,7 +132,7 @@ Properties:
  Duration of migration (in seconds)
 
 
-* **MissFailoverRoute**
+###MissFailoverRoute
  For get-like requests, sends the same request sequentially to each route
  handle in the list, in order, until the first hit reply.
  If all replies result in errors/misses, returns the reply from the
@@ -137,7 +141,9 @@ Properties:
  Properties:
  * `children`
  List of child route handles.
-* **NullRoute**
+
+
+###NullRoute
  Returns the default reply for each request right away. Default replies are:
  * delete - not found
  * get - not found
@@ -145,7 +151,7 @@ Properties:
  No properties.
 
 
-* **PoolRoute**
+###PoolRoute
  Route handle that routes to a pool. With different settings, it provides the same
  functionality as HashRoute, but also allows rate limiting, shadowing, et cetera.
  Properties:
@@ -153,17 +159,19 @@ Properties:
  If string, routes to the pool with the specified name. If object, creates a pool on the fly. This object has the same format as 
  the `pools` property described earlier, with an additional `name` property.
  Example:
- ```JSON
- {
- "type": "PoolRoute",
- "pool": {
- "name": "MyPool",
- "servers": [ /* pool hosts here */ ]
- }
- }
+
+ ```JavaScript
+  {
+    "type": "PoolRoute",
+    "pool": {
+      "name": "MyPool",
+      "servers": [ /* pool hosts here */ ]
+    }
+  }
  ```
+
  * `shadows` (optional, default empty)
- List of objects that define additional route handles to which mcrouter should duplicate routed data  (shadow).
+ List of objects that define additional route handles to which mcrouter should duplicate routed data (shadow).
  Each object has following properties:
  * `target`
  Route handle for shadow requests.
@@ -178,23 +186,24 @@ Properties:
  If set, enables rate limiting requests to prevent server overload.
  The object that defines rate and burst are parameters of a token bucket
  algorithm (http://en.wikipedia.org/wiki/Token_bucket):
- ```JSON
- {
- "type": "PoolRoute",
- "pool": "MyPool",
- "rates": {
- "gets_rate": double (optional)
- "gets_burst": double (optional)
- "sets_rate": double (optional)
- "sets_burst": double (optional)
- "deletes_rate": double (optional)
- "deletes_burst": double (optional)
- }
- }
+
+ ```JavaScript
+  {
+    "type": "PoolRoute",
+    "pool": "MyPool",
+    "rates": {
+      "gets_rate": double (optional)
+      "gets_burst": double (optional)
+      "sets_rate": double (optional)
+      "sets_burst": double (optional)
+      "deletes_rate": double (optional)
+      "deletes_burst": double (optional)
+    }
+  }
  ```
 
 
-* **PrefixPolicyRoute**
+###PrefixPolicyRoute
 Sends to different targets based on specified operations.
  Properties:
  * `default_policy`
@@ -202,23 +211,26 @@ Sends to different targets based on specified operations.
  * `operation_policies`
  Object, with operation name as key and route handle for specified operation as
  value. Example:
- ```JSON
- {
- "default_policy": "PoolRoute|A",
- "operation_policies": {
- "delete": {
- "type": "AllSyncRoute",
- "children": [ "PoolRoute|A", "PoolRoute|B" ]
- }
- }
- }
+
+ ```JavaScript
+  {
+    "default_policy": "PoolRoute|A",
+    "operation_policies": {
+      "delete": {
+        "type": "AllSyncRoute",
+        "children": [ "PoolRoute|A", "PoolRoute|B" ]
+      }
+    }
+  }
  ```
+
  Sends gets and sets to pool A, sends deletes to pool A and pool B.
  Valid operations are 'get', 'set', 'delete'.
+ Route handles for `operation_policies` are parsed in alphabetical order (delete, get, set).
 
 
-* **WarmUpRoute**
-Intended for use as the destination route in a Migrate
+###WarmUpRoute
+ Intended for use as the destination route in a Migrate
  route. Allows for substantial changes to the number of boxes in a pool
  without increasing the miss rate and, consequently, to the load on the
  underlying storage or service.
