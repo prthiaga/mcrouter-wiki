@@ -53,17 +53,17 @@ _Explanation_: requests will be routed to boxes based on a consistent hashing of
   }
 }
 ```
-_Explanation_: deletes and sets are sent to all hosts in pool, Gets are sent to the first host in pool. If a get request fails, it is automatically sent (retried) to the second host in pool, then the third, and so on.
+_Explanation_: deletes and sets are sent to all hosts in pool A, gets are sent to the first host in the pool. If a get request fails, it is automatically sent (retried) to the second host in pool, then the third, and so on.
 
 ####Example: shadow production traffic to test hosts
 ```javascript
 {
   "pools": {
     "production": {
-      "servers": [ /* your production memcache boxes */ ]
+      "servers": [ /* production hosts */ ]
     },
     "test": {
-      "servers": [ /* your test memcache boxes */ ]
+      "servers": [ /* test hosts */ ]
     }
   },
   "route": {
@@ -81,7 +81,7 @@ _Explanation_: deletes and sets are sent to all hosts in pool, Gets are sent to 
   }
 }
 ```
-_Explanation_: all requests go to the 'production' pool.; requests for 10% of keys sent to the first and second host are **also** sent to the 'test' pool.
+_Explanation_: all requests go to the 'production' pool; requests for 10% of keys sent to the first and second host are **also** sent to the 'test' pool.
 
 ####Example: send to different hosts based on routing prefix
 ```javascript
@@ -111,7 +111,7 @@ _Explanation_: all requests go to the 'production' pool.; requests for 10% of ke
   ]
 }
 ```
-_Explanation_: routing prefixes may be used to choose between sets of memcached boxes. In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key").
+_Explanation_: routing prefixes allow organizing pools into distinct clusters, and multiple clusters into datacenters. More about routing prefix concept [here](Routing-Prefix). In this example, commands sent to mcrouter "get /a/a/key" and "get /A/A/other_key" are served by servers in pool A (as "get key" and "get other_key" respectively), while "get /b/b/yet_another_key" will be served by servers in pool B (which will see "get yet_another_key").
 
 
 ###Defining pools
@@ -140,7 +140,7 @@ Routes are composed of blocks called "route handles". Each route handle encapsul
 
 A route handle receives a request from a parent route handle, processes it, and potentially sends it on to child route handles; it then processes the replies and responds back with its own reply to the original request.
 
-In a given config, route handles form a directed acyclic graph with each route handle as a node. They're freely composeable and an arbitrary graph can be represented in the config. 
+In a given config, route handles form a directed acyclic graph with each route handle as a node. They're freely composeable and an arbitrary graph can be represented in the config. Each available route handle is described  [here](List-of-Route-Handles).
 
 ####Representing route handles in JSON
 
@@ -187,7 +187,7 @@ is equivalent to
 }
 ```
 
-A route handle specification looks like this:
+Each route handle object has `type` and additional fields. Here is an example of route handle object:
 ```javascript
 {
   "type" : "HashRoute",
@@ -212,9 +212,9 @@ In addition to selection by routing prefix, mcrouter also allows selection by ke
 To enable this logic, the root of the route handle tree should be a special route handle with the type set to "PrefixSelectorRoute" and the properties as follows:
 
 * `policies`
- Object with the string prefix as keys and the route handles as values. If a key matches multiple prefixes, the longest prefix is selected.
+ Object with the string prefixes as keys and the route handles as values. If a key matches multiple prefixes, the longest prefix is selected.
 * `wildcard`
- A default route handle object. If a key doesn't match any prefix in `policies`, requests for it will go here.
+ A default route handle object. If a key doesn't match any prefix in `policies`, requests will go here.
 
 Example:
 ```javascript
