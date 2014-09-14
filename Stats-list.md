@@ -64,7 +64,7 @@ Here is an explanation of what most important stats mean:
 * result_[reply result]_shadow  
   Average number of replies per second received for shadow requests drilled down by result.
 
-* result_<reply result>  
+* result_[reply result]  
   Average number of replies per second received for normal requests drilled down by reply result.
 
 * result_[reply result]_all  
