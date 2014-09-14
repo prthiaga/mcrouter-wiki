@@ -140,7 +140,7 @@ Routes are composed of blocks called "route handles". Each route handle encapsul
 
 A route handle receives a request from a parent route handle, processes it, and potentially sends it on to child route handles; it then processes the replies and responds back with its own reply to the original request.
 
-In a given config, route handles form a directed acyclic graph with each route handle as a node. They're freely composeable and an arbitrary graph can be represented in the config. Each available route handle is described  [here](List-of-Route-Handles).
+In a given config, route handles form a directed acyclic graph with each route handle as a node. They're freely composeable and an arbitrary graph can be represented in the config.
 
 ####Representing route handles in JSON
 
@@ -202,7 +202,7 @@ For simplicity, there's an equivalent short form which sets all options to defau
 ```
 You can read this as 'Create HashRoute that will route to pool MyPool'.
 
-See [List of Route Handles](List of Route Handles) for a more detailed description of available routes.
+See [List of Route Handles](List-of-Route-Handles) for a more detailed description of available routes.
 
 
 ####Prefix route selector
