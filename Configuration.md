@@ -7,7 +7,7 @@ A mcrouter config is JSON with some extensions:
 * C++-style comments are allowed (both `/* */` and `\\`)
 * Macros are supported (see [JSONM](JSONM))
 
-Otherwise the file must conform to JSON (http://json.org/) - unfortunately this means no trailing commas in lists or objects.
+Otherwise the file must conform to [JSON](http://json.org/) - unfortunately this means no trailing commas in lists or objects.
 
 The top-level configuration object contains two properties: `pools` (optional), and `routes`
 or `route`.
