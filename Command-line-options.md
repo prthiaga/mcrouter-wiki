@@ -15,7 +15,7 @@ Each option has a "command line name" and an "internal name". The internal name 
 - `-R <PREFIX>`, `--route-prefix=<PREFIX>` Default [[routing prefix]] (e.g. `/datacenter/cluster/`).
 - `--disable-miss-on-get-errors` By default, mcrouter converts any errors on `get` commands into misses (i.e. `NOT_FOUND`) for the client. This option disables this behaviour, forwarding back all actual errors.
 - `--send-invalid-route-to-default` Normally requests with keys of the form `/foo/bar/key` will result in an error if `/foo/bar/` does not explicitly exist in the config. With this option, mcrouter will send those requests to default route (respecting `keep_routing_prefix` pool option, and forwarding `/foo/bar/` unmodified if it's set).
-- `--big-value-split-threshold=<N>` Values in update requests over this threshold in bytes will be automatically split into smaller values (re-assembly on `get` is also automatic). If 0, no splitting is performed.
+- `--big-value-split-threshold=<N>` Values in update requests over this threshold in bytes [[will be automatically split|Features#large-values]] into smaller values (re-assembly on `get` is also automatic). If 0, no splitting is performed.
 
 ### Timeouts
 The simplest way is to specify destination timeouts is with
