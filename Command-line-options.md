@@ -40,12 +40,17 @@ See [[discussion about TKO|Features#health-checkauto-failover]].
 - `--global-tko-tracking` If enabled, track TKO per-router instead of per-proxy. This will become the default after testing in production.
 
 ### Network
+- `-p <PORT1>,<PORT2>,...`, `--port <PORT1>,<PORT2>,...` Port(s) to listen on (comma separated).
 - `--reset-inactive-connection-interval=<N>` A timer with this period (in ms) closes all inactive outgoing connections. 0 to disable.
 - `-K <N>`, `--keepalive-count=<N>` TCP KEEPALIVE count for outgoing connections.
 - `-i <N>`, `--keepalive-interval=<N>` TCP KEEPALIVE interval for outgoing connections.
 - `-I <N>`, `--keepalive-idle=<N>` TCP KEEPALIVE idle for outgoing connections.
-- `--pem-cert-path=<PATH>`, `--pem-key-path=<PATH>`, `--pem-ca-path=<PATH>` Paths of pem-style certificate/key/CA cert for SSL (used for both incoming and outgoing connections).
+- `--listen-sock-fd` Listen socket fd to take over (used in tests).
 - `--no-network` ***Debug only.*** Return random generated replies to every request, do not use network.
+
+#### SSL
+- `--ssl-port <PORT1>,<PORT2>` SSL Port(s) to listen on (comma separated).
+- `--pem-cert-path=<PATH>`, `--pem-key-path=<PATH>`, `--pem-ca-path=<PATH>` Paths of pem-style certificate/key/CA cert for SSL (used for both incoming and outgoing connections).
 
 ### Delete stream
 By default, mcrouter will save a record of every `delete` command it fails to deliver downstream (either due network issues or an error response from a destination). The client never gets an error response (deletes that were logged to disk are replied as `NOT_FOUND` to client; in this case mcrouter ensures that write to disk completes fully before sending the reply). The delete log can be replayed and cleaned up by another process.
@@ -76,9 +81,6 @@ Mcrouter can be thought of as a series of queues. The client-facing server parse
 
 ### Process management
 - `-L <PATH>`, `--log-path=<PATH>` Path for the log file.
-- `-p <PORT1>,<PORT2>,...`, `--port <PORT1>,<PORT2>,...` Port(s) to listen on (comma separated).
-- `--ssl-port <PORT1>,<PORT2>` SSL Port(s) to listen on (comma separated).
-- `--listen-sock-fd` Listen socket fd to take over (used in tests).
 - `-P <PATH>`, `--pid-file=<PATH>` If specified, open and lock the PID file to prevent another mcrouter start up with the same PID file path.
 - `-b`, `--background` Daemonize on startup.
 - `-m`, `--managed-mode` Spawn a child mcrouter; parent process is responsible for auto restarts.
