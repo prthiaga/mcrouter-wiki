@@ -7,7 +7,7 @@
    * [Shadowing](Shadowing-setup)
    * [Cold cache warm up](Cold-cache-warm-up-setup)
    * [Multi-cluster/broadcast operations](Multi-cluster-broadcast-setup)
- * [Concepts](Concepts)
+ * **Concepts**
    * [Pools](Pools)
    * [[Key syntax]]
    * [Routing Prefix](Routing-Prefix)
