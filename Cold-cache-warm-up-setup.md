@@ -14,7 +14,7 @@ Here is the setup for this logic:
      "type": "WarmUpRoute",
      "cold": "PoolRoute|cold",
      "warm": "PoolRoute|warm",
-     /* time of warm up in seconds */
+     /* expiration time for keys in cold pool */
      "exptime": 3600
    }
  }
