@@ -65,7 +65,7 @@ By default, mcrouter will save a record of every `delete` command it fails to de
 - `--fibers-debug-record-stack-size` ***Debug only.*** Record exact amount of fibers stacks used in the `fibers_stack_high_watermark` stat counter, which is normally an estimate (location at a likely bottom point of the stack). This is expensive and only provided for debugging. Works by painting the stack with a known value and periodically looking for the amount of undisturbed free space at the end of the stack.
 
 ### Queueing
-Mcrouter can be thought of as a series of queues. The client-facing server parses the requests which are then forwarded to the routing code, which finally invokes internal client code that sends out requests to destinations. These options control queueing in various parts of the pipeline, and are listed in the same order:
+See [[the discussion on quality of service|Features#quality-of-service]].
 - `--reqs-per-read=<N>` If specified, the incoming request buffer size is automatically adjusted to allow through roughly this many requests per event loop iteration. Smaller values may improve latency in a large fan out scenario.
 - `--max-client-outstanding-reqs=<N>` Maximum requests outstanding (that is, sent by the client but not yet replied by mcrouter) per client connection. Mcrouter stops reading from the connection socket when this limit is reached. This limits overall memory usage by mcrouter.
 - `--proxy-max-inflight-requests=<N>` Maximum requests that were routed through the config but not replied yet. This is a queue between the incoming parsed requests and individual fibers allocated per request. The rationale is to limit the number of fibers in use, which require more memory than the parsed requests.
