@@ -21,7 +21,7 @@ This file contains command line arguments passed to mcrouter. In case an option 
 Contains [MD5](http://en.wikipedia.org/wiki/MD5) hashes for each tracked config file (additional files might be tracked due to `@import` statements). It provides the same information as [`__mcrouter__.config_sources_info`](Admin-requests) admin request.
 
 ###stats
-Numerous counters collected by mcrouter. These include number of requests received and sent per operation, start time, average request duration, etc. For a detailed explanation on stats exposed by mcrouter see [Stats list](Stats-list). Example for setup from [Home page](Home) after running for 10 seconds:
+Numerous counters collected by mcrouter. These include number of requests received and sent per operation, start time, average request duration, etc. For a detailed explanation on stats exposed by mcrouter see [stats logged to file](Stats-list#stats-logged-to-file). Example for setup from [Home page](Home) after running for 10 seconds:
 
 ```JavaScript
  {
