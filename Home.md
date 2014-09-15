@@ -26,7 +26,6 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + Rich [[stats counters|Stats list]], [[Stats commands]] and [[debug commands|Admin requests]]
 + [[Quality of service|Features#quality-of-service]]
 + [[Large values|Features#large-values]]
-+ Multi-level caches
 + [[IPv6 support|Features#ipv6-support]]
 + [[SSL support|Features#ssl-support]]
 
