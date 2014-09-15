@@ -10,6 +10,7 @@
    * [Multi-cluster/broadcast operations](Multi-cluster-broadcast-setup)
  * [Concepts](Concepts)
    * [Pools](Pools)
+   * [[Key syntax]]
    * [Routing Prefix](Routing-Prefix)
  * [Features](Features) 
  * [Command line options](Command-line-options)
