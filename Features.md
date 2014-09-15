@@ -22,7 +22,7 @@ In this scheme, invalidating the index key is sufficient to invalidate the entir
 Mcrouter supports IPv6 hosts out of the box. To specify an IPv6 address in a pool server list, enclose the host in square brackets, i.e. on a dual-stacked host (both IPv6 and IPv4 interfaces) `"[::1]:5000"` is equivalent to `"127.0.0.1:5000"` or `"localhost:5000"`.
 
 ### SSL support
-Mcrouter supports SSL encryption of incoming and/or outgoing connections. See [[SSL options|Command line options#SSL]]. This obviously needs support on the client that will talk to mcrouter and/or the destination (memcached). But note that two mcrouters set up in series can talk over SSL out of the box.
+Mcrouter supports SSL encryption of incoming and/or outgoing connections. See [[SSL options|Command line options#ssl]]. This obviously needs support on the client that will talk to mcrouter and/or the destination (memcached). But note that two mcrouters set up in series can talk over SSL out of the box.
 
 ### Reliable delete stream
 Link from Stats files about spooling goes here.
