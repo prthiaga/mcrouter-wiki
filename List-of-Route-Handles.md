@@ -175,14 +175,15 @@ Properties:
 
  * `shadows` (optional, default empty)  
    List of objects that define additional route handles to which mcrouter should duplicate routed data (shadow).
-   Each object has following properties:
- * `target`  
-   Route handle for shadow requests.
- * `index_range` (array of two integers, both in [0, number of servers in pool - 1])  
-   Only requests sent to servers from `index_range` will be sent to `target`,
- * `key_fraction_range` (array of two doubles, both in [0, 1])  
-   Only requests with key hash from `key_fraction_range` will be sent to
-   `target`,
+   Each object in `shadows` has following properties:
+   * `target`  
+     Route handle for shadow requests.
+   * `index_range` (array of two integers, both in [0, number of servers in pool - 1])  
+     Only requests sent to servers from `index_range` will be sent to `target`,
+   * `key_fraction_range` (array of two doubles, both in [0, 1])  
+     Only requests with key hash from `key_fraction_range` will be sent to
+     `target`. The hash used for this purpose is [SpookyHashV2](http://burtleburtle.net/bob/hash/spooky.html).
+ 
  * `hash` (optional, default `Ch3`)  
    String or object that defines hash function, same as in [HashRoute][#hashroute].
  * `rates` (optional, default no rate limiting)  
