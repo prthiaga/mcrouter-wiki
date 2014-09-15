@@ -74,7 +74,7 @@ Mcrouter can be thought of as a series of queues. The client-facing server parse
 - `--logging-rtt-outlier-threshold-us=<N>` Destination requests with round trip time exceeding this threshold will be considered "outliers" and counted in the outliers stats.
 - `--track-open-fds` Log number of file descriptors opened by mcrouter process. This might cause performance regression if the number of connections is huge, as this is computed by walking the `/proc/self/fd` directory.
 
-### Standalone mcrouter options
+### Process management
 - `-L <PATH>`, `--log-path=<PATH>` Path for the log file.
 - `-p <PORT1>,<PORT2>,...`, `--port <PORT1>,<PORT2>,...` Port(s) to listen on (comma separated).
 - `--ssl-port <PORT1>,<PORT2>` SSL Port(s) to listen on (comma separated).
