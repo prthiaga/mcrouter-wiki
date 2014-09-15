@@ -19,7 +19,8 @@ Mcrouter can send some part of production traffic (shadow it) to test hosts, wit
       {
         "target": "PoolRoute|test",
         // shadow traffic that would go to first and second hosts in 'production' pool
-        "index_range": [0, 1],
+        // note that the endpoint is non-inclusive
+        "index_range": [0, 2],
         // shadow requests for 10% of keys based on key hash
         "key_fraction_range": [0, 0.1]
       }
