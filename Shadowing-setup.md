@@ -31,4 +31,4 @@ Mcrouter can send some part of production traffic (shadow it) to test hosts, wit
 
 _Explanation_: all requests go to the 'production' [pool](Pools); requests for 10% of keys sent to the first and second production hosts are **also** sent to the 'test' pool.
 
-More about mcrouter configuration see [here](Configuration).
+Find out more about mcrouter configuration [here](Configuration).
