@@ -83,11 +83,12 @@ Properties:
  * `salt` (string, optional, default empty)  
    Specifies salt to be added to key before hashing
  * `hash_func` (string, optional, default `Ch3`)  
-   Which hashing function to use: `Ch3`, `Crc32` or `WeightedCh3`
+   Which hashing function to use: `Ch3`, `Crc32` or `WeightedCh3`.
+   More about hash functions see [here](Pools#hash-functions)
  * `weights` (list of doubles, valid only when `hash_func` is `WeightedCh3`)  
    Weight for each destination. If `weights` has more elements than `children`,
    extra values are ignored. If `weights` has fewer elements than number of
-   children, missing values are assumed to be 0.5.
+   children, missing values are assumed to be `0.5`.
 
 
 ###HostIdRoute
