@@ -18,7 +18,7 @@ $ ~/mcrouter-install/install/bin/mcrouter --help
 ### Dependencies
 
 * GCC 4.8+
-* Boost 1.51+ (boost::filesystem, boost::system, boost::regex, boost::context)
+* [Boost](http://www.boost.org/) 1.51+ (boost::filesystem, boost::system, boost::regex, boost::context)
 * [Ragel](http://www.complang.org/ragel/)
 
 Here's a list of required packages for Ubuntu from the [auto-install script](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/install_ubuntu_14.04.sh):
