@@ -2,7 +2,7 @@ When using cache at a large scale it happens that most frequently used data are 
 
 Both problems are solved with [replication](http://en.wikipedia.org/wiki/Replication_(computing)).
 
-Lets reword the problem. In other words we want to:
+Lets reword the problem. Using more specific terms, we want to:
 * send gets to a random box from a [pool](Pools). If request fails, get the data from any other box.
 * send both sets and deletes to all hosts inside a [pool](Pools).
 
