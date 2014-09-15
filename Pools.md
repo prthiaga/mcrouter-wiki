@@ -1,5 +1,7 @@
 Destination hosts are grouped into "pools". A pool is a basic building block of a routing config. At a minimum, a pool consists of an ordered list of destination hosts and a hash function.
 
+For detailed configuration, see [[PoolRoute|List-of-Route-Handles#poolroute]].
+
 ### Hash functions
 - "ch3" ("consistent hash, version 3") is the consistent hashing algorithm used by mcrouter. This is the default hash function for pools. The underlying algorithm is [furc_hash()](https://github.com/facebook/mcrouter/blob/master/mcrouter/lib/fbi/hash.c#L151). The [[routing part of the key|Key syntax]] is hashed and the request is set to the resulting index in the pool.
 - "crc32" hash sends the request to host index crc32(routing_key) % pool_size.
