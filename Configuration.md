@@ -27,7 +27,7 @@ Okay, some common use cases (mcrouter is capable of much more) you can find unde
 The `pools` property is a dictionary with pool names as keys and pool objects as values. Each pool object contains an ordered list of destination servers, together with some additional optional properties. Some of the pool properties are:
 
 * `servers` (required)
-  List of `"host:port"` strings. Note that IPv6 addresses must be specified in square brackets.
+  List of `"host:port"` strings. Note that [IPv6 addresses](http://en.wikipedia.org/wiki/IPv6_address) must be specified in square brackets.
 
   ```javascript
    "servers": [ "127.0.0.1:12345", "[::1]:5000", "memcached123.somedomain:4000" ]
