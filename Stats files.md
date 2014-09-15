@@ -13,7 +13,7 @@ This file contains command line arguments passed to mcrouter. In case an option 
    "config_str" : "{\"pools\":{\"A\":{\"servers\":[\"[::1]:5001\"]}},\"route\":\"PoolRoute|A\"}",
    "server_timeout_ms" : "1000",
    "disable_reload_configs" : "0",
-   /* some options omitted */
+   /* some options are omitted */
 }
 ```
 
