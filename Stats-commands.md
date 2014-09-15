@@ -22,7 +22,7 @@ For mcrouter setup from [Home page](Home) possible output is:
 ```
 
 ##stats groups
-Mcrouter stats command also supports optional `group` parameter for `stats` command. It is passed the same way as `key` for `get`:
+Mcrouter `stats` command also supports optional `group` parameter. It is passed the same way as `key` for `get`:
 
 ```bash
  echo "stats all" | nc 0 5000
