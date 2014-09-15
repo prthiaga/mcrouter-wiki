@@ -14,13 +14,13 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + [[Connection pooling|Features#connection-pooling]]
 + Multiple hashing schemes
 + [[Prefix routing|Prefix routing setup]]
-+ Replicated pools
-+ Production traffic shadowing
++ [[Replicated pools|Replicated-pools-setup]]
++ [[Production traffic shadowing|Shadowing-setup]]
 + Online reconfiguration
 + [[Flexible routing|Configuration]]
 + [[Destination health monitoring/automatic failover|Features#health-checkauto-failover]]
-+ Cold cache warm up
-+ Broadcast operations
++ [[Cold cache warm up|Cold-cache-warm-up-setup]]
++ [[Broadcast operations|Multi-cluster-broadcast-setup]]
 + [[Reliable delete stream|Features#reliable-delete-stream]]
 + Multi-cluster support
 + Rich [[stats counters|Stats list]], [[Stats commands]] and [[debug commands|Admin requests]]
@@ -30,7 +30,7 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + [[SSL support|Features#ssl-support]]
 
 ## News 
- * Initial open source release (mcrouter 1.0) (September 14, 2014) 
+ * Initial open source release (mcrouter 1.0) (September 15, 2014) 
 
 ## Getting Started
 See [[installation|mcrouter-installation]] for more detailed installation instructions.
