@@ -14,7 +14,7 @@ Here is an explanation of what most important stats mean:
 * **parent_pid**
   Process id of process that started mcrouter.
 
-##stats logged to file
+##Stats logged to file
 * **asynclog_requests**  
   Number of failed deletes written to spool file. More about spool file read [here](Features#reliable-delete-stream).
 * **closed_inactive_connections**  
