@@ -57,7 +57,7 @@ See [[SSL support|Features#SSL-support]].
 See [[reliable delete stream|Features#reliable-delete-stream]].
 - `--asynclog-disable` Disable logging of failed deletes; errors will be returned to the client.
 - `-a <PATH>`, `--async-dir=<PATH>` Location for the failed deletes log.
-- `--use-asynclog-version2` Enable new format log (the new format logs more information per delete and will become the default in the future).
+- `--use-asynclog-version2` Enable [[new format log|Features#asynclog-v2]] (the new format logs more information per delete and will become the default in the future).
 
 ### Runtime
 - `--num-proxies=<N>` Run with N threads. Typically one thread per core is a good rule of thumb.
