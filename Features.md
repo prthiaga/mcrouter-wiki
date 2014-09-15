@@ -1,5 +1,6 @@
 ### ASCII protocol
 Mcrouter implements the standard [https://github.com/memcached/memcached/blob/master/doc/protocol.txt](memcached ASCII protocol).
+
 ### Connection pooling
 Mcrouter will only open one TCP connection to a given destination per mcrouter thread, and any requests sent to that destination will share the same connection.
 
@@ -25,4 +26,34 @@ Mcrouter supports IPv6 hosts out of the box. To specify an IPv6 address in a poo
 Mcrouter supports SSL encryption of incoming and/or outgoing connections. See [[SSL options|Command line options#ssl]]. This obviously needs support on the client that will talk to mcrouter and/or the destination (memcached). But note that two mcrouters set up in series can talk over SSL out of the box.
 
 ### Reliable delete stream
-Link from Stats files about spooling goes here.
+By default, mcrouter will save a record of every `delete` command it fails to deliver downstream (either due network issues or an error response from a destination). The client never gets an error response. `delete`s that were logged to disk are replied as `NOT_FOUND` to client; in this case mcrouter ensures that write to disk completes fully before sending the reply. The delete log can be replayed and cleaned up by another process.
+
+See the [[delete stream options|Command line options#delete-stream]] for configuration details.
+
+The failed delete log is called "asynclog" or "async spool". The log is written into files under the async spool root, organized into hourly directories. Each directory will contain multiple spool files (one per mcrouter process per thread per 15 minutes of log). Mcrouter never deletes or modifies those files in any way after writing to them.
+
+An asynclog file is a sequence of '\n'-separated JSON serialized arrays. There are two asynclog formats: v1 and v2. v1 is being phased out and v2 will be the default format in the future.
+
+##### Asynclog v1
+A sample entry and explanation:
+```
+["AS1.0",1410611165.754,"C",["127.0.0.1",5001,"delete key\r\n"]]
+
+[version (always "AS1.0"), timestamp, command (always "C"),
+  [destination host, destination port, failed command]]
+```
+
+##### Asynclog v2
+Version 2 has extra configuration information (pool name and mcrouter instance name) to route the failed request correctly, even if the destination host has changed. Destination host:port is still provided, but instance/pool data should be used to replay the delete if available.
+
+A sample entry and explanation:
+
+```
+["AS2.0",1410611229.747,"C",{"k":"key","p":"A","h":"[127.0.0.1]:5001","f":"5000"}]
+
+[version (always "AS2.0"), timestamp, command (always "C"),
+  {"k": key,
+   "p": pool name,
+   "h": "[destination host]:destination port",
+   "f": "mcrouter port or instance name"}]
+```
