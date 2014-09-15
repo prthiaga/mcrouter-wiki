@@ -505,19 +505,21 @@ Usage: `@empty(dictionary)`
 Returns true if object, array or string is empty.
 
 ####less
-Returns true if A is less than B:
+Returns true if A is less than B. Can compare any values except objects.
+
 ```JSON
  { "condition": "@less(bcd,abcd)" }
 ```
 
 After preprocessing:
+
 ```JSON
  { "condition": false }
 ```
 
 ####equals
 Usage: `@equals(A,B)`  
-Returns true if A == B
+Returns true if `A == B`. Can compare any values.
 
 ####and, or
 Returns true if `A and B`; `A or B` respectively. Both A and B should be booleans.
