@@ -1,5 +1,5 @@
 The complete list of available options can be obtained with `mcrouter --help`.
-Each option has a "command line name" and an "internal name". The internal name is used in `__mcrouter__.options` admin command. The internal name is listed in square brackets below.
+Each option has a "command line name" and an "internal name". The internal name is used in [[__mcrouter__.options admin command|Admin-requests#get-__mcrouter__options]], and is listed in square brackets below.
 
 ### Config management
 - `-f <PATH>`, `--config-file=<PATH>` The config file to use. Mcrouter will keep track of updates to the file; restarting the process is not required.
