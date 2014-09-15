@@ -20,7 +20,7 @@ Here is an explanation of what most important stats mean:
 * **closed_inactive_connections**  
   Number of connections closed due to inactivity. Once connection is not used for more than a minute,
   mcrouter will force-close it. The period of inactivity is configured with
-  [`--reset-inactive-connection-interval`](Command-line-options#--reset-inactive-connection-interval) command line option.
+  [[--reset-inactive-connection-interval|Command line options#network]] command line option.
 * **cmd_[operation]**  
   Average number of received requests per second drilled down by operation.
 
