@@ -84,7 +84,6 @@ Properties:
  Specifies salt to be added to key before hashing
  * `hash_func` (string, optional, default "Ch3")
  Which hashing function to use: "Ch3", "Crc32" or "WeightedCh3"
- **TODO!!!!** explain what each function does.
  * `weights` (list of doubles, valid only when hash_func is 'WeightedCh3')
  Weight for each destination. If `weights` has more elements than `children`,
  extra values are ignored. If `weights` has fewer elements than number of
@@ -137,7 +136,6 @@ Properties:
  handle in the list, in order, until the first hit reply.
  If all replies result in errors/misses, returns the reply from the
  last destination in the list.
- **TODO!!!!** What should it do for delete/set? Currently the behavior is strange.
  Properties:
  * `children`
  List of child route handles.
