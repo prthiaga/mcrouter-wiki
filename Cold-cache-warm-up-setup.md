@@ -13,9 +13,7 @@ Here is the setup for this logic:
    "route": {
      "type": "WarmUpRoute",
      "cold": "PoolRoute|cold",
-     "warm": "PoolRoute|warm",
-     /* expiration time for warm up requests */
-     "exptime": 3600
+     "warm": "PoolRoute|warm"
    }
  }
 ```
