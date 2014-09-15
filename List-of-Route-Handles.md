@@ -143,10 +143,9 @@ Properties:
 
 ###NullRoute
  Returns the default reply for each request right away. Default replies are:
- 
- * delete - not found
- * get - not found
- * set - not stored
+ * `delete` - not found
+ * `get` - not found
+ * `set` - not stored
  
  No properties.
 
