@@ -1,44 +1,73 @@
 # Welcome to mcrouter
-Mcrouter is a memcached protocol routing layer that enables the easy expansion of memcached deployments to distributed pools of arbitrary side, providing request routing, connection pooling, failover, and many other features. Because the routing and feature logic are abstracted from the client in mcrouter deployments, the client may simply communicate with destination hosts through mcrouter over a TCP connection using standard memcached protocol. 
+Mcrouter is a memcached protocol router for scaling [memcached](http://memcached.org/) deployments. It's a core component of cache
+infrastructure at Facebook and Instagram where mcrouter handles almost
+5 billion requests per second at peak.
 
-Typically, little or no client modification is needed to use mcrouter, which was designed to be a drop-in proxy between the client and memcached hosts. At Facebook and Instagram, mcrouter is a core component of a distributed cache infrastructure that spans a very large number of individual memcached boxes.
+Mcrouter is developed and maintained by Facebook.
 
-Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`, etc. and specific commands to access stats, version and so on. See [Routing](List-of-Route-Handles) for more.
+Because the routing and feature logic are abstracted from the client in mcrouter deployments, the client may simply communicate with destination hosts through mcrouter over a TCP connection using standard memcached protocol. Typically, little or no client modification is needed to use mcrouter, which was designed to be a drop-in proxy between the client and memcached hosts.
 
-For a detailed introduction to mcrouter, see [Overview](Overview). 
-
+Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`, etc. and specific commands to access stats, version and so on.
 
 ## Features 
- * Request routing
- * Connection Pooling 
- * Flexible Configuration 
- * Failover support
- * Shadow testing support
-
++ [[Memcached ASCII protocol|Features#ascii-protocol]]
++ [[Connection pooling|Features#connection-pooling]]
++ Multiple hashing schemes
++ [[Prefix routing]]
++ Replicated pools
++ Production traffic shadowing
++ Online reconfiguration
++ [[Flexible routing|Configuration]]
++ [[Destination health monitoring/automatic failover|Features#health-checkauto-failover]]
++ Cold cache warm up
++ Broadcast operations
++ [[Reliable delete stream|Features#reliable-delete-stream]]
++ Multi-cluster support
++ Rich [[stats counters|Stats list]], [[Stats commands]] and [[debug commands|Admin requests]]
++ [[Quality of service|Features#quality-of-service]]
++ [[Large values|Features#large-values]]
++ Multi-level caches
++ [[IPv6 support|Features#ipv6-support]]
++ [[SSL support|Features#ssl-support]]
 
 ## News 
- * mcrouter v1.0 Released (September, 2014) 
- * etc. 
+ * Initial open source release (mcrouter 1.0) (September 14, 2014) 
 
 ## Getting Started
-To install Mcrouter, see [Installation](mcrouter-installation).
+See [[installation|mcrouter-installation]] for more detailed installation instructions.
 
-Assuming you have a memcached instance on the local host running on port 5001, the simplest Mcrouter setup is as following (Note, "::1" is the IPv6 loopback address; IPv6 addresses must be specified in square brackets. You can also use "127.0.0.1:5001" or "localhost:5001"):
+Mcrouter depends on [folly](https://github.com/facebook/folly) and [FBThrift](https://github.com/facebook/fbthrift).
+
+The installation is a standard autotools flow:
 
 ```Shell
-./mcrouter \
-    --config-str='{"pools":{"A":{"servers":["[::1]:5001"]}},"route":"PoolRoute|A"}' \
+autoreconf --install
+./configure
+make
+sudo make install
+mcrouter --help
+```
+
+Assuming you have a memcached instance on the local host running on port 5001, the simplest mcrouter setup is
+
+```Shell
+mcrouter \
+    --config-str='{"pools":{"A":{"servers":["127.0.0.1:5001"]}},"route":"PoolRoute|A"}' \
     -p 5000
 ```
 
-To test, send a request to port 5000. For example, using Netcat (http://netcat.sourceforge.net/):
+To test, send a request to port 5000. For example, using [Netcat](http://netcat.sourceforge.net/):
 
 ```Shell
 echo -ne "get key\r\n" | nc 0 5000
 ```
 
-For a complete list of command line arguments, check `./mcrouter --help`.
+For a complete [[list of command line arguments|Command line options]], check `mcrouter --help`.
 
 ## Links
+Engineering discussions and support: https://www.facebook.com/groups/mcrouter
 
-## Contact
+## License
+Copyright (c) 2014, Facebook, Inc. All rights reserved.
+
+Licensed under a BSD license: https://github.com/facebook/mcrouter/blob/master/LICENSE
