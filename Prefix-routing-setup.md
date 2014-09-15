@@ -1,4 +1,7 @@
-When different data is stored on the same memcached instance, problem of different workloads arises. Memcached doesn't distinguish or prioritize any keys, all keys compete for the same amount of memory and are evicted in the same way. But some data is simple to compute, some is more complex; so cache miss on more 'expensive' data results in higher load on clients, while 'cheaper' data can be easily recalculated. Also some keys are requested more often than others, so data that is requested not-so-often can be evicted from cache even before any client uses it.
+When different data is stored on the same memcached instance, problem of different workloads arises.
+
+Memcached doesn't distinguish or prioritize any keys, all keys compete for the same amount of memory and are evicted in the same way. But some data is simple to compute, some is more complex; so cache miss on more 'expensive' data results in higher load on clients, while 'cheaper' data can be easily recalculated. Also some keys are requested more often than others, so data that is requested not-so-often can be evicted from cache even before any client uses it.
+
 Mcrouter solves this problem by separating keys from different workloads to different pools. 
 
 Mcrouter can send keys with different prefixes to different [pools](Pools), so they will not compete for the same memory space.
