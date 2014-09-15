@@ -1,4 +1,4 @@
-When caching data at a large scale is happens that most frequently used values are read by huge amount of clients and memcached servers simply run out of connections. Another problem arises when some data is so important that should be available always, even when several servers go down. Since you decided to use cache, we assume that number of gets is much higher than number of sets and deletes.
+When using cache at a large scale it happens that most frequently used data are read by huge amount of clients and memcached servers simply run out of connections. Another problem arises when some data is so important that should be available always, even when several servers go down. Since you decided to use cache, we assume that number of gets is much higher than number of sets and deletes.
 Both problems are solved with [replication](http://en.wikipedia.org/wiki/Replication_(computing)).
 So, in other words we want to:
 * send gets to a random box from a [pool](Pools). If request fails, get the data from any other box.
