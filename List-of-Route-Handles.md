@@ -145,7 +145,7 @@ Properties:
  Returns the default reply for each request right away. Default replies are:
  * `delete` - not found
  * `get` - not found
- * `set` - not stored
+ * `set` - not stored  
  No properties.
 
 
