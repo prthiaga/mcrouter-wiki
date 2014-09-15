@@ -67,18 +67,17 @@ A better way is to specify `region` and `cluster` pool settings. These are compa
 - `--within-cluster-timeout-ms=<N>` Timeout for talking to pools within the same cluster.
 
 ### Stats
-	    --stats-root                                 Root directory for stats files [default: "/var/mcrouter/stats"]
-	    --stats-logging-interval                     Time in ms between stats reports, or 0 for no logging [default: 10000]
-	    --logging-rtt-outlier-threshold-us           surpassing this threshold rtt time means we will log it as an outlier. 0 (the default) means that we will do no logging of outliers. [default: 0]
-	    --stats-async-queue-length                   Asynchronous queue size for logging. [default: 50]
-	    --track-open-fds                             Log number of file descriptors opened by mcrouter process. This might cause performance regression in case number of mcrouter clients is huge.
+- `--stats-root=<PATH>` Root directory for stats files.
+- `--stats-logging-interval=<N>` Time in ms between stat file updates, or 0 for no logging.
+- `--logging-rtt-outlier-threshold-us=<N>` Destination requests with round trip time exceeding this threshold will be considered "outliers" and counted in the outliers stats.
+- `--track-open-fds` Log number of file descriptors opened by mcrouter process. This might cause performance regression if the number of connections is huge, as this is computed by walking the `/proc/self/fd` directory.
 
 ### Standalone mcrouter options
-	-L, --log-path                                   Log file path [default: ""]
-	-p, --port                                       Port(s) to listen on (comma separated) [default: ]
-	    --ssl-port                                   SSL Port(s) to listen on (comma separated) [default: ]
-	    --listen-sock-fd                             Listen socket to take over [default: -1]
-	-P, --pid-file                                   PID file [default: ""]
-	-b, --background                                 Run in background
-	-m, --managed-mode                               Managed mode (auto restart on crash)
-	-n, --connection-limit                           Connection limit [default: 65535]
+- `-L <PATH>`, `--log-path=<PATH>` Path for the log file.
+- `-p <PORT1>,<PORT2>,...`, `--port <PORT1>,<PORT2>,...` Port(s) to listen on (comma separated).
+- `--ssl-port <PORT1>,<PORT2>` SSL Port(s) to listen on (comma separated).
+- `--listen-sock-fd` Listen socket fd to take over (used in tests).
+- `-P <PATH>`, `--pid-file=<PATH>` If specified, open and lock the PID file to prevent another mcrouter start up with the same PID file path.
+- `-b`, `--background` Daemonize on startup.
+- `-m`, `--managed-mode` Spawn a child mcrouter; parent process is responsible for auto restarts.
+- `-n <N>`, `--connection-limit=<N>` File descriptor limit.
