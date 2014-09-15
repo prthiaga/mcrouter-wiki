@@ -1,6 +1,20 @@
 Mcrouter exposes numerous counters which include: number of requests sent, number of replies received, start time, average request duration, etc. These stats are exposed by ["stats" commands](Stats-commands) and in ["stats" file](Stats-files).
 
 Here is an explanation of what most important stats mean:
+
+##Basic stats
+* **version**
+  Version of mcrouter binary.
+* **commandargs**
+  Command line used to start mcrouter.
+* **time**
+  Current server time.
+* **child_pid**
+  Process id of mcrouter instance.
+* **parent_pid**
+  Process id of process that started mcrouter.
+
+##stats logged to file
 * **asynclog_requests**  
   Number of failed deletes written to spool file. More about spool file read [here](Features#reliable-delete-stream).
 * **closed_inactive_connections**  
