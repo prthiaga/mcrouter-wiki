@@ -307,18 +307,24 @@ After preprocessing:
 ####merge
 Usage:
 
+```JavaScript
  "type": "merge",
  "params": [ list1, list2, list3, ... ]
+```
 
 or
 
+```JavaScript
  "type": "merge",
  "params": [ obj1, obj2, obj3, ... ]
+```
 
 or
- 
+
+```JavaScript 
  "type": "merge"
  "params": [ str1, str2, str3, ... ]
+```
 
 Combines multiple lists or objects into one.
 In case `params` is a list of strings, `merge` concatenates them.
