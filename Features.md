@@ -48,9 +48,9 @@ Version 2 has extra configuration information (pool name and mcrouter instance n
 
 A sample entry and explanation:
 
-```
-["AS2.0",1410611229.747,"C",{"k":"key","p":"A","h":"[127.0.0.1]:5001","f":"5000"}]
+`["AS2.0",1410611229.747,"C",{"k":"key","p":"A","h":"[127.0.0.1]:5001","f":"5000"}]`
 
+```
 [version (always "AS2.0"), timestamp, command (always "C"),
   {"k": key,
    "p": pool name,
