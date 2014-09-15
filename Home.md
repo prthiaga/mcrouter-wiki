@@ -16,7 +16,7 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + [[Prefix routing|Prefix routing setup]]
 + [[Replicated pools|Replicated-pools-setup]]
 + [[Production traffic shadowing|Shadowing-setup]]
-+ Online reconfiguration
++ [[Online reconfiguration|Command-line-options#config-management]]
 + [[Flexible routing|Configuration]]
 + [[Destination health monitoring/automatic failover|Features#health-checkauto-failover]]
 + [[Cold cache warm up|Cold-cache-warm-up-setup]]
