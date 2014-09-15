@@ -1,1 +1,1 @@
-*** Hash functions
+### Hash functions
