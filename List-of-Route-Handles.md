@@ -185,7 +185,7 @@ Properties:
      `target`. The hash used for this purpose is [SpookyHashV2](http://burtleburtle.net/bob/hash/spooky.html).
  
  * `hash` (optional, default `Ch3`)  
-   String or object that defines hash function, same as in [HashRoute][#hashroute].
+   String or object that defines hash function, same as in [HashRoute](#hashroute).
  * `rates` (optional, default no rate limiting)  
    If set, enables rate limiting requests to prevent server overload.
    The object that defines rate and burst are parameters of a [token bucket
