@@ -54,7 +54,7 @@ See [[SSL support|Features#SSL-support]].
 - `--pem-cert-path=<PATH>`, `--pem-key-path=<PATH>`, `--pem-ca-path=<PATH>` Paths of pem-style certificate/key/CA cert for SSL (used for both incoming and outgoing connections).
 
 ### Delete stream
-By default, mcrouter will save a record of every `delete` command it fails to deliver downstream (either due network issues or an error response from a destination). The client never gets an error response (deletes that were logged to disk are replied as `NOT_FOUND` to client; in this case mcrouter ensures that write to disk completes fully before sending the reply). The delete log can be replayed and cleaned up by another process.
+See [[reliable delete stream|Features#reliable-delete-stream]].
 - `--asynclog-disable` Disable logging of failed deletes; errors will be returned to the client.
 - `-a <PATH>`, `--async-dir=<PATH>` Location for the failed deletes log.
 - `--use-asynclog-version2` Enable new format log (the new format logs more information per delete and will become the default in the future).
