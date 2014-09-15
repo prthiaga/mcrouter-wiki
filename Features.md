@@ -30,6 +30,8 @@ By default, mcrouter will save a record of every `delete` command it fails to de
 
 See the [[delete stream options|Command line options#delete-stream]] for configuration details.
 
+Number of failed deletes is recorded in the [[asynclog_requests stats counter|Stats-list#stats-logged-to-file]].
+
 The failed delete log is called "asynclog" or "async spool". The log is written into files under the async spool root, organized into hourly directories. Each directory will contain multiple spool files (one per mcrouter process per thread per 15 minutes of log). Mcrouter never deletes or modifies those files in any way after writing to them.
 
 An asynclog file is a sequence of '\n'-separated JSON serialized arrays. There are two asynclog formats: v1 and v2. v1 is being phased out and v2 will be the default format in the future.
