@@ -1,4 +1,4 @@
-Every time a new cache box is added to Memcache infrastructure, it has empty cache. This box is called 'cold'. Every request to this box will end up in 'miss', so clients would spend lots of resources to fill the cache. In the worst case this will affect performance of the entire site, because on every 'miss' client would spend more time to actually get the data.
+Every time a new cache box is added to Memcache infrastructure, it has empty cache. This box is called 'cold'. Every request to this box will end up in 'miss', so clients will spend lots of resources to fill the cache. In the worst case this will affect performance of the entire site, because on every 'miss' on the cold box client would spend much more time to actually get the data.
 
 Mcrouter offers a way to 'warm up' cold cache boxes without impact on performance. The idea is simple: when we have a cold box and receive a 'miss', try to get a value from 'warm 'box (one with filled cache) and set it back to cold box.
 
