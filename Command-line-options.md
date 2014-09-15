@@ -63,8 +63,8 @@ There are two ways to fine tune timeouts in a geographically distributed setup. 
 
 A better way is to specify `region` and `cluster` pool settings. These are compared to the components of the default route (i.e. `/some_region/some_cluster/`). Depending on whether we're in the same cluster as the pool, same region, or a different region entirely, one of the following timeouts is in effect:
 - `--cross-region-timeout-ms=<N>` Timeout for talking to pools in another region.
-- `--cross-cluster-timeout-ms=<N>` Timeout for talking to pools within same region but different cluster.
-- `--within-cluster-timeout-ms=<N>` Timeout for talking to pools within same cluster.
+- `--cross-cluster-timeout-ms=<N>` Timeout for talking to pools within the same region but a different cluster.
+- `--within-cluster-timeout-ms=<N>` Timeout for talking to pools within the same cluster.
 
 ### Stats
 	    --stats-root                                 Root directory for stats files [default: "/var/mcrouter/stats"]
