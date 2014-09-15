@@ -154,7 +154,7 @@ No properties.
 
 ###PoolRoute
 Route handle that routes to a pool. With different settings, it provides the same
-functionality as HashRoute, but also allows rate limiting, shadowing, et cetera.
+functionality as [HashRoute](#hashroute), but also allows rate limiting, shadowing, et cetera.
 Properties:
 
  * `pool` (string or object)  
