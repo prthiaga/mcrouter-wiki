@@ -3,15 +3,15 @@ Mcrouter exposes numerous counters which include: number of requests sent, numbe
 Here is an explanation of what most important stats mean:
 
 ##Basic stats
-* **version**
+* **version**  
   Version of mcrouter binary.
-* **commandargs**
+* **commandargs**  
   Command line used to start mcrouter.
-* **time**
+* **time**  
   Current server time.
-* **child_pid**
+* **child_pid**  
   Process id of mcrouter instance.
-* **parent_pid**
+* **parent_pid**  
   Process id of process that started mcrouter.
 
 ##Stats logged to file
