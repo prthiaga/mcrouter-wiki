@@ -17,4 +17,6 @@ Mcrouter uses this logic to send requests to a [pool](Pools) by default. So samp
  }
 ```
 
+_Explanation_: requests will be routed to boxes based on a consistent hashing of keys. For more on consistent hashing, see [here](http://en.wikipedia.org/wiki/Consistent_hashing).
+
 More about mcrouter configuration see [here](Configuration).
