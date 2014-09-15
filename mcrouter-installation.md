@@ -1,51 +1,43 @@
-##Automatic installation
+## Automatic installation for Ubuntu
 
-**TODO!!!**: use script from **D1377312** (once it is committed).
+To simplify dependency installation, we provided an [auto-install script](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/install_ubuntu_12.04.sh) that's been tested on Ubuntu 12.04 and 14.04.
 
-##Manual installation
+The script might also be useful for other systems - make sure to read through its source files. It contains a bunch of ["recipe" files](https://github.com/facebook/mcrouter/tree/master/mcrouter/scripts/recipes) to download and install each mcrouter dependency, including workaround for common pain points.
 
-###Install
+**Note: for Ubuntu 14.04 comment out line 9 `sudo add-apt-repository -y ppa:boost-latest/ppa`**
 
-```Shell
- #prime sudo
- sudo echo
-
- sudo yum install libopenssl-devel libcap-devel libevent-devel boost-devel \
- gtest-devel glog-devel gflags-devel snappy-devel zlib scons flex bison \
- krb5-devel binutils-devel
+After you've read through the script and made sure you're fine with the commands it will run, invoke with absolute dir for self-contained install and any arguments to `make`:
+```
+$ git clone git@github.com:facebook/mcrouter.git
+$ ./mcrouter/mcrouter/scripts/install_ubuntu_12.04.sh /home/$USER/mcrouter-install/ -j4
+[sudo] password for ...:
+...
+$ ~/mcrouter-install/install/bin/mcrouter --help
 ```
 
-###Download and install
+## Manual installation
 
-* latest autotools
-Simplest way is to use this script:
-http://git.savannah.gnu.org/cgit/coreutils.git/tree/scripts/autotools-install
+### Dependencies
 
-* python 2.7
+* GCC 4.8+
+* Boost 1.51+ (boost::filesystem, boost::system, boost::regex, boost::context)
+* [Ragel](http://www.complang.org/ragel/)
 
-* folly
-Follow instructions from https://github.com/facebook/folly
-
-* fbthrift
- * Download fbthrift from https://github.com/facebook/fbthrift.
-If you have errors regarding 'double-conversion' missing, add
-*-ldouble-conversion* to AC_SUBST() macro in *thrift/configure.ac*
- * If you have *folly/String.h* not found errors,
-add *-I/fbcode/folly* to CPPFLAGS:
+Here's a list of required packages for Ubuntu from the [auto-install script](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/install_ubuntu_12.04.sh):
 ```Shell
- CPPFLAGS="-I~/fbcode/folly" ./configure
-```
- * Build and install it. In *thrift* subfolder run
-```Shell
- autoreconf --install
- ./configure
- make
- sudo make install
+sudo apt-get install -y gcc-4.8 g++-4.8 libboost1.54-dev libboost-thread1.54-dev \
+    libboost-filesystem1.54-dev libboost-system1.54-dev libboost-regex1.54-dev \
+    libboost-python1.54-dev libboost-context1.54-dev ragel autoconf unzip \
+    libsasl2-dev git libtool python-dev cmake libssl-dev libcap-dev libevent-dev \
+    libgtest-dev libsnappy-dev scons flex bison libkrb5-dev binutils-dev make \
+    libnuma-dev ragel
 ```
 
-###Build mcrouter
+ * [folly](https://github.com/facebook/folly). Follow instructions from folly README. Also take a look at [auto install folly recipe](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/recipes/folly.sh).
+ * [FBThrift](https://github.com/facebook/fbthrift). Follow instructions and check out the [auto install recipe](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/recipes/fbthrift.sh).
 
-Clone mcrouter source code from https://github.com/facebook/mcrouter.
+### Build mcrouter
+
 In mcrouter folder run
 
 ```Shell
