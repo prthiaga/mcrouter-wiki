@@ -75,7 +75,7 @@ See [[the discussion on quality of service|Features#quality-of-service]].
 - `--target-max-pending-requests=<N>` The size of the outstanding requests queue per destination. Requests over this limit will be returned with an error immediately.
 
 ### Stats
-- `--stats-root=<PATH>` Root directory for stats files.
+- `--stats-root=<PATH>` Root directory for [[stats files]].
 - `--stats-logging-interval=<N>` Time in ms between stat file updates, or 0 for no logging.
 - `--logging-rtt-outlier-threshold-us=<N>` Destination requests with round trip time exceeding this threshold will be considered "outliers" and counted in the outliers stats.
 - `--track-open-fds` Log number of file descriptors opened by mcrouter process. This might cause performance regression if the number of connections is huge, as this is computed by walking the `/proc/self/fd` directory.
