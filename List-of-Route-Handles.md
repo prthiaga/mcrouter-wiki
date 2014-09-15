@@ -27,7 +27,7 @@ Properties:
 
 
 ###DevNullRoute
-Same as **NullRoute**, but with mcrouter stats reporting.
+Same as [NullRoute](#nullroute), but with mcrouter stats reporting. See [Stats list](Stats-list#stats-logged-to-file).
 
 
 ###ErrorRoute
