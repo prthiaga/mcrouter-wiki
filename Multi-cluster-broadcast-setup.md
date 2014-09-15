@@ -1,8 +1,8 @@
-When data is spread across multiple clusters and datacenters, it is useful to group [pools](Pools) of cache hosts into logical groups and send requests to any particular cluster or datacenter.
+When data is spread across multiple physical locations, it is useful to group [pools](Pools) of cache hosts into logical groups and send requests to any particular group. We use grouping by clusters and datacenters. In fact 'cluster' or 'datacenter' may have any number of pools which differ from others in one way or another. The main idea is those boxes are different (e.g. it takes longer to send a request there) hence we need to have a different routing logic.
 
-When number of servers grows to thousands, it is useful to have a dedicated mcrouter instance per cluster and/or datacenter that serves requests from other clusters/datacenters. This way we can decrease number of connections to cache boxes, easily replicate data over clusters and datacenters, reduce load on clients.
+The same logic applies when number of servers in some cluster or datacenter grows to thousands and we want to have a dedicated mcrouter instance to serve requests from other clusters/datacenters. Clients in other clusters will now route requests to a single mcrouter instance instead of thousands of cache boxes. This decreases number of connections to cache boxes, provides easy way to replicate data over numerous boxes and reduce load on clients.
 
-This is why routing prefixes where introduced in mcrouter. Here is a configuration with two pools in different datacenters, each has own set of routing prefixes (or aliases), so clients can easily send requests to a particular pool. Also, to send a request to all clusters/datacenters, one can use [patterns](Routing-Prefix#pattern-matching) in key's routing prefix.
+This is why routing prefixes were introduced in mcrouter. Here is a configuration with two pools in different datacenters, each has own set of routing prefixes (or aliases), so clients can easily send requests to a particular pool. Also, to send a request to all clusters/datacenters, one can use [patterns](Routing-Prefix#pattern-matching) in key's routing prefix, thus easily replicate data.
 
 ```JavaScript
 {
