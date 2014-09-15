@@ -1,4 +1,4 @@
-#### [mcrouter wiki](Home)
+#### [Mcrouter wiki](Home)
  * [Installation](mcrouter-installation)
  * **Common setups**
    * [Sharded pools](Sharded-pools-setup)
