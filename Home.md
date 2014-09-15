@@ -22,7 +22,7 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + [[Cold cache warm up|Cold-cache-warm-up-setup]]
 + [[Broadcast operations|Multi-cluster-broadcast-setup]]
 + [[Reliable delete stream|Features#reliable-delete-stream]]
-+ Multi-cluster support
++ [[Multi-cluster support|Multi-cluster-broadcast-setup]]
 + Rich [[stats counters|Stats list]], [[Stats commands]] and [[debug commands|Admin requests]]
 + [[Quality of service|Features#quality-of-service]]
 + [[Large values|Features#large-values]]
