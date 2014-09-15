@@ -1,6 +1,6 @@
-When using cache at a large scale it happens that most frequently used data are read by huge amount of clients and memcached servers simply run out of connections. Another problem arises when some data is so important that should be available always, even when several servers go down. Since you decided to use cache, we assume that number of gets is much higher than number of sets and deletes.
+In many cases in which cache is deployed at large scales, frequently-accessed data are read by huge numbers of clients, and memcached servers risk running out of connections. Problems may also arise when critical data must always be available, even when several servers go down. Mcrouter solves both of these problems with [replication](http://en.wikipedia.org/wiki/Replication_(computing)).
 
-Both problems are solved with [replication](http://en.wikipedia.org/wiki/Replication_(computing)).
+Note: since you decided to use cache, we assume that the number of gets in your deployment is much higher than number of sets and deletes.
 
 Lets reword the problem. Using more specific terms, we want to:
 * send gets to a random box from a [pool](Pools). If request fails, get the data from any other box.
