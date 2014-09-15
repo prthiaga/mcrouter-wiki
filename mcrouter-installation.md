@@ -4,6 +4,8 @@ To simplify dependency installation, we provided an [auto-install script](https:
 
 The script might also be useful for other systems - make sure to read through its source files. It contains a bunch of ["recipe" files](https://github.com/facebook/mcrouter/tree/master/mcrouter/scripts/recipes) to download and install each mcrouter dependency, including workaround for common pain points.
 
+**Note: there's a known FBThrift build issue; if you see "cannot import name frontend", check out this [workaround](https://github.com/facebook/fbthrift/issues/26#issuecomment-55557289)**
+
 After you've read through the script and made sure you're fine with the commands it will run, invoke with absolute dir for self-contained install and any arguments to `make`:
 ```
 $ git clone git@github.com:facebook/mcrouter.git
