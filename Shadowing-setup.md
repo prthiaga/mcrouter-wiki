@@ -1,4 +1,5 @@
 Even software engineers may make mistakes. In fact, without proper testing any code change in critical code is dangerous and can bring down the entire site. Also some optimizations look great in theory but when tested under production load they doesn't show any benefit, or even break the existing logic. That's why testing under real load is the best way to test new code.
+
 Mcrouter can send some part of production traffic (shadow it) to test hosts, without any visible impact on performance or reliability. Here is an example:
 
 ```JavaScript
