@@ -13,7 +13,7 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + [[Memcached ASCII protocol|Features#ascii-protocol]]
 + [[Connection pooling|Features#connection-pooling]]
 + Multiple hashing schemes
-+ [[Prefix routing]]
++ [[Prefix routing|Prefix routing setup]]
 + Replicated pools
 + Production traffic shadowing
 + Online reconfiguration
