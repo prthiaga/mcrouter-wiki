@@ -2,12 +2,12 @@
 
 Mcrouter config files specify where and how mcrouter should route requests.
 
-A mcrouter config is JSON with some extensions:
+A mcrouter config is [JSON](http://json.org/) with some extensions:
 
 * C++-style comments are allowed (both `/* */` and `\\`)
 * Macros are supported (see [JSONM](JSONM))
 
-Otherwise the file must conform to [JSON](http://json.org/) - unfortunately this means no trailing commas in lists or objects.
+Otherwise the file must conform to JSON - unfortunately this means no trailing commas in lists or objects.
 
 The top-level configuration object contains two properties: `pools` (optional), and `routes`
 or `route`.
@@ -27,17 +27,21 @@ Okay, some common use cases (mcrouter is capable of much more) you can find unde
 The `pools` property is a dictionary with pool names as keys and pool objects as values. Each pool object contains an ordered list of destination servers, together with some additional optional properties. Some of the pool properties are:
 
 * `servers` (required)
-List of `"host:port"` strings. Note that IPv6 addresses must be specified in square brackets.
-```javascript
-  "servers": [ "127.0.0.1:12345", "[::1]:5000", "memcached123.somedomain:4000" ]
-```
-Defines the pool's destination servers.
+  List of `"host:port"` strings. Note that IPv6 addresses must be specified in square brackets.
+
+  ```javascript
+   "servers": [ "127.0.0.1:12345", "[::1]:5000", "memcached123.somedomain:4000" ]
+  ```
+
+  Defines the pool's destination servers.
 
 * `protocol` (optional): `"ascii"` (default) or `"umbrella"`
-Which protocol to use. Ascii is the text Memcache protocol, Umbrella is an out of order binary protocol in use at Facebook. (see [Routing](Routing.md)).
+  Which protocol to use. Ascii is the text Memcache protocol, Umbrella is an out of order
+  binary protocol in use at Facebook. (see [Routing](Routing.md)).
 
 * `keep_routing_prefix` (optional): bool (default `false`)
-If true, do not strip the routing prefix from keys when sending request to this pool. Useful for making a mcrouter talk to another mcrouter.
+  If `true`, do not strip the routing prefix from keys when sending request to this pool.
+  Useful for making a mcrouter talk to another mcrouter.
 
 
 ###Defining `routes`
@@ -55,22 +59,22 @@ In a given config, route handles form a directed acyclic graph with each route h
 `routes` property is a list of route handle trees and `aliases`. `aliases` is a list of routing prefixes used for a given route handle tree. For example:
 
 ```javascript
-{
-  "routes": [
-    {
-      "aliases": [
-        "/regionA/clusterA/",
-        "/regionA/clusterB/"
-      ],
-      "route" : {
-        // route handle tree for regionA
-      }
-    },
-    {
-      // other route here
-    }
-  ]
-}
+ {
+   "routes": [
+     {
+       "aliases": [
+         "/regionA/clusterA/",
+         "/regionA/clusterB/"
+       ],
+       "route" : {
+         // route handle tree for regionA
+       }
+     },
+     {
+       // other route here
+     }
+   ]
+ }
 ```
 
 In this example, all keys with the `/regionA/clusterA/` and `/regionA/clusterB/` routing prefixes are routed to the regionA route handle tree.
@@ -78,30 +82,30 @@ In this example, all keys with the `/regionA/clusterA/` and `/regionA/clusterB/`
 Use `route` instead of `routes` if routing prefixes are not used. Semantically, it is equivalent to specifying the default route (given as a command line parameter) as the single alias, i.e.
 
 ```javascript
-{
-  "route": /* some route handle tree */
-}
+ {
+   "route": /* some route handle tree */
+ }
 ```
 
 is equivalent to
 ```javascript
-{
-  "routes": [
-    {
-      "aliases": [ /* default routing prefix specified on mcrouter command line */ ],
-      "route": /* some route handle tree */
-    }
-  ]
-}
+ {
+   "routes": [
+     {
+       "aliases": [ /* default routing prefix specified on mcrouter command line */ ],
+       "route": /* some route handle tree */
+     }
+   ]
+ }
 ```
 
 Each route handle object has `type` and additional fields. Here is an example of route handle object:
 ```javascript
-{
-  "type" : "HashRoute",
-  "children" : "Pool|MyPool",
-  ... // additional options, e.g. hash function, salt, etc.
-}
+ {
+   "type" : "HashRoute",
+   "children" : "Pool|MyPool",
+   ... // additional options, e.g. hash function, salt, etc.
+ }
 ```
 
 For simplicity, there's an equivalent short form which sets all options to default values:
@@ -120,29 +124,31 @@ In addition to selection by routing prefix, mcrouter also allows selection by ke
 To enable this logic, the root of the route handle tree should be a special route handle with the type set to "PrefixSelectorRoute" and the properties as follows:
 
 * `policies`
- Object with the string prefixes as keys and the route handles as values. If a key matches multiple prefixes, the longest prefix is selected.
+  Object with the string prefixes as keys and the route handles as values.
+  If a key matches multiple prefixes, the longest prefix is selected.
 * `wildcard`
- A default route handle object. If a key doesn't match any prefix in `policies`, requests will go here.
+  A default route handle object. If a key doesn't match any prefix in `policies`, requests will go here.
 
 Example:
 ```javascript
-{
-  "pools": { /* define pool A, B and C */ }
-  "routes": [
-    {
-      "aliases": [ "/a/a/" ],
-      "route": {
-        "type": "PrefixSelectorRoute",
-        "policies": {
-          "a": "PoolRoute|A",
-          "ab": "PoolRoute|B"
-        },
-        "wildcard": "PoolRoute|C"
-      }
-    }
-  ]
-}
+ {
+   "pools": { /* define pool A, B and C */ }
+   "routes": [
+     {
+       "aliases": [ "/a/a/" ],
+       "route": {
+         "type": "PrefixSelectorRoute",
+         "policies": {
+           "a": "PoolRoute|A",
+           "ab": "PoolRoute|B"
+         },
+         "wildcard": "PoolRoute|C"
+       }
+     }
+   ]
+ }
 ```
+
 _Explanation_: requests with routing prefix "/a/a/" and key prefix "a" (but not "ab"!) will be sent to pool A, requests with routing prefix "/a/a/" and key prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/" will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd"); "/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
 
 
@@ -152,50 +158,51 @@ You may wish to use the same route handle in different parts of the config. To a
 
 Route handles may also be defined in the `named_handles` property of the config. Example:
 ```javascript
-{
-  "pools": { /* define pool A and pool B */ },
-  "named_handles": [
-    {
-      "type": "PoolRoute",
-      "name": "ratedA",
-      "pool": "A",
-      "rates": {
-        "sets_rate" : 10
-      }
-    }
-  ],
-  "routes": [
-    {
-      "aliases": [ "/a/a/" ],
-      "route": {
-        "type": "FailoverRoute",
-        "children": [
-          "ratedA",
-          {
-            "type": "PoolRoute",
-            "name": "ratedB",
-            "pool": "B",
-            "rates": {
-              "sets_rate": 100
-            }
-          }
-        ]
-      }
-    },
-    {
-      "aliases": [ "/b/b/" ],
-      "route": {
-        "type": "FailoverRoute",
-        "children": [
-          "ratedB",
-          "ratedA"
-        ]
-      }
-    }
-  ]
-}
+ {
+   "pools": { /* define pool A and pool B */ },
+   "named_handles": [
+     {
+       "type": "PoolRoute",
+       "name": "ratedA",
+       "pool": "A",
+       "rates": {
+         "sets_rate" : 10
+       }
+     }
+   ],
+   "routes": [
+     {
+       "aliases": [ "/a/a/" ],
+       "route": {
+         "type": "FailoverRoute",
+         "children": [
+           "ratedA",
+           {
+             "type": "PoolRoute",
+             "name": "ratedB",
+             "pool": "B",
+             "rates": {
+               "sets_rate": 100
+             }
+           }
+         ]
+       }
+     },
+     {
+       "aliases": [ "/b/b/" ],
+       "route": {
+         "type": "FailoverRoute",
+         "children": [
+           "ratedB",
+           "ratedA"
+         ]
+       }
+     }
+   ]
+ }
 ```
-In this example, we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
+
+In this example we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
 
 ###JSONM
-You can use macros to avoid repetition when writing large complicated configs. For more information about JSONM and macros, see [JSONM](JSONM).
+You can also use macros to avoid repetition when writing large complicated configs. For more information about JSONM and macros, see [JSONM](JSONM).
