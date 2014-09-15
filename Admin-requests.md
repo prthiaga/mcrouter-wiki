@@ -43,7 +43,10 @@ The following special commands are supported:
 - `get __mcrouter__.config`: config string (error if configured from a file).
 - `get __mcrouter__.config_age`: how long, in seconds, since last config reload.
 - `get __mcrouter__.config_file`: config file location (error if configured from string).
-- `get __mcrouter__.options`: list of space-separated option name and value pairs of startup command line options.
+
+##### `get __mcrouter__.options`
+List of space-separated option name and value pairs of startup command line options.
+
 - `get __mcrouter__.options(num_proxies)`: the value of a specific option, in this example `num_proxies`.
 - `get __mcrouter__.route(<op>,<key>)`: list of destination where a given request would be routed to. Note that there are no spaces around comma or brackets, as the whole `__mcrouter__...` string must be a valid memcache key.
 
