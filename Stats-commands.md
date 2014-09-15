@@ -1,4 +1,4 @@
-To find out mcrouter state, performance and usage information one can use "stats" command. This information includes: number of requests of each served by mcrouter, replies, how long mcrouter is running, etc. It is a rough analogue of memcached "stats", but with more features.
+To find out mcrouter state, performance and usage information one can use `stats` command. The command returns information about: number of requests served by mcrouter, replies received, how long mcrouter is running, etc. It is a rough analogue of memcached `stats`, but with more features.
 The most basic usage is to send "stats" request to mcrouter. Assuming mcrouter is running on port 5000:
 
 ```bash
@@ -40,7 +40,7 @@ Group parameter controls which stats will be returned. Valid group names:
 * **cmd-error**
   Returns number of requests failed.
 * **servers**
-  This is special group, not included in any of above.
+  This is a special group, not included in any of above.
   Returns state of each server from config, together with additional info per each server. Output example:
   ```
    ~# echo stats servers | nc 0 5000
@@ -48,4 +48,4 @@ Group parameter controls which stats will be returned. Valid group names:
     END
   ```
 
-To find a list of stats exposed by mcrouter, see [Stats list](Stats-list).
+To find out a list of stats exposed by mcrouter, see [Stats list](Stats-list).
