@@ -16,7 +16,7 @@ Using a simple preprocessor, we generate standard JSON objects from
 user-friendly JSONM by processing all macros and substituting all constants. . 
 
 ###Syntax
-JSONM is JSON object with two special optional keys: `consts` and `macros`:
+JSONM is a JSON object with two special optional keys: `consts` and `macros`:
 
 ```
   {
@@ -236,6 +236,7 @@ _Note: "backslash" is JSON property, so it will be interpreted as only one backs
 These macros perform different operations on JSON values.
 
 ####import
+Usage: `@import(path)`  
 Allows loading JSONM from external source. Example:
 
 > File: cities.json
@@ -268,6 +269,7 @@ After preprocessing, `city.json` becomes:
 ```
 
 ####int, str, bool
+Usage: `@int(5)`; `@str(@int(5))`; `@bool(true)`  
 `@int` casts its argument to an integer:
 
 ```JavaScript
@@ -286,6 +288,7 @@ After preprocessing:
 `@str` casts its argument to string; `@bool` to boolean.
 
 ####keys, values
+Usage: `@keys(object)`; `@values(object)`  
 `@keys` returns list of object keys; `@values` returns list of object values:
 
 ```JavaScript
@@ -302,7 +305,23 @@ After preprocessing:
 ```
 
 ####merge
-Merge combines multiple lists or objects into one. It can also concatenate strings.
+Usage:
+
+ "type": "merge",
+ "params": [ list1, list2, list3, ... ]
+
+or
+
+ "type": "merge",
+ "params": [ obj1, obj2, obj3, ... ]
+
+or
+ 
+ "type": "merge"
+ "params": [ str1, str2, str3, ... ]
+
+Combines multiple lists or objects into one.
+In case `params` is a list of strings, `merge` concatenates them.
 
 ```JavaScript
  {
@@ -343,6 +362,7 @@ After preprocessing:
 ```
  
 ####select
+Usage: `@select(obj,string)` or `@select(list,int)`  
 Returns element from list or object.
 
 ```JavaScript
@@ -363,6 +383,7 @@ After preprocessing:
 ```
 
 ####shuffle
+Usage: `@shuffle(list)`  
 Randomly shuffles list.
 
 ```JavaScript
@@ -380,6 +401,20 @@ After preprocessing, (one possible example):
 
 
 ####slice
+Usage:
+
+ "type": "slice",
+ "dictionary": obj,
+ "from": string,
+ "to": string
+
+or
+ 
+ "type": "slice",
+ "dictionary": list/string,
+ "from": int,
+ "to": int
+
 Returns a slice (subrange) of list, object or string.
 
 ```JavaScript
@@ -398,6 +433,7 @@ After preprocessing:
 ```
 
 ####range
+Usage: `@range(@int(1),@int(2))`  
 Returns list of integers [from, from + 1, ..., to]
 
 ```JavaScript
@@ -415,6 +451,7 @@ After preprocessing:
 ```
 
 ####isArray, isBool, isInt, isObject, isString
+Usage: `@isArray(value)`; `isBool(value)`; etc.  
 Return true if value is list, bool, int, object or string respectively:
 ```JavaScript
  "@isString(abc)"
@@ -427,6 +464,7 @@ After preprocessing:
 ```
 
 ####add, sub, mul, div, mod
+Usage: `@add(A,B)`; `@sub(A,B)`; etc.  
 Perform corresponding operation on integers:
 ```JavaScript
  // 2*3 + 5
@@ -440,6 +478,7 @@ After preprocessing:
 ```
 
 ####contains
+Usage: @contains(dictionary,value)  
 Returns true if dictionary contains a key; list contains a value; string contains a substring:
 ```JSON
  { "condition": "@contains(abacaba,aca)" }
@@ -452,6 +491,7 @@ After preprocessing:
 ```
 
 ####empty
+Usage: `@empty(dictionary)`  
 Returns true if object, array or string is empty.
 
 ####less
@@ -466,6 +506,7 @@ After preprocessing:
 ```
 
 ####equals
+Usage: `@equals(A,B)`  
 Returns true if A == B
 
 ####and, or
@@ -473,6 +514,13 @@ Returns true if A and B; A or B respectively. A and B should be booleans.
 
 ###Built-in calls
 ####if
+Usage:
+
+ "type": "if",
+ "condition": bool,
+ "is_true": any value
+ "is_false": any value
+
 Conditional operator: returns `is_true` property if `condition` is true, `is_false` otherwise:
 ```JavaScript
  {
@@ -492,10 +540,28 @@ After preprocessing:
 ```
 
 ####transform
+Usage:
+ 
+ "type": "transform",
+ "dictionary": obj,
+ "itemTransform": macro with extended context
+ "keyTranform": macro with extended context (optional)
+ "itemName": string (optional, default: item)
+ "keyName": string (optional, default: key)
+
+or
+
+ "type": "transform",
+ "dictionary": list,
+ "itemTranform": macro with extended context
+ "keyName": string (optional, default: key)
+ "itemName": string (optional, default: item)
+
 Transforms elements of a list or object, using `itemTransform` and `keyTransform`
 properties. `keyTransform` is optional; available only if the dictionary is an
 object. `itemTransform` and `keyTransform` are `valueWithMacros` and may use
-two additional parameters: `key` and `item`.
+two additional parameters: `key` and `item` (parameter names are configured
+with `keyName` and `itemName` properties).
 
 ```JSON
  {
@@ -518,6 +584,15 @@ After preprocessing:
 ```
 
 ####process
+Usage:
+ 
+ "type": "process",
+ "initialValue": any value,
+ "transform": macro with extended context
+ "keyName": string (optional, default: key)
+ "itemName": string (optional, default: item)
+ "valueName": string (optional, default: value)
+
 Iterates over object or array and transforms "value". Literally:
 
 ```
@@ -529,7 +604,8 @@ Iterates over object or array and transforms "value". Literally:
 ```
 
 `transform` is `valueWithMacros` and may use three additional
-parameters: `key`, `item` and `value`.
+parameters: `key`, `item` and `value` (parameter names are configured
+with `keyName`, `itemName` and `valueName` properties).
 
 ```JavaScript
  {
