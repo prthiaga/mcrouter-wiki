@@ -52,10 +52,10 @@ How long, in seconds, since last config reload.
 Config file location (error if configured from string).
 
 ##### `get __mcrouter__.options`
-List of space-separated option name and value pairs of startup command line options.
+List of space-separated command line options [[internal name|Command line options]] and value pairs.
 
 ##### `get __mcrouter__.options(num_proxies)`
-The value of a specific option, in this example `num_proxies`.
+The value of a specific option, in this example `num_proxies`. The option is specified by its internal name.
 
 ##### `get __mcrouter__.route(<op>,<key>)`
 List of destination where a given request would be routed to. Note that there are no spaces around comma or brackets, as the whole `__mcrouter__...` string must be a valid memcache key.
