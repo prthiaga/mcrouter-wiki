@@ -390,7 +390,7 @@ After preprocessing:
 
 ####shuffle
 Usage: `@shuffle(list)`  
-Randomly shuffles list.
+Randomly shuffles a list.
 
 ```JavaScript
  {
@@ -409,17 +409,21 @@ After preprocessing, (one possible example):
 ####slice
 Usage:
 
+```JavaScript
  "type": "slice",
  "dictionary": obj,
  "from": string,
  "to": string
+```
 
 or
- 
+
+```JavaScript 
  "type": "slice",
  "dictionary": list/string,
  "from": int,
  "to": int
+```
 
 Returns a slice (subrange) of list, object or string.
 
@@ -484,7 +488,7 @@ After preprocessing:
 ```
 
 ####contains
-Usage: @contains(dictionary,value)  
+Usage: `@contains(dictionary,value)`  
 Returns true if dictionary contains a key; list contains a value; string contains a substring:
 ```JSON
  { "condition": "@contains(abacaba,aca)" }
@@ -516,18 +520,21 @@ Usage: `@equals(A,B)`
 Returns true if A == B
 
 ####and, or
-Returns true if A and B; A or B respectively. A and B should be booleans.
+Returns true if `A and B`; `A or B` respectively. Both A and B should be booleans.
 
 ###Built-in calls
 ####if
 Usage:
 
+```JavaScript
  "type": "if",
  "condition": bool,
  "is_true": any value
  "is_false": any value
+```
 
 Conditional operator: returns `is_true` property if `condition` is true, `is_false` otherwise:
+
 ```JavaScript
  {
    "value": {
@@ -547,21 +554,25 @@ After preprocessing:
 
 ####transform
 Usage:
- 
+
+```JavaScript 
  "type": "transform",
  "dictionary": obj,
  "itemTransform": macro with extended context
  "keyTranform": macro with extended context (optional)
  "itemName": string (optional, default: item)
  "keyName": string (optional, default: key)
+```
 
 or
 
+```JavaScript
  "type": "transform",
  "dictionary": list,
  "itemTranform": macro with extended context
  "keyName": string (optional, default: key)
  "itemName": string (optional, default: item)
+```
 
 Transforms elements of a list or object, using `itemTransform` and `keyTransform`
 properties. `keyTransform` is optional; available only if the dictionary is an
@@ -582,6 +593,7 @@ with `keyName` and `itemName` properties).
 ```
 
 After preprocessing: 
+
 ```JSON
  {
    "b": "a",
@@ -591,15 +603,17 @@ After preprocessing:
 
 ####process
 Usage:
- 
+
+```JavaScript 
  "type": "process",
  "initialValue": any value,
  "transform": macro with extended context
  "keyName": string (optional, default: key)
  "itemName": string (optional, default: item)
  "valueName": string (optional, default: value)
+```
 
-Iterates over object or array and transforms "value". Literally:
+Iterates over an object or array and transforms "value". Literally:
 
 ```
   value = initialValue
