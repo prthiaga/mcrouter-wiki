@@ -31,7 +31,7 @@ A better way is to specify `region` and `cluster` pool settings. These are compa
 - `--within-cluster-timeout-ms=<N>` Timeout for talking to pools within the same cluster.
 
 ### Health check
-Mcrouter keeps track of each destination's health status. If we get a certain number of timeouts in a row, the destination is marked "TKO" ("technical knockout" since it's down for the round :)) and we start sending `version` command probes (known as "TKO probes") until one comes back successfully. Normal requests would be failed over to a backup destination immediately (without waiting for further timeouts). We also distinguish between "soft TKO" and "hard TKO" - "hard TKO" are due to failures that are unlikely to be resolved on the subsequent request, for example `ECONNREFUSED`.
+See [[discussion about TKO|Features#health-checkauto-failover]].
 - `--timeouts-until-tko=<N>` Mark as soft TKO after this many timeouts.
 - `-r <N>`, `--probe-timeout-initial=<N>`; `--probe-timeout-max=<N>` TKO probes are sent with exponentially increasing interval. These options control the initial size of this interval and the maximum size respectively (in ms). The actual intervals have some random jitter of up to 50% added to them to avoid overloading a single failed host with TKO probes from different mcrouters.
 - `--maximum-soft-tkos=<N>` Maximum number of destinations allowed to be in soft TKO state at any point in time. This is for cascading failure protection. We stop marking hosts as TKO on timeout once we reach this limit.
