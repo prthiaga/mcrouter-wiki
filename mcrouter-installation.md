@@ -63,12 +63,12 @@ Run
 ```
 
 If you have "symbol not found" errors from gtest, build it and put
-libgtest.a/libgtest_main.a into you LD_LIBRARY_PATH. To build gtest:
+libgtest.a/libgtestmain.a into you LD_LIBRARY_PATH. To build gtest:
 
 * load it from http://googletest.googlecode.com/files/gtest-1.6.0.zip
 * in make subfolder run
 ```
  make
 ```
-* Rename gtest.a to libgtest.a; gtest_main.a to libgtest_main.a
+* Rename gtest.a to libgtest.a; gtest_main.a to libgtestmain.a
 * Don't forget to add libgtest.a and libgtestmain.a to your LD_LIBRARY_PATH
