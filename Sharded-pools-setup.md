@@ -5,7 +5,7 @@ Mcrouter uses this logic to send requests to a [pool](Pools) by default. So samp
 ```JavaScript
  {
    "pools": {
-     "A": { "servers": [ /* list of hosts, each will store some data */ ] }
+     "A": { "servers": [ /* list of hosts */ ] }
    },
    "route": "PoolRoute|A"
  }
