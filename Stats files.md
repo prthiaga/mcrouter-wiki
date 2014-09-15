@@ -1,4 +1,4 @@
-Mcrouter creates and automatically updates several files useful to monitor its state. These files are created under `/var/mcrouter/stats` folder by default and have names starting from `libmcrouter.mcrouter.<mcrouter port number>.<file>`. Root folder for stats files is configured with [`--stats-root`](Command-line-options#--stats-root) command line option. These files by default are updated every 10 seconds, this period is configured with [`--stats-logging-interval`](Command-line-options#--stats-logging-interval) command line option.
+Mcrouter creates and automatically updates several files useful to monitor its state. These files are created under `/var/mcrouter/stats` folder by default and have names of form `libmcrouter.mcrouter.<mcrouter port number>.<file>`. Root folder for stats files is configured with [`--stats-root`](Command-line-options#--stats-root) command line option. These files by default are updated every 10 seconds, this period is configured with [`--stats-logging-interval`](Command-line-options#--stats-logging-interval) command line option.
 Lets discuss each file in more details.
 
 ###startup_options
