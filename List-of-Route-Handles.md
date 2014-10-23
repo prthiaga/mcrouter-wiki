@@ -36,14 +36,14 @@ Immediately returns the error reply for each request. You can specify the error 
 
 ###FailoverRoute
 Sends the request to the first child in the list and waits for the reply. If the reply is a non-error, returns it immediately. Otherwise, sends the request to the second child, and so on. If all children respond with errors, returns the last error reply.
-_Note_: miss (key not found) doesn't count for an error. See [MissFailoverRoute](#MissFailoverRoute) to failover misses.
+_Note_: miss (key not found) doesn't count for an error. See [MissFailoverRoute](#missfailoverroute) to failover misses.
 
 Properties:
  * `children`: list of child route handles
 
 
 ###FailoverWithExptimeRoute
-Failover with additional settings. Sends request to `normal` route handle
+[FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle
 If it responds with an error, checks `settings` and failovers to `failover`
 if necessary.
 Properties:
