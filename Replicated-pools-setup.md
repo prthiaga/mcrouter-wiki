@@ -11,14 +11,19 @@ Here is a sample mcrouter configuration to achieve this:
 ```JavaScript
  {
    "pools": {
-     // hosts of replicated pool, e.g.:
-     "127.0.0.1:12345",
-     "[::1]:12346"
+      "A": {
+         "servers": [
+            // hosts of replicated pool, e.g.:
+           "127.0.0.1:12345",
+           "[::1]:12346"
+         ]
+      }
    },
    "route": {
      "type": "PrefixPolicyRoute",
      "operation_policies": {
        "delete": "AllSyncRoute|Pool|A",
+       "add": "AllSyncRoute|Pool|A",
        "get": "LatestRoute|Pool|A",
        "set": "AllSyncRoute|Pool|A"
      }
