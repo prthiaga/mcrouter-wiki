@@ -51,6 +51,9 @@ How long, in seconds, since last config reload.
 ##### `get __mcrouter__.config_file`
 Config file location (error if configured from string).
 
+##### `get __mcrouter__.hostid`
+Hostid of this mcrouter instance, an unsigned 32-bit integer in decimal.
+
 ##### `get __mcrouter__.options`
 List of space-separated command line options [[internal name|Command line options]] and value pairs.
 
