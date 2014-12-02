@@ -35,7 +35,7 @@ The `pools` property is a dictionary with pool names as keys and pool objects as
 
   Defines the pool's destination servers.
 
-* `hash` (optinal): `ch3` (default); `crc32` or `wch3`
+* `hash` (optional): `ch3` (default); `crc32` or `wch3`
   Hash function used to select a server from the list that will serve a request. For more details see [hash functions](Pools#hash-functions).
 
 * `protocol` (optional): `"ascii"` (default) or `"umbrella"`
