@@ -46,6 +46,7 @@ Properties:
 [FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle
 If it responds with an error, checks `settings` and failovers to `failover`
 if necessary.
+
 Properties:
  * `normal`  
    All requests sent here first.
@@ -78,6 +79,7 @@ Properties:
 
 ###HashRoute
 Routes to the destination based on key hash.
+
 Properties:
  * `children`  
    List of child route handles.
@@ -94,6 +96,7 @@ Properties:
 
 ###HostIdRoute
 Routes to one destination chosen based on client host ID.
+
 Properties:
  * `children`: list of child route handles.
 
@@ -102,6 +105,7 @@ Properties:
 Attempts to "behave well" in how many new targets it connects to.
 Creates a FailoverRoute with at-most `failover_count` child handles chosen
 pseudo-randomly based on client host ID.
+
 Properties:
  * `children`  
    List of child route handles.
@@ -139,6 +143,7 @@ For get-like requests, sends the same request sequentially to each route
 handle in the list, in order, until the first hit reply.
 If all replies result in errors/misses, returns the reply from the
 last destination in the list.
+
 Properties:
  * `children`: list of child route handles.
 
@@ -156,6 +161,7 @@ No properties.
 ###PoolRoute
 Route handle that routes to a pool. With different settings, it provides the same
 functionality as [HashRoute](#hashroute), but also allows rate limiting, shadowing, et cetera.
+
 Properties:
 
  * `pool` (string or object)  
@@ -210,6 +216,7 @@ Properties:
 
 ###PrefixPolicyRoute
 Sends to different targets based on specified operations.
+
 Properties:
 
  * `default_policy`  
@@ -247,6 +254,7 @@ fetched from the "warm" route handle (where the request is likely to result
 in a cache hit). If "warm" returns a hit, the response is forwarded to
 the client and an asynchronous request, with the configured expiration time,
 updates the value in the "cold" route handle.
+
 Properties:
 
  * `cold`  
