@@ -126,7 +126,7 @@ This route handle changes behavior based on Migration mode.
     worst among two replies.
  4. After (start_time + 2*interval), sends all requests to `to` route handle.
  
- Properties:
+Properties:
  
  * `from`  
    Route handle that routes to destination from which we are migrating.
