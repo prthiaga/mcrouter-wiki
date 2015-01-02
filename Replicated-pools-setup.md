@@ -20,7 +20,7 @@ Here is a sample mcrouter configuration to achieve this:
       }
    },
    "route": {
-     "type": "PrefixPolicyRoute",
+     "type": "OperationSelectorRoute",
      "operation_policies": {
        "delete": "AllSyncRoute|Pool|A",
        "add": "AllSyncRoute|Pool|A",
