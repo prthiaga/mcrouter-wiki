@@ -242,6 +242,12 @@ Properties:
  Route handles for `operation_policies` are parsed in alphabetical order (delete, get, set).
 
 
+###RandomRoute
+Routes to one random destination from list of children.
+
+Properties:
+ * `children`: list of child route handles.
+
 ###WarmUpRoute
 Intended for use as the destination route in a Migrate
 route. Allows for substantial changes to the number of boxes in a pool
