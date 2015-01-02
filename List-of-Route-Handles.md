@@ -214,7 +214,7 @@ Properties:
  ```
 
 
-###PrefixPolicyRoute
+###OperationSelectorRoute (previously: PrefixPolicyRoute)
 Sends to different targets based on specified operations.
 
 Properties:
