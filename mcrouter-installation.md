@@ -30,9 +30,9 @@ Here's a list of required packages for Ubuntu from the [auto-install script](htt
 sudo apt-get install -y gcc-4.8 g++-4.8 libboost1.54-dev libboost-thread1.54-dev \
     libboost-filesystem1.54-dev libboost-system1.54-dev libboost-regex1.54-dev \
     libboost-python1.54-dev libboost-context1.54-dev ragel autoconf unzip \
-    libsasl2-dev git libtool python-dev cmake libssl-dev libcap-dev libevent-dev \
-    libgtest-dev libsnappy-dev scons flex bison libkrb5-dev binutils-dev make \
-    libnuma-dev ragel
+    git libtool python-dev cmake libssl-dev libcap-dev libevent-dev \
+    libgtest-dev libsnappy-dev scons binutils-dev make \
+    wget libdouble-conversion-dev libgflags-dev libgoogle-glog-dev
 ```
 
  * [folly](https://github.com/facebook/folly). Follow instructions from folly README. Also take a look at [auto install folly recipe](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/recipes/folly.sh).
