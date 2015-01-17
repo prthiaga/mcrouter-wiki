@@ -35,8 +35,6 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 ## Getting Started
 See [[installation|mcrouter-installation]] for more detailed installation instructions.
 
-Mcrouter depends on [folly](https://github.com/facebook/folly) and [FBThrift](https://github.com/facebook/fbthrift).
-
 The installation is a standard autotools flow:
 
 ```Shell
