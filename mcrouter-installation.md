@@ -4,8 +4,6 @@ To simplify dependency installation, we provided an [auto-install script](https:
 
 The script might also be useful for other systems - make sure to read through its source files. It contains a bunch of ["recipe" files](https://github.com/facebook/mcrouter/tree/master/mcrouter/scripts/recipes) to download and install each mcrouter dependency, including workaround for common pain points.
 
-**Note: there's a known FBThrift build issue; if you see "cannot import name frontend", check out this [workaround](https://github.com/facebook/fbthrift/issues/26#issuecomment-55557289)**
-
 After you've read through the script and made sure you're fine with the commands it will run, invoke with absolute dir for self-contained install and any arguments to `make`:
 ```
 $ git clone git@github.com:facebook/mcrouter.git
@@ -14,6 +12,10 @@ $ ./mcrouter/mcrouter/scripts/install_ubuntu_14.04.sh /home/$USER/mcrouter-insta
 ...
 $ ~/mcrouter-install/install/bin/mcrouter --help
 ```
+
+## Docker
+
+You can use this [Dockerfile](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/docker/Dockerfile) to build a docker image (base on ubuntu 14:04).
 
 ## Manual installation
 
@@ -34,7 +36,6 @@ sudo apt-get install -y gcc-4.8 g++-4.8 libboost1.54-dev libboost-thread1.54-dev
 ```
 
  * [folly](https://github.com/facebook/folly). Follow instructions from folly README. Also take a look at [auto install folly recipe](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/recipes/folly.sh).
- * [FBThrift](https://github.com/facebook/fbthrift). Follow instructions and check out the [auto install recipe](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/recipes/fbthrift.sh).
 
 ### Build mcrouter
 
