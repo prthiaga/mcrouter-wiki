@@ -12,8 +12,10 @@
    * [[Key syntax]]
    * [Routing Prefix](Routing-Prefix)
  * [Features](Features) 
- * [Command line options](Command-line-options)
- * [Configuration](Configuration)
+ * **Configuration**
+   * [Command line options](Command-line-options)
+   * [Config Files](Config-Files)
+   * [Flavors](Flavors)
    * [JSONM](JSONM)
    * [List of Route Handles](List-of-Route-Handles)
  * **Monitoring**
