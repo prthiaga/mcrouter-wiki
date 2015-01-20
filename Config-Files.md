@@ -1,4 +1,4 @@
-###What is a mcrouter config?
+###What is a mcrouter config file?
 
 Mcrouter config files specify where and how mcrouter should route requests.
 
