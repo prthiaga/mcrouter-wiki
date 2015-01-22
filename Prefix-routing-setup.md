@@ -26,4 +26,4 @@ Mcrouter can send keys with different prefixes to different [pools](Pools), so t
 
 _Explanation_: requests with key prefix "a" will be sent to pool 'workload1', requests with key prefix "b" will be sent to pool 'workload2'. Other requests will be sent to pool 'common_cache'. So key "abcd" will be sent to 'workload1'; "bar" to 'workload2'; "zzz" to 'common_cache'.
 
-Find out more about mcrouter configuration [here](Configuration).
+Find out more about mcrouter configuration [here](List-of-Route-Handles).
