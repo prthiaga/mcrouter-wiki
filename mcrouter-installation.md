@@ -15,8 +15,15 @@ $ ~/mcrouter-install/install/bin/mcrouter --help
 
 ## Docker
 
-You can use this [Dockerfile](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/docker/Dockerfile) to build a docker image (base on ubuntu 14:04).
+### Official Docker
 
+We provide this [Dockerfile](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/docker/Dockerfile) for you to build a docker image (base on ubuntu 14:04).
+
+### Third party Dockers
+
+* https://registry.hub.docker.com/u/jamescarr/mcrouter/
+* https://registry.hub.docker.com/u/jamescarr/mcrouter-rest-api/
+ 
 ## Manual installation
 
 ### Dependencies
