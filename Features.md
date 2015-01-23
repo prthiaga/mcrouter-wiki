@@ -1,5 +1,5 @@
 ### ASCII protocol
-Mcrouter implements the standard [https://github.com/memcached/memcached/blob/master/doc/protocol.txt](memcached ASCII protocol).
+Mcrouter implements the standard [memcached ASCII protocol](https://github.com/memcached/memcached/blob/master/doc/protocol.txt).
 
 ### Connection pooling
 Mcrouter will only open one TCP connection to a given destination per mcrouter thread, and any requests sent to that destination will share the same connection.
