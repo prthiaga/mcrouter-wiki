@@ -23,3 +23,4 @@
    * [Stats files](Stats-files)
    * [Stats commands](Stats-commands)
    * [Stats list](Stats-list)
+* [Error Handling](Error-Handling) 
