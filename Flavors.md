@@ -37,7 +37,7 @@ There are some things from the above example that are worth mentioning:
 * The following options are _standalone options_ and should be informed in the _standalone_options_ object of the standalone flavor file: `log_file, debug_level, ports, ssl_ports, listen_sock_fd, pidfile, background, managed, fdlimit, max_global_outstanding_reqs, max_client_outstanding_reqs, requests_per_read, enable_failure_logging`. All the other options should go into the libmcrouter_options object or in the libmcrouter flavor file.  
 
 # Usage
-To use a flavor, simply inform it's path (without any suffixes, i.e. "-standalone") to mcrouter command line:
+To use a flavor, simply inform its path (without any suffixes, i.e. "-standalone") to mcrouter command line:
 ```bash
 $ mcrouter /path/to/flavor
 ```
