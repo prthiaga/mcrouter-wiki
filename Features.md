@@ -13,7 +13,7 @@ Mcrouter keeps track of each destination's health status. If we get a certain nu
 Mcrouter can be thought of as a series of queues. The client-facing server parses the requests which are then forwarded to the routing code, which finally invokes internal client code that sends out requests to destinations. Check out [[the command line options|Command line options#queueing]] that control queueing in various parts of the pipeline.
 
 ### Large values
-Mcrouter can split and reassemble values which are normally too large to store in memcached directly. The split threshold can be set with `--big-value-split-threshold=<N>` [[command line option|Command line options#routing]]. This is implemented with a BigValue [[route handle|Configuration#route-handles]].
+Mcrouter can split and reassemble values which are normally too large to store in memcached directly. The split threshold can be set with `--big-value-split-threshold=<N>` [[command line option|Command line options#routing]]. This is implemented with a BigValue [[route handle|Config-Files#route-handles]].
 
 On a large request we split it up into smaller chunks which are set as separate requests; we also set an index key. The index key is the same as the original request key, while the chunk request keys are composed of the original key + chunk index + a random suffix. The random suffix is recorded in the index key.
 
