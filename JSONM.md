@@ -24,7 +24,7 @@ JSONM is a JSON object with two special optional keys: `consts` and `macros`:
       constDefinition,
       constDefinition,
       …
-    },
+    ],
     "macros": {
       "macroName1": macroDefinition,
       "macroName2": macroDefinition,
