@@ -184,12 +184,12 @@ only built-in macros and built-in calls in consts.
      {
        "type": "constDef",
        "name": "author",
-       "value": "John Doe"
+       "result": "John Doe"
      },
      {
        "type": "constDef",
        "name": "copyright",
-       "value": "%author% owns it"
+       "result": "%author% owns it"
      }
    ],
    "file": "%copyright%. Some content"
