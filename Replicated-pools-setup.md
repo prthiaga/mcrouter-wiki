@@ -22,8 +22,8 @@ Here is a sample mcrouter configuration to achieve this:
    "route": {
      "type": "OperationSelectorRoute",
      "operation_policies": {
-       "delete": "AllSyncRoute|Pool|A",
        "add": "AllSyncRoute|Pool|A",
+       "delete": "AllSyncRoute|Pool|A",
        "get": "LatestRoute|Pool|A",
        "set": "AllSyncRoute|Pool|A"
      }
@@ -31,6 +31,6 @@ Here is a sample mcrouter configuration to achieve this:
  }
 ```
 
-_Explanation_: deletes and sets are sent to all hosts in pool A, gets are sent to a random host in the pool based on mcrouter's host id (thus, to split the load, you'll need to run several mcrouter instances). If a get request fails, it is automatically sent (retried) to another host in pool, then another, and so on. By default, number of retries is 5.
+_Explanation_: adds, deletes and sets are sent to all hosts in pool A, gets are sent to a random host in the pool based on mcrouter's host id (thus, to split the load, you'll need to run several mcrouter instances). If a get request fails, it is automatically sent (retried) to another host in pool, then another, and so on. By default, number of retries is 5.
 
 Find out more about mcrouter configuration [here](Configuration).
