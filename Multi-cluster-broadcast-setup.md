@@ -27,11 +27,19 @@ This is why routing prefixes were introduced in mcrouter. Here is a configuratio
         "/b/b/"
       ],
       "route": "PoolRoute|B"
+    },
+    {
+      "aliases": [
+        "/././"
+      ],
+      "route": "PoolRoute|A"
     }
   ]
 }
 ```
 
 _Explanation_: routing prefixes allow organizing pools into distinct clusters, and multiple clusters into datacenters. More about routing prefix concept [here](Routing-Prefix). In this example, commands sent to mcrouter `get /a/a/key` and `get /A/A/other_key` are served by servers in pool A (as `get key` and `get other_key` respectively), while `get /b/b/yet_another_key` will be served by servers in pool B (which will see `get yet_another_key`). Broadcast request `delete /*/*/one_more_key` will be sent to both pool A and pool B (as `delete one_more_key`).
+
+You must specify a default route "/././" or mcrouter will not start.
 
 Find out more about mcrouter configuration [here](Config-Files).
