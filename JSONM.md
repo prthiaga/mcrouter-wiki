@@ -442,6 +442,29 @@ After preprocessing:
  [2, 3]
 ```
 
+####sort
+Usage:
+
+```JavaScript
+ "type": "sort",
+ "dictionary": list,
+```
+
+Sort a list of strings/numbers.
+
+```JavaScript
+ {
+   "type": "sort",
+   "dictionary": [2, 1],
+ }
+```
+
+After preprocessing:
+
+```JavaScript
+ [1, 2]
+```
+
 ####range
 Usage: `@range(@int(1),@int(2))`  
 Returns list of integers [from, from + 1, ..., to]
@@ -642,4 +665,49 @@ After preprocessing:
 
 ```JSON
  "dcba"
+```
+
+####foreach
+Usage:
+
+```JavaScript 
+ "type": "foreach",
+ "key": string (optional, default: key)
+ "item": string (optional, default: item)
+ "from": object or list
+ "where": macro with extended context (optional, %key% and %item%)
+ "use": macro with extended context (optional, %key% and %item%)
+ "top": int (optional)
+ "noMatchResult": any value (optional)
+```
+
+foreach (key, item) from <from> where <where> use <use> top <int> for top <top> items from dictionary "from" which satisfy "where" condition merge <use> expansions into one dictionary.
+
+For example, to filter dictionary:
+```JavaScript
+{
+ "type": "foreach",
+ "from": <dictionary>,
+ "where": <condition>
+}
+```
+
+To convert object to list:
+```JavaScript
+{
+ "type": "foreach",
+ "from": <object>,
+ "use": [ <list item> ]
+ "noMatchResult": []
+}
+```
+
+To grab at most 2 items from <dictionary> that satisfy <condition>:
+```JavaScript
+{
+ "type": "foreach",
+ "from": <dictionary>
+ "where": <condition>
+ "top": 2
+}
 ```
