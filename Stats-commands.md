@@ -44,8 +44,10 @@ Group parameter controls which stats will be returned. Valid group names:
   Returns state of each server from config, together with additional info per each server. Output example:
   ```
    ~# echo stats servers | nc 0 5000
-    STAT [0000:0000:0000:0000:0000:0000:0000:0001]:5001:TCP:ascii-1-0 status:up notfound:1 connect_error:2
+    STAT [0000:0000:0000:0000:0000:0000:0000:0001]:5001:TCP:ascii-1000 up:1; notfound:1 connect_error:2
     END
   ```
+* **suspect_servers**
+  Similar to **servers** but returns list of servers that replied with an error to last request sent to them.
 
 To find out a list of stats exposed by mcrouter, see [Stats list](Stats-list).
