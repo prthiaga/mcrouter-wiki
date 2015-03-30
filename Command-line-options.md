@@ -35,9 +35,6 @@ See [[discussion about TKO|Features#health-checkauto-failover]].
 - `--timeouts-until-tko=<N>` (_failures_until_tko_) Mark as soft TKO after this many timeouts.
 - `-r <N>`, `--probe-timeout-initial=<N>` (_probe_delay_initial_ms_); `--probe-timeout-max=<N>` (_probe_delay_max_ms_) TKO probes are sent with exponentially increasing interval. These options control the initial size of this interval and the maximum size respectively (in ms). The actual intervals have some random jitter of up to 50% added to them to avoid overloading a single failed host with TKO probes from different mcrouters.
 - `--maximum-soft-tkos=<N>` Maximum number of destinations allowed to be in soft TKO state at any point in time. This is for cascading failure protection. We stop marking hosts as TKO on timeout once we reach this limit.
-- `--latency-threshold-us=<N>` If nonzero, destinations with average latency longer than this threshold will have new requests registered as soft TKO events.
-- `--latency-window-size=<N>` Destination latency moving average window size. Smaller numbers will put more weight on the new requests (i.e. at the extreme the value of 1 will cause the average to be equal to the latest request latency), while larger numbers put less weight on unusual bursts. If 0, TKO decisions based on latency are disabled.
-- `--global-tko-tracking` If enabled, track TKO per-router instead of per-proxy. This will become the default after testing in production.
 
 ### Network
 - `-p <PORT1>,<PORT2>,...`, `--port <PORT1>,<PORT2>,...` Port(s) to listen on (comma separated).
