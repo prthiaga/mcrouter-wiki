@@ -43,7 +43,7 @@ Properties:
 
 
 ###FailoverWithExptimeRoute
-[FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle
+[FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle.
 If it responds with an error, checks `settings` and failovers to `failover`
 if necessary.
 
