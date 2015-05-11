@@ -1,3 +1,9 @@
+###AllAsyncRoute
+Immediately sends the same request to all child route handles. Does not wait for response. Returns the default reply for each request right away as returned by [NullRoute](#nullroute).
+
+Properties:
+ * `children`: list of child route handles.
+
 ###AllFastestRoute
 Immediately sends the same request to all child route handles. Returns the first non-error reply to come back. Other requests complete in the background and their replies are silently ignored.
 
