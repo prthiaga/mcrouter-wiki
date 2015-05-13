@@ -23,4 +23,4 @@ _Explanation_: requests will be routed to boxes based on a consistent hashing of
 
 See also:
 * supported [hash functions](Pools#hash-functions);
-* mcrouter [configuration](Configuration).
+* mcrouter [configuration](Config-Files).
