@@ -168,8 +168,8 @@ Sends to different targets based on specified key prefixes.
 
 Properties:
 
-* `wildcard`
-   Default route handle if the key prefix does not match any other specified policies.
+* `wildcard`  
+    Default route handle if the key prefix does not match any other specified policies.
 
 * `operation_policies`  
    Object, with operation name as key and route handle for specified operation as
