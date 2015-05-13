@@ -163,6 +163,28 @@ Returns the default reply for each request right away. Default replies are:
  
 No properties.
 
+###PrefixSelectorRoute
+Sends to different targets based on specified key prefixes.
+
+Properties:
+
+* `wildcard`
+   Default route handle if the key prefix does not match any other specified routes.
+
+* `operation_policies`  
+   Object, with operation name as key and route handle for specified operation as
+   value. Example:
+
+ ```JavaScript
+"route": {
+        "type": "PrefixSelectorRoute",
+        "policies": {
+          "shr": "PoolRoute|shared_pool"
+        },
+        "wildcard": "PoolRoute|local_pool_in_second_cluster"
+      }
+```
+See [[Prefix routing setup]] for a more detailed example.
 
 ###PoolRoute
 Route handle that routes to a pool. With different settings, it provides the same
