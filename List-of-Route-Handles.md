@@ -171,7 +171,7 @@ Properties:
 * `wildcard`  
     Default route handle if the key prefix does not match any other specified policies.
 
-* `operation_policies`  
+* `policies`  
    Object, with operation name as key and route handle for specified operation as
    value. Example:
 
