@@ -47,14 +47,14 @@ _Note_: miss (key not found) doesn't count for an error. See [MissFailoverRoute]
 Properties:
  * `children`  
    List of child route handles
- * `failover_errors` (object or array, optional, default all error types)  
-   This property allows specifying for which errors to failover. The following example shows how to failover only on `connect_timeout`, `timeout`, `connect_error` and `tko` errors (for a full list of errors, refer to [Errors List](Error-Handling#list-of-errors)).
+ * `failover_errors` (object or array, optional, default: all errors)  
+   This property allows specifying for which errors to failover. If this property is missing, we assume default behavior: failover on every error received, independent of the operation. The following example shows how to failover only on `connect_timeout`, `timeout`, `connect_error` and `tko` errors (for a full list of errors, refer to [Errors List](Error-Handling#list-of-errors)).
 
    ```javascript
    [ "connect_timeout", "timeout", "connect_error", "tko" ]
    ```
 
-   It is possible to go further and break down the failover settings per operation type:
+   The above config is valid for every operation (`get`, `set`, `delete`, ...). It is possible to go further and tweak the failover behavior per operation type:
 
    ```javascript
    {
@@ -75,11 +75,11 @@ Properties:
    All requests sent here first.
  * `failover`  
    List of route handles to which to route in case of error reply from `normal`.
- * `failover_exptime` (int, optional, default 60)
+ * `failover_exptime` (int, optional, default 60)  
    TTL (in seconds) for update requests sent to failover. Useful when failing
    over "sets" to a special pool with a small TTL to protect against
    temporary outages.
- * `settings` (object, optional)  
+ * `settings` (**deprecated**, use `failover_errors` instead)  
    This object allows tweaking failover logic, such as specifying which errors from `normal`
    route handle are returned immediately, without sending to `failover` hosts.
      
@@ -99,6 +99,8 @@ Properties:
  `gets`, `updates`, `deletes` correspond to operations. `true` configures 
  mcrouter to failover the request, `false` to return the
  error immediately. To find out more about errors and operations, see [Routing](Routing.md).
+ * `failover_errors` (object or array, optional, default: all errors)  
+   Same as in [FailoverRoute](#failoverroute). This option replaces `settings`, which is now deprecated.
 
 ###HashRoute
 Routes to the destination based on key hash.
@@ -134,7 +136,7 @@ Properties:
    List of child route handles.
  * `failover_count` (int, optional, default 5)  
    Number of route handles to route to.
- * `failover_errors` (object or array, optional, default all errors)  
+ * `failover_errors` (object or array, optional, default: all errors)  
    Same as described in [FailoverRoute](#failoverroute).
 
 
