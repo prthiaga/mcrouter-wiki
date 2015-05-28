@@ -41,11 +41,28 @@ Immediately returns the error reply for each request. You can specify the error 
 
 
 ###FailoverRoute
-Sends the request to the first child in the list and waits for the reply. If the reply is a non-error, returns it immediately. Otherwise, sends the request to the second child, and so on. If all children respond with errors, returns the last error reply.
+Sends the request to the first child in the list and waits for the reply. If the reply is a non-error, returns it immediately. Otherwise, depending on the settings, sends the request to the second child, and so on. If all children respond with errors, returns the last error reply.
 _Note_: miss (key not found) doesn't count for an error. See [MissFailoverRoute](#missfailoverroute) to failover misses.
 
 Properties:
- * `children`: list of child route handles
+ * `children`  
+   List of child route handles
+ * `failover_errors` (object or array, optional, default all error types)  
+   This property allows specifying for which errors to failover. The following example shows how to failover only on `connect_timeout`, `timeout`, `connect_error` and `tko` errors (for a full list of errors, refer to [Errors List](Error-Handling#list-of-errors)).
+
+   ```javascript
+   [ "connect_timeout", "timeout", "connect_error", "tko" ]
+   ```
+
+   It is possible to go further and break down the failover settings per operation type:
+
+   ```javascript
+   {
+     "gets": [ "connect_timeout", "timeout", "connect_error", "tko" ],
+     "updates": [], // empty array: will not failover.
+     // "deletes" is missing, default behavior (all errors) will be assumed.
+   }
+   ```
 
 
 ###FailoverWithExptimeRoute
@@ -117,6 +134,8 @@ Properties:
    List of child route handles.
  * `failover_count` (int, optional, default 5)  
    Number of route handles to route to.
+ * `failover_errors` (object or array, optional, default all errors)  
+   Same as described in [FailoverRoute](#failoverroute).
 
 
 ###MigrateRoute
