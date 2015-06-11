@@ -442,6 +442,29 @@ After preprocessing:
  [2, 3]
 ```
 
+####size
+Usage:
+
+```JavaScript
+  "type": "size",
+  "dictionary": list/string/object
+```
+
+Returns size of object/array/string.
+
+```JavaScript
+ {
+   "type": "size",
+   "dictionary": [1, 2],
+ }
+```
+
+After preprocessing:
+
+```JavaScript
+ 2
+```
+
 ####sort
 Usage:
 
