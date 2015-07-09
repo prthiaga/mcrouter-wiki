@@ -149,12 +149,12 @@ properties may include macro calls:
 
 ```JavaScript
  {
-   "person": "@fullName(John,Doe)",
+   "person": "@fullName(John, Doe)",
    "car": "@car(Mercedes)"
  }
 ```
 
-After preprocessing:
+Trailing and leading spaces are trimmed from arguments. After preprocessing:
 
 ```JavaScript
  {
