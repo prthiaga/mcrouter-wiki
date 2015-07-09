@@ -20,11 +20,6 @@ JSONM is a JSON object with two special optional keys: `consts` and `macros`:
 
 ```
   {
-    "consts": [
-      constDefinition,
-      constDefinition,
-      …
-    ],
     "macros": {
       "macroName1": macroDefinition,
       "macroName2": macroDefinition,
@@ -180,18 +175,16 @@ only built-in macros and built-in calls in consts.
 
 ```JavaScript
  {
-   "consts": [
-     {
+   "macros": {
+     "author": {
        "type": "constDef",
-       "name": "author",
        "result": "John Doe"
      },
-     {
+     "copyright": {
        "type": "constDef",
-       "name": "copyright",
        "result": "%author% owns it"
      }
-   ],
+   },
    "file": "%copyright%. Some content"
  }
 ```
