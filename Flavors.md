@@ -76,7 +76,7 @@ Given that the above files are properly saved to disk at the locations specified
 ```bash
 $ mcrouter /var/mcrouter/myflavor
 
-$ mcrouter --default-route='/region3/' --config-file='mcrouter_config.json' -p 8888
+$ mcrouter --default-route='/region3/' --config-file='mcrouter_config.json' -p 5000
 ```
 
 **Note**: The _default_route_ option present in the _libmcrouter_options_ object in the **standalone flavor file**, overwrote the _default_route_ option present in the **libmcrouter flavor file**.
