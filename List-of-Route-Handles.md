@@ -174,6 +174,13 @@ last destination in the list.
 Properties:
  * `children`: list of child route handles.
 
+###ModifyExptimeRoute
+Modifies exptime (TTL) for all requests.
+
+Properties:
+ * `target`: child route handle.
+ * `exptime` (int)  
+   New TTL (in seconds) for requests.
 
 ###NullRoute
 Returns the default reply for each request right away. Default replies are:
