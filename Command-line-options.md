@@ -60,7 +60,8 @@ See [[reliable delete stream|Features#reliable-delete-stream]].
 - `--num-proxies=<N>` Run with N threads. Typically one thread per core is a good rule of thumb.
 - `--fibers-max-pool-size=<N>` Maximum number of preallocated free fibers to keep around per thread. Should be set to the expected number of outgoing requests in flight - higher numbers will increase performance on request bursts at the expense of constantly higher memory usage.
 - `--fibers-stack-size=<N>` The amount of stack to allocate per fiber, in bytes. Should normally not be adjusted unless significant code changes or unusually complicated configs are needed.
-- `--fibers-debug-record-stack-size` ***Debug only.*** Record exact amount of fibers stacks used in the `fibers_stack_high_watermark` stat counter, which is normally an estimate (location at a likely bottom point of the stack). This is expensive and only provided for debugging. Works by painting the stack with a known value and periodically looking for the amount of undisturbed free space at the end of the stack.
+- `--fibers-record-stack-size-every` Record exact amount of fibers stacks used in the `fibers_stack_high_watermark` stat counter, which is normally an estimate (location at a likely bottom point of the stack) on every N fiber. This is expensive, so by default runs on every 100000 fiber.
+- `--disable-fibers-use-guard-pages` By default mcrouter protects fiber stacks from fiber pool with guard page. This way on stack overflow we'll immediately crash, not corrupt memory. This options provides a way to disable this behavior. One particular reason it is useful: 'perf record' may take huge amount of time when running with guard pages.
 
 ### Queueing
 See [[the discussion on quality of service|Features#quality-of-service]].
@@ -75,11 +76,8 @@ See [[the discussion on quality of service|Features#quality-of-service]].
 - `--stats-root=<PATH>` Root directory for [[stats files]].
 - `--stats-logging-interval=<N>` Time in ms between stat file updates, or 0 for no logging.
 - `--logging-rtt-outlier-threshold-us=<N>` Destination requests with round trip time exceeding this threshold will be considered "outliers" and counted in the outliers stats.
-- `--track-open-fds` Log number of file descriptors opened by mcrouter process. This might cause performance regression if the number of connections is huge, as this is computed by walking the `/proc/self/fd` directory.
 
 ### Process management
 - `-L <PATH>`, `--log-path=<PATH>` Path for the log file.
 - `-P <PATH>`, `--pid-file=<PATH>` If specified, open and lock the PID file to prevent another mcrouter start up with the same PID file path.
-- `-b`, `--background` Daemonize on startup.
-- `-m`, `--managed-mode` Spawn a child mcrouter; parent process is responsible for auto restarts.
 - `-n <N>`, `--connection-limit=<N>` File descriptor limit.
