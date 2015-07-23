@@ -61,7 +61,7 @@ See [[reliable delete stream|Features#reliable-delete-stream]].
 - `--fibers-max-pool-size=<N>` Maximum number of preallocated free fibers to keep around per thread. Should be set to the expected number of outgoing requests in flight - higher numbers will increase performance on request bursts at the expense of constantly higher memory usage.
 - `--fibers-stack-size=<N>` The amount of stack to allocate per fiber, in bytes. Should normally not be adjusted unless significant code changes or unusually complicated configs are needed.
 - `--fibers-record-stack-size-every` Record exact amount of fibers stacks used in the `fibers_stack_high_watermark` stat counter, which is normally an estimate (location at a likely bottom point of the stack) on every N fiber. This is expensive, so by default runs on every 100000 fiber.
-- `--disable-fibers-use-guard-pages` By default mcrouter protects fiber stacks from fiber pool with guard page. This way on stack overflow we'll immediately crash, not corrupt memory. This options provides a way to disable this behavior. One particular reason it is useful: 'perf record' may take huge amount of time when running with guard pages.
+- `--disable-fibers-use-guard-pages` By default mcrouter protects limited number of fiber stacks with guard pages ([protected](http://man7.org/linux/man-pages/man2/mprotect.2.html) piece of a memory at the top of the stack). This way on stack overflow we'll immediately crash, not corrupt memory. This options provides a way to disable this behavior. One particular reason it is useful: 'perf record' may take huge amount of time when running with guard pages.
 
 ### Queueing
 See [[the discussion on quality of service|Features#quality-of-service]].
