@@ -294,7 +294,7 @@ Properties:
  ```
 
  Sends gets and sets to pool A, sends deletes to pool A and pool B.
- Valid operations are 'get', 'set', 'delete', 'incr', 'decr'.
+ Valid operations are 'add', 'get', 'set', 'delete', 'incr', 'decr'.
  Route handles for `operation_policies` are parsed in alphabetical order (delete, get, set).
 
 
