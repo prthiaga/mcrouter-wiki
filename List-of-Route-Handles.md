@@ -63,7 +63,7 @@ Properties:
      // "deletes" is missing, default behavior (all errors) will be assumed.
    }
    ```
-
+   To find out more about errors and operations, see [Routing](Routing.md).
 
 ###FailoverWithExptimeRoute
 [FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle.
@@ -80,25 +80,6 @@ Properties:
    over "sets" to a special pool with a small TTL to protect against
    temporary outages.
  * `settings` (**deprecated**, use `failover_errors` instead)  
-   This object allows tweaking failover logic, such as specifying which errors from `normal`
-   route handle are returned immediately, without sending to `failover` hosts.
-     
- ```javascript
-  {
-    "tko": {
-      "gets": boolean (optional, default true)
-      "updates": boolean (optional, default true)
-      "deletes": boolean (optional, default false)
-    },
-    "connectTimeout": { /* same as tko */ },
-    "dataTimeout": { /* same as tko */ }
-  }
- ```
-
- `tko`, `connectTimeout` and `dataTimeout` correspond to reply errors;
- `gets`, `updates`, `deletes` correspond to operations. `true` configures 
- mcrouter to failover the request, `false` to return the
- error immediately. To find out more about errors and operations, see [Routing](Routing.md).
  * `failover_errors` (object or array, optional, default: all errors)  
    Same as in [FailoverRoute](#failoverroute). This option replaces `settings`, which is now deprecated.
 
