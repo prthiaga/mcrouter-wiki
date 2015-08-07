@@ -250,6 +250,25 @@ Properties:
   }
  ```
 
+* `slow_warmup` (optional, default empty)  
+   Enables slow warm up for this pool. If enabled, as soon the hit rate of a server in this pool drops bellow a certain threshold, a percentile of the requests will be sent to `failoverTarget` straight away.  
+   The slow warmup route has the following properties:
+   * `failoverTarget`  
+     Route handle for requests when the server is cold. 
+   * `settings` (optional)  
+     Settings allow customization of slow warm up logic. It has the following properties:
+     * `enable_threshold` (number between 0.0 and 1.0)  
+     Slow warm up will be enabled as soon as the hit rate of the server drops bellow this threshold.
+     * `disable_threshold` (number between 0.0 and 1.0, must be greater than `enable_threshold`)  
+     Slow warm up will be disabled as soon as the hit rate of the server goes above this threshold.
+     * `start` (optional, default 0.1, must be a number between 0.0 and 1.0)  
+     Fraction of requests to send to the server being warmed up when its hit rate is 0.
+     * `step` (optional, default 1.0, must be a number between 0.0 and 100.0)  
+     Step by which the percentage of requests sent to the server should be incremented when its hit rate increases.  
+     * `min_requests` (optional, default 100)  
+     Minimum number of requests necessary to start calculating the hit rate. Before this number is reached, the server is considered warm. 
+   
+ 
 
 ###OperationSelectorRoute (previously: PrefixPolicyRoute)
 Sends to different targets based on specified operations.
