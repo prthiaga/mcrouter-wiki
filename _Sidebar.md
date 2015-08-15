@@ -7,6 +7,7 @@
    * [Shadowing](Shadowing-setup)
    * [Cold cache warm up](Cold-cache-warm-up-setup)
    * [Multi-cluster/broadcast operations](Multi-cluster-broadcast-setup)
+   * [Two level caching](Two-level-caching)
  * **Concepts**
    * [Pools](Pools)
    * [[Key syntax]]
