@@ -1,11 +1,22 @@
-In cases when shared memcached pool can't handle the load and/or has too high latency, it is useful to setup 2 level caching. For example, one may run service and memcached on the same box and have shared cache pool with much bigger capacity.
+When a single shared memcached pool is overloaded it could be useful to use a 2-level caching setup. For example, an additional memcached instance could be co-located with the client in addition to a shared cache pool with a much bigger capacity.
 
-In this case the logic on get path is following: read from local memcached instance, on miss go to shared pool to fetch data. If data is present in the shared pool, set it back to local memcached.
+Then the `get` logic becomes:
+- Read from the local memcached instance
+- On a miss, read from the shared pool
+- If the data was present in the shared pool, set it back to the local memcached
 
-That's exactly what [WarmUpRoute](List-of-Route-Handles#warmuproute) does.
+This is exactly what [WarmUpRoute](List-of-Route-Handles#warmuproute) does.
 
-There is still an open question: how do we set data to both shared and local instances and how do we invalidate cache?
-The answer depends on the use case. The simplest approach is to store data in local memcached with small TTL (exptime). That's useful for services that may tolerate stale data for a short period of time. 
+We also need to decide:
+- How are updates handled - how do we set the data to both the shared and the local instances?
+- How are deletes handled?
+
+The answers depend on the use case. Some solutions are suggested below.
+
+
+#### Local instance with small TTL
+
+A simple approach is to use a small TTL (exptime) when setting to the local cache - assuming the services can tolerate stale data up to that period of time.
 
 Here is the corresponding config:
 
@@ -40,12 +51,14 @@ Here is the corresponding config:
  }
 ```
 
-_Explanation_: All sets and deletes go both to the "shared" and "local" pool. Gets are attempted on the "local" pool and in case of a miss, data is fetched from the "shared" pool (where the request is likely to result in a cache hit). If "shared" returns an hit, the response is then forwarded to the client and an asynchronous request updates the value in the "local" route handle. All data is set in "local" pool with small TTL (exptime) of 10 seconds.
+_Explanation_: All sets and deletes will go to both the `shared` and `local` pools. Gets only go to the `local` pool first; the `shared` pool will be checked in case of a miss. If `shared` returns a hit, the response is then returned to the client and an asynchronous request updates the value in the `local` pool - note that the client is not blocked on that update. All data is set in the `local` pool with a small TTL (exptime) of 10 seconds.
 
 
-Another approach is to replicate sets and deletes to all memcached instances (both shared pool and every local instance). It is a more complicated approach and it is useful only when a) stale data is totally unacceptable b) amount of gets is much higher than amount of sets/deletes.
+#### Replicate everything
 
-The config for this approach looks like this:
+Another approach is to replicate sets and deletes to all memcached instances (both the shared pool and any local instances). This is useful if stale data is unacceptable, but the tradeoff is that the update and delete traffic is increased N-fold (where N is the number of local instances) - don't use if your load is write-heavy!
+
+The config for a single instance might look like this:
 
 ```JavaScript
  {
@@ -76,6 +89,6 @@ The config for this approach looks like this:
  }
 ```
 
-_Explanation_: All sets and deletes go both to the "shared" pool and all servers in "all_local" pool. Gets are attempted on the "local" pool and in case of a miss, on the "shared" pool.
+_Explanation_: All sets and deletes go to both the `shared` pool and all local instances (`all_local` pool). Gets are attempted on the `local` pool and in case of a miss, on the `shared` pool.
 
 Find out more about mcrouter configuration [here](Config-Files).
