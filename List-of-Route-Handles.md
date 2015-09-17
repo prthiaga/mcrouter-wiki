@@ -64,6 +64,15 @@ Properties:
    }
    ```
    To find out more about errors and operations, see [Routing](Routing.md).
+ * `failover_limit` (object, optional, default: no limit)  
+   ```javascript
+   {
+     "rate": double, /* 0.0 <= rate <= 1.0 */
+     "burst": integer /* 1 <= burst <= 1000000000 */ 
+   }
+   ```
+   We rate limit failover requests over normal requests using [token bucket
+   algorithm](http://en.wikipedia.org/wiki/Token_bucket). Rate 0.5 means we'll failover at most 50% of all requests, doesn't matter how many requests we send per second. If we hit the limit, error received from first destination in `children` list be returned immediately.
 
 ###FailoverWithExptimeRoute
 [FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle.
@@ -105,7 +114,7 @@ Routes to one destination chosen based on client host ID.
 
 Properties:
  * `children`: list of child route handles.
-
+ * `salt` (string, optional): if present, mcrouter will use `hash(salt, client host ID)` instead of client host ID.
 
 ###LatestRoute
 Attempts to "behave well" in how many new targets it connects to.
@@ -119,7 +128,7 @@ Properties:
    Number of route handles to route to.
  * `failover_errors` (object or array, optional, default: all errors)  
    Same as described in [FailoverRoute](#failoverroute).
-
+ * `salt` (string, optional): if present, mcrouter will use `hash(salt, client host ID)` instead of client host ID.
 
 ###MigrateRoute
 This route handle changes behavior based on Migration mode.
