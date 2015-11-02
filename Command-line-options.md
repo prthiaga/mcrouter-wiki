@@ -81,3 +81,4 @@ See [[the discussion on quality of service|Features#quality-of-service]].
 - `-L <PATH>`, `--log-path=<PATH>` Path for the log file.
 - `-P <PATH>`, `--pid-file=<PATH>` If specified, open and lock the PID file to prevent another mcrouter start up with the same PID file path.
 - `-n <N>`, `--connection-limit=<N>` File descriptor limit.
+- `--debug-fifo-root=<PATH>` Root directory for debug fifos. `''` to disable.
