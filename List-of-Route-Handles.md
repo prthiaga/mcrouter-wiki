@@ -314,8 +314,7 @@ Properties:
  * `children`: list of child route handles.
 
 ###WarmUpRoute
-Intended for use as the destination route in a Migrate
-route. Allows for substantial changes to the number of boxes in a pool
+Allows for substantial changes to the number of boxes in a pool
 without increasing the miss rate and, consequently, to the load on the
 underlying storage or service.
 
