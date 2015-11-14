@@ -171,6 +171,8 @@ Properties:
  * `target`: child route handle.
  * `exptime` (int)  
    New TTL (in seconds) for requests.
+ * `action` (optional, default is `set`)
+   Valid options: `set` or `min`. If action is `set`, always uses new exptime. If action is `min`, uses new exptime only if it's lower than one specified in request.
 
 ###NullRoute
 Returns the default reply for each request right away. Default replies are:
