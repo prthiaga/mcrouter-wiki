@@ -16,7 +16,7 @@ Using a simple preprocessor, we generate standard JSON objects from
 user-friendly JSONM by processing all macros and substituting all constants. . 
 
 ###Syntax
-JSONM is a JSON object with two special optional keys: `consts` and `macros`:
+JSONM is a JSON object with a special optional key `macros`:
 
 ```
   {
