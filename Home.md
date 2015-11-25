@@ -31,6 +31,7 @@ Mcrouter supports typical memcache protocol commands like `get`, `set`, `delete`
 + [[SSL support|Features#ssl-support]]
 
 ## News 
+ * Release v0.14.0.  (November 25, 2015) Starting today, we will sync all mcrouter commits continuously to the master branch of our GitHub repo. In addition, we will be cutting a biweekly release branch that is intended to be stable and resilient to third-party incompatibilities. This week's release appears as the release-14-0 branch in our GitHub repo. 
  * Initial open source release (mcrouter 1.0) (September 15, 2014) 
 
 ## Getting Started
