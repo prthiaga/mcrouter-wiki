@@ -206,6 +206,8 @@ Properties:
 ```
 See [[Prefix routing setup]] for a more detailed example.
 
+**Note:** PrefixSelectorRoute can be only used as a topmost route handle in config tree. It's the only route handle with such restriction.
+
 ###PoolRoute
 Route handle that routes to a pool. With different settings, it provides the same
 functionality as [HashRoute](#hashroute), but also allows rate limiting, shadowing, et cetera.
