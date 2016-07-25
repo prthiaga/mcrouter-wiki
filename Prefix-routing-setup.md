@@ -11,19 +11,23 @@ Mcrouter can send keys with different prefixes to different [pools](Pools), so t
    "pools": {
      "workload1": { "servers": [ /* list of cache hosts for workload1 */ ] },
      "workload2": { "servers": [ /* list of cache hosts for workload2 */ ] },
+     "workload3": { "servers": [ /* list of cache hosts for workload3 */ ] },
      "common_cache": { "servers": [ /* list of cache hosts for common use */ ] }
    },
    "route": {
      "type": "PrefixSelectorRoute",
      "policies": {
        "a": "PoolRoute|workload1",
-       "b": "PoolRoute|workload2"
+       "b": "PoolRoute|workload2",
+       "ab": "PoolRoute|workload3"
      },
      "wildcard": "PoolRoute|common_cache"
    }
  }
 ```
 
-_Explanation_: requests with key prefix "a" will be sent to pool 'workload1', requests with key prefix "b" will be sent to pool 'workload2'. Other requests will be sent to pool 'common_cache'. So key "abcd" will be sent to 'workload1'; "bar" to 'workload2'; "zzz" to 'common_cache'.
+_Explanation_: requests with key prefix "a" will be sent to pool 'workload1', requests with key prefix "b" will be sent to pool 'workload2', requests with key prefix "ab" will be sent to pool 'workload3'. Other requests will be sent to pool 'common_cache'. So key "acd" will be sent to 'workload1'; "abcd" to 'workload3'; "bar" to 'workload2'; "zzz" to 'common_cache'.
+
+_Note_: mcrouter will always choose longest prefix match if there are multiple possible matches (i.e. key "abcd" has both "a" and "ab" as prefixes, but it will be routed only to "workload3").
 
 Find out more about mcrouter configuration [here](List-of-Route-Handles).
