@@ -296,6 +296,7 @@ Properties:
 
  ```JavaScript
   {
+    "type": "OperationSelectorRoute",
     "default_policy": "PoolRoute|A",
     "operation_policies": {
       "delete": {
