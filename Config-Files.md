@@ -1,4 +1,4 @@
-###What is a mcrouter config file?
+### What is a mcrouter config file?
 
 Mcrouter config files specify where and how mcrouter should route requests.
 
@@ -17,13 +17,13 @@ or `route`.
 `routes` (or `route`) specifies special handling (e.g, failover rules, key prefix handling). Mcrouter supports dynamic reconfiguration so you don't need to restart mcrouter to apply config changes.
 
 
-###Quick examples
+### Quick examples
 
 Too boring. I want to use it right now!
 
 Okay, some common use cases (mcrouter is capable of much more) you can find under **Common setups** section.
 
-###Defining pools
+### Defining pools
 
 The `pools` property is a dictionary with pool names as keys and pool objects as values. Each pool object contains an ordered list of destination servers, together with some additional optional properties. Some of the pool properties are:
 
@@ -45,9 +45,9 @@ The `pools` property is a dictionary with pool names as keys and pool objects as
   Useful for making a mcrouter talk to another mcrouter.
 
 
-###Defining `routes`
+### Defining `routes`
 
-####Route handles
+#### Route handles
 
 Routes are composed of blocks called "route handles". Each route handle encapsulates some piece of routing logic, such as "send a request to a single destination host" or "provide failover."
 
@@ -55,7 +55,7 @@ A route handle receives a request from a parent route handle, processes it, and 
 
 In a given config, route handles form a directed acyclic graph with each route handle as a node. They're freely composeable and an arbitrary graph can be represented in the config.
 
-####Representing route handles in JSON
+#### Representing route handles in JSON
 
 `routes` property is a list of route handle trees and `aliases`. `aliases` is a list of routing prefixes used for a given route handle tree. For example:
 
@@ -118,7 +118,7 @@ You can read this as 'Create HashRoute that will route to pool MyPool'.
 See [List of Route Handles](List-of-Route-Handles) for a more detailed description of available routes.
 
 
-####Prefix route selector
+#### Prefix route selector
 
 In addition to selection by routing prefix, mcrouter also allows selection by key prefix. For example, you might want to route all keys beginning with foo_ to pool A, and all keys starting with bar_ to pool B. Note that key prefixes are not stripped, unlike routing prefixes.
 
@@ -153,7 +153,7 @@ Example:
 _Explanation_: requests with routing prefix "/a/a/" and key prefix "a" (but not "ab"!) will be sent to pool A, requests with routing prefix "/a/a/" and key prefix "ab" will be sent to pool B. Other requests with routing prefix "/a/a/" will be sent to pool C. So key "/a/a/abcd" will be sent to pool B (as "abcd"); "/a/a/acdc" to pool A (as "acdc"), "/a/a/b" to pool C (as "b").
 
 
-####Named handles
+#### Named handles
 
 You may wish to use the same route handle in different parts of the config. To avoid duplication, add `name` to route handle object and then refer to this route handle by its name. If two route handles have the same name, only the first one is parsed - the second one is treated as a duplicate and is not parsed (even if it has different properties - these differences would be silently ignored). Instead, the first route handle is substituted in its place.
 
@@ -205,5 +205,5 @@ Route handles may also be defined in the `named_handles` property of the config.
 
 In this example we specify two pools with different rate limits. Requests with the "/a/a/" routing prefix will be routed to pool A and failover to pool B. Requests with the "/b/b/" routing prefix will be routed to pool B, and failover to pool A.
 
-###JSONM
+### JSONM
 You can also use macros to avoid repetition when writing large complicated configs. For more information about JSONM and macros, see [JSONM](JSONM).
