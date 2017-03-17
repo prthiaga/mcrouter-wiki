@@ -1,31 +1,31 @@
-###AllAsyncRoute
+### AllAsyncRoute
 Immediately sends the same request to all child route handles. Does not wait for response. Returns the default reply for the request right away as returned by [NullRoute](#nullroute).
 
 Properties:
  * `children`: list of child route handles.
 
-###AllFastestRoute
+### AllFastestRoute
 Immediately sends the same request to all child route handles. Returns the first non-error reply to come back. Other requests complete in the background and their replies are silently ignored.
 
 Properties:
  * `children`: list of child route handles.
 
 
-###AllInitialRoute
+### AllInitialRoute
 Immediately sends the same request to all child route handles. Waits for the reply from first route handle in the `children` list and returns it. Other requests are completed asynchronously in the background.
 
 Properties:
  * `children`: list of child route handles.
 
 
-###AllMajorityRoute
+### AllMajorityRoute
 Immediately sends the same request to all child route handles. Waits for replies until a non-error result appears (half + 1) times (or all replies if that never happens), and then returns the latest reply that it sees (the effect is that typically the reply with the most common result is returned).
 
 Properties:
  * `children`: list of child route handles.
 
 
-###AllSyncRoute
+### AllSyncRoute
 Immediately sends the same request to all child route handles. Collects all replies and responds with the "worst" reply (i.e., the error reply, if any).
 
 Properties:
@@ -36,11 +36,11 @@ Properties:
 Same as [NullRoute](#nullroute), but with mcrouter stats reporting. See [Stats list](Stats-list#stats-logged-to-file).
 
 
-###ErrorRoute
+### ErrorRoute
 Immediately returns the error reply for each request. You can specify the error value to return: `"ErrorRoute|MyErrorValueHere"`
 
 
-###FailoverRoute
+### FailoverRoute
 Sends the request to the first child in the list and waits for the reply. If the reply is a non-error, returns it immediately. Otherwise, depending on the settings, sends the request to the second child, and so on. If all children respond with errors, returns the last error reply.
 _Note_: miss (key not found) doesn't count for an error. See [MissFailoverRoute](#missfailoverroute) to failover misses.
 
@@ -74,7 +74,7 @@ Properties:
    We rate limit failover requests over normal requests using [token bucket
    algorithm](http://en.wikipedia.org/wiki/Token_bucket). Rate 0.5 means we'll failover at most 50% of all requests, doesn't matter how many requests we send per second. If we hit the limit, error received from first destination in `children` list be returned immediately.
 
-###FailoverWithExptimeRoute
+### FailoverWithExptimeRoute
 [FailoverRoute](#failoverroute) with additional settings. Sends request to `normal` route handle.
 If it responds with an error, checks `settings` and failovers to `failover`
 if necessary.
@@ -92,7 +92,7 @@ Properties:
  * `failover_errors` (object or array, optional, default: all errors)  
    Same as in [FailoverRoute](#failoverroute). This option replaces `settings`, which is now deprecated.
 
-###HashRoute
+### HashRoute
 Routes to the destination based on key hash.
 
 Properties:
@@ -109,14 +109,14 @@ Properties:
    children, missing values are assumed to be `0.5`.
 
 
-###HostIdRoute
+### HostIdRoute
 Routes to one destination chosen based on client host ID.
 
 Properties:
  * `children`: list of child route handles.
  * `salt` (string, optional): if present, mcrouter will use `hash(salt, client host ID)` instead of client host ID.
 
-###LatestRoute
+### LatestRoute
 Attempts to "behave well" in how many new targets it connects to.
 Creates a FailoverRoute with at-most `failover_count` child handles chosen
 pseudo-randomly based on client host ID.
@@ -130,7 +130,7 @@ Properties:
    Same as described in [FailoverRoute](#failoverroute).
  * `salt` (string, optional): if present, mcrouter will use `hash(salt, client host ID)` instead of client host ID.
 
-###MigrateRoute
+### MigrateRoute
 This route handle changes behavior based on Migration mode.
  1. Before migration starts, sends all requests to `from` route handle.
  2. Between start_time and (start_time + interval), sends all requests except
@@ -155,7 +155,7 @@ Properties:
    Duration of migration (in seconds)
 
 
-###MissFailoverRoute
+### MissFailoverRoute
 For get-like requests, sends the same request sequentially to each route
 handle in the list, in order, until the first hit reply.
 If all replies result in errors/misses, returns the reply from the
@@ -164,7 +164,7 @@ last destination in the list.
 Properties:
  * `children`: list of child route handles.
 
-###ModifyExptimeRoute
+### ModifyExptimeRoute
 Modifies exptime (TTL) for all requests.
 
 Properties:
@@ -174,7 +174,7 @@ Properties:
  * `action` (optional, default is `set`)
    Valid options: `set` or `min`. If action is `set`, always uses new exptime. If action is `min`, uses new exptime only if it's lower than one specified in request.
 
-###NullRoute
+### NullRoute
 Returns the default reply for each request right away. Default replies are:
  
  * `delete` - not found
@@ -183,7 +183,7 @@ Returns the default reply for each request right away. Default replies are:
  
 No properties.
 
-###PrefixSelectorRoute
+### PrefixSelectorRoute
 Sends to different targets based on specified key prefixes.
 
 Properties:
@@ -208,7 +208,7 @@ See [[Prefix routing setup]] for a more detailed example.
 
 **Note:** PrefixSelectorRoute can be only used as a topmost route handle in config tree. It's the only route handle with such restriction.
 
-###PoolRoute
+### PoolRoute
 Route handle that routes to a pool. With different settings, it provides the same
 functionality as [HashRoute](#hashroute), but also allows rate limiting, shadowing, et cetera.
 
@@ -283,7 +283,7 @@ Properties:
    
  
 
-###OperationSelectorRoute (previously: PrefixPolicyRoute)
+### OperationSelectorRoute (previously: PrefixPolicyRoute)
 Sends to different targets based on specified operations.
 
 Properties:
@@ -312,13 +312,13 @@ Properties:
  Route handles for `operation_policies` are parsed in alphabetical order (delete, get, set).
 
 
-###RandomRoute
+### RandomRoute
 Routes to one random destination from list of children.
 
 Properties:
  * `children`: list of child route handles.
 
-###WarmUpRoute
+### WarmUpRoute
 Allows for substantial changes to the number of boxes in a pool
 without increasing the miss rate and, consequently, to the load on the
 underlying storage or service.
