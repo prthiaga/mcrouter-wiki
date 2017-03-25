@@ -21,4 +21,4 @@ Here is the setup for this logic:
 _Explanation_: All sets and deletes go to the "cold" route handle. Gets are attempted on the "cold" route handle and in case of a miss, data is fetched from the "warm" route handle (where the request is likely to result
 in a cache hit). If "warm" returns an hit, the response is then forwarded to the client and an asynchronous request updates the value in the "cold" route handle.
 
-Find out more about mcrouter configuration [here](Config-Files).
+Find out more about mcrouter configuration [here](Config-Files).  See also [WarmUpRoute](List-of-Route-Handles#warmuproute)
