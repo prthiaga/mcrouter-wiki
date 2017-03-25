@@ -1,21 +1,21 @@
-#JSON with macros (JSONM)
+# JSON with macros (JSONM)
 
 JSONM is a JSON extension that allows using macro definitions inside JSON files.
 
-###Why?
+### Why?
 The main goals of this format are to make configuration files more readable and to get rid
 of scripts that generate huge configuration files.
 
-###What?
+### What?
 JSONM is superset of JSON. Any JSON object may be treated as JSON with
 macros. JSON with macros is also a valid JSON object – the difference lies in enhancing some JSON properties to allow
 reuse of similar parts of large JSON objects.
 
-###How?
+### How?
 Using a simple preprocessor, we generate standard JSON objects from
 user-friendly JSONM by processing all macros and substituting all constants. . 
 
-###Syntax
+### Syntax
 JSONM is a JSON object with a special optional key `macros`:
 
 ```
@@ -59,7 +59,7 @@ JSONM is a JSON object with a special optional key `macros`:
   }
  ```
 
-###Comments
+### Comments
 JSONM allows C-style comments, which are removed by
 the preprocessor. Example:
 
@@ -77,11 +77,11 @@ After preprocessing:
    "key": "value/**/"
  }
 ```
-###Macro
+### Macro
 Macro is a reusable piece of JSON. One can think about it as a function that
 takes an arbitrary list of values and returns `valueWithMacros`.
 
-####Macro definition
+#### Macro definition
 The "macros" property should be an object with macro definitions. Syntax is following:
 
 ```JavaScript
@@ -143,7 +143,7 @@ Parameters may have defaults. Example:
  }
 ```
 
-####Macro call
+#### Macro call
 Given an object with the macros from our previous examples, other
 properties may include macro calls:
 
@@ -169,7 +169,7 @@ Trailing and leading spaces are trimmed from arguments. After preprocessing:
  }
 ```
 
-###Consts
+### Consts
 Consts are `valueWithMacros` that may be substituted everywhere. One may use
 only built-in macros and built-in calls in consts.
 
@@ -196,7 +196,7 @@ After preprocessing:
  }
 ```
 
-###Escaping
+### Escaping
 These characters have special meaning for the preprocessor: ‘@', ‘%', ‘(',
 ‘)', ‘,'. Add two backslashes (\\) before any character to escape
 the character. It will then be added to the string 'as is' and will not
@@ -225,10 +225,10 @@ After preprocessing:
 
 _Note: "backslash" is JSON property, so it will be interpreted as only one backslash_.
 
-###Built-in macros
+### Built-in macros
 These macros perform different operations on JSON values.
 
-####import
+#### import
 Usage: `@import(path)`  
 Allows loading JSONM from external source. Example:
 
@@ -261,7 +261,7 @@ After preprocessing, `city.json` becomes:
  }
 ```
 
-####int, str, bool
+#### int, str, bool
 Usage: `@int(5)`; `@str(@int(5))`; `@bool(true)`  
 `@int` casts its argument to an integer:
 
@@ -280,7 +280,7 @@ After preprocessing:
 ```
 `@str` casts its argument to string; `@bool` to boolean.
 
-####keys, values
+#### keys, values
 Usage: `@keys(object)`; `@values(object)`  
 `@keys` returns list of object keys; `@values` returns list of object values:
 
@@ -381,7 +381,7 @@ After preprocessing:
  1
 ```
 
-####shuffle
+#### shuffle
 Usage: `@shuffle(list)`  
 Randomly shuffles a list.
 
@@ -399,7 +399,7 @@ After preprocessing, (one possible example):
 ```
 
 
-####slice
+#### slice
 Usage:
 
 ```JavaScript
@@ -435,7 +435,7 @@ After preprocessing:
  [2, 3]
 ```
 
-####size
+#### size
 Usage:
 
 ```JavaScript
@@ -458,7 +458,7 @@ After preprocessing:
  2
 ```
 
-####sort
+#### sort
 Usage:
 
 ```JavaScript
@@ -481,7 +481,7 @@ After preprocessing:
  [1, 2]
 ```
 
-####range
+#### range
 Usage: `@range(@int(1),@int(2))`  
 Returns list of integers [from, from + 1, ..., to]
 
@@ -499,7 +499,7 @@ After preprocessing:
  }
 ```
 
-####isArray, isBool, isInt, isObject, isString
+#### isArray, isBool, isInt, isObject, isString
 Usage: `@isArray(value)`; `isBool(value)`; etc.  
 Return true if value is list, bool, int, object or string respectively:
 ```JavaScript
@@ -512,7 +512,7 @@ After preprocessing:
  true
 ```
 
-####add, sub, mul, div, mod
+#### add, sub, mul, div, mod
 Usage: `@add(A,B)`; `@sub(A,B)`; etc.  
 Perform corresponding operation on integers:
 ```JavaScript
@@ -526,7 +526,7 @@ After preprocessing:
  "value": 11
 ```
 
-####contains
+#### contains
 Usage: `@contains(dictionary,value)`  
 Returns true if dictionary contains a key; list contains a value; string contains a substring:
 ```JSON
@@ -683,7 +683,7 @@ After preprocessing:
  "dcba"
 ```
 
-####foreach
+#### foreach
 Usage:
 
 ```JavaScript 
