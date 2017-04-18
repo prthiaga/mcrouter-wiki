@@ -163,6 +163,7 @@ last destination in the list.
 
 Properties:
  * `children`: list of child route handles.
+ * `return_best_on_error` (optional, default is `false`): if `true`, returns the "best" reply if all replies are errors/misses (e.g. miss is better than error), instead of returning the reply from the last destination.
 
 ### ModifyExptimeRoute
 Modifies exptime (TTL) for all requests.
