@@ -10,6 +10,8 @@ Each option has a "command line name" and an "internal name". The internal name 
 - `--file-observer-poll-period-ms=<N>` Sleep for this amount between polling `inotify` for updates on the tracked files.
 - `--file-observer-sleep-before-update-ms=<N>` Sleep for this amount after an update occurred. This is a hack to avoid reading a partially written config. For example, some text editors save the file in stages, and `inotify` will alert us on the first save, so we wait for a bit to work around this.
 - `--constantly-reload-configs` ***Debug only.*** Continuously re-parse and re-load the config. Used to exercise the config reload code (for bugs and performance).
+- `--config-dump-root` Directory to which mcrouter will save last valid configs. Mcrouter will fallback to these saved configs when it starts with a bad configuration.
+- `--max-dumped-config-age` Tells mcrouter it should not trust dumped configs (see option above) if they are older than what's specified in this argument.
 
 ### Routing
 - `-R <PREFIX>`, `--route-prefix=<PREFIX>` (_default_route_) Default [[routing prefix]] (e.g. `/datacenter/cluster/`).
