@@ -34,7 +34,7 @@ We provide this [Dockerfile](https://github.com/facebook/mcrouter/blob/master/mc
 
 Here's a list of required packages for Ubuntu from the [auto-install script](https://github.com/facebook/mcrouter/blob/master/mcrouter/scripts/install_ubuntu_14.04.sh):
 ```Shell
-sudo apt-get install -y gcc-4.8 g++-4.8 libboost1.54-dev libboost-thread1.54-dev \
+sudo apt-get install -y gcc-4.9 g++-4.9 libboost1.54-dev libboost-thread1.54-dev \
     libboost-filesystem1.54-dev libboost-system1.54-dev libboost-regex1.54-dev \
     libboost-python1.54-dev libboost-context1.54-dev ragel autoconf unzip \
     git libtool python-dev cmake libssl-dev libcap-dev libevent-dev \
