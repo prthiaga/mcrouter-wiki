@@ -28,7 +28,7 @@ We provide this [Dockerfile](https://github.com/facebook/mcrouter/blob/master/mc
 
 ### Dependencies
 
-* GCC 4.8+
+* GCC 4.9+. Note that Ubuntu 14 ships with GCC 4.8, so it is necessary to install and configure the build system to use GCC 4.9 (e.g., by exporting the environment variables `CC=gcc-4.9` and `CXX=g++-4.9`).  Our auto-install script for Ubuntu 14 takes care of this.
 * [Boost](http://www.boost.org/) 1.51+ (boost::filesystem, boost::system, boost::regex, boost::context)
 * [Ragel](http://www.complang.org/ragel/)
 
