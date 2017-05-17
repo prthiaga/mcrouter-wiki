@@ -297,7 +297,7 @@ After preprocessing:
  ["a", "b"]
 ```
 
-####merge
+#### merge
 Usage:
 
 ```JavaScript
@@ -319,7 +319,7 @@ or
  "params": [ str1, str2, str3, ... ]
 ```
 
-Combines multiple lists or objects into one.
+Combines multiple strings, lists or objects into one.
 In case `params` is a list of strings, `merge` concatenates them.
 
 ```JavaScript
@@ -359,8 +359,9 @@ After preprocessing:
    "c": 4
  }
 ```
+**Note:** properties of `obj{N}` will override properties of `obj{N-1}`.
  
-####select
+#### select
 Usage: `@select(obj,string)` or `@select(list,int)`  
 Returns element from list or object.
 
@@ -418,7 +419,11 @@ or
  "to": int
 ```
 
-Returns a slice (subrange) of list, object or string.
+Returns a slice (subrange) of list, object or string:
+- in case of list range of elements `from <= id <= to`.
+- in case of object range of properties with keys `from <= key <= to`.
+- in case of string substring `[from, to]`
+Note: from and to are inclusive
 
 ```JavaScript
  {
@@ -539,11 +544,49 @@ After preprocessing:
  { "condition": true }
 ```
 
-####empty
+#### empty
 Usage: `@empty(dictionary)`  
 Returns true if object, array or string is empty.
 
-####less
+#### split
+Usage:
+```JSON
+ "type": "split"
+ "dictionary": string,
+ "delim": string
+```
+Splits input string by delimiter and returns a list of pieces.
+
+```JSON
+ {
+   "type": "split",
+   "dictionary": "a.b.c.",
+   "delim": "."
+ }
+```
+
+After preprocessing:
+
+```JSON
+ [ "a", "b", "c", "" ]
+```
+
+#### set
+Usage:
+```JSON
+ "type": "set"
+ "dictionary": array or object,
+ "key": string or int,
+ "value": any value
+```
+For array, returns input array `dictionary` with item at index `key` set to `value`. 0 <= `key` <= `@size(%dictionary%)`
+For object, returns input object `dictionary` with property `key` set to `value`.
+
+#### defined
+Usage: `@defined(name)`
+Returns `true` if the name is defined in local context or in consts (i.e. check if macro, variable, parameter or constant with the given name exists.
+
+#### less
 Returns true if A is less than B. Can compare any values except objects.
 
 ```JSON
@@ -556,18 +599,22 @@ After preprocessing:
  { "condition": false }
 ```
 
-####equals
+#### equals
 Usage: `@equals(A,B)`  
 Returns true if `A == B`. Can compare any values.
 
-####and, or
+#### and, or
 Returns true if `A and B`; `A or B` respectively. Both A and B should be booleans.
 
-###Built-in calls
-####if
+#### not
+Usage: `@not(A)`
+Returns true if not `A`.
+
+### Built-in calls
+#### if
 Usage:
 
-```JavaScript
+```JSON
  "type": "if",
  "condition": bool,
  "is_true": any value
@@ -593,7 +640,7 @@ After preprocessing:
   { "value": "Yeah" }
 ```
 
-####transform
+#### transform
 Usage:
 
 ```JavaScript 
@@ -642,7 +689,7 @@ After preprocessing:
  }
 ```
 
-####process
+#### process
 Usage:
 
 ```JavaScript 
