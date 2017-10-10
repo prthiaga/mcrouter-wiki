@@ -172,6 +172,7 @@ the preprocessor. Example:</p>
 <ul>
 <li><a href="#import"><tt>&#064;import</tt></a></li>
 <li><a href="#int"><tt>&#064;int</tt></a></li>
+<li><a href="#double"><tt>&#064;double</tt></a></li>
 <li><a href="#bool"><tt>&#064;bool</tt></a></li>
 <li><a href="#str"><tt>&#064;str</tt></a></li>
 <li><a href="#not"><tt>&#064;not</tt></a></li>
@@ -182,6 +183,7 @@ the preprocessor. Example:</p>
 <li><a href="#if"><tt>&#064;if</tt></a></li>
 <li><a href="#isBool"><tt>&#064;isBool</tt></a></li>
 <li><a href="#isInt"><tt>&#064;isInt</tt></a></li>
+<li><a href="#isDouble"><tt>&#064;isDouble</tt></a></li>
 <li><a href="#isString"><tt>&#064;isString</tt></a></li>
 <li><a href="#isArray"><tt>&#064;isArray</tt></a></li>
 <li><a href="#isObject"><tt>&#064;isObject</tt></a></li>
@@ -252,9 +254,9 @@ the preprocessor. Example:</p>
 
 <span id="int"></span><span id="bool"></span><span id="str"></span>
 
-<h3 id="type-conversions-int-boo">Type conversions <tt>&#064;int, &#064;bool, &#064;str</tt> <a href="#type-conversions-int-boo" class="headerLink">#</a></h3>
+<h3 id="type-conversions-int-boo">Type conversions <tt>&#064;int, &#064;double, &#064;bool, &#064;str</tt> <a href="#type-conversions-int-boo" class="headerLink">#</a></h3>
 
-<p>JSONM allows you to do type conversion between integer, boolean and string types. These three macro convert input <tt>value</tt> parameter to the integer, boolean, string respectively. Conversion happens according to the <tt>folly::to&lt;T&gt;(arg)</tt> logic.</p>
+<p>JSONM allows you to do type conversion between integer, boolean and string types. These four macro convert input <tt>value</tt> parameter to the integer, double, boolean, string respectively. Conversion happens according to the <tt>folly::to&lt;T&gt;(arg)</tt> logic.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -262,7 +264,7 @@ the preprocessor. Example:</p>
 <li><tt>value</tt> valueWithMacros (required): a value to convert.</li>
 </ul>
 
-<p><strong>Examples:</strong> <tt>&#064;int(123)</tt>, <tt>&#064;bool(1)</tt>, <tt>&#064;bool(true)</tt>, <tt>&#064;bool(false)</tt>, <tt>&#064;str(12345)</tt>, <tt>&#064;str(true)</tt>.</p>
+<p><strong>Examples:</strong> <tt>&#064;int(123)</tt>, <tt>&#064;double(5.5)</tt>, <tt>&#064;bool(1)</tt>, <tt>&#064;bool(true)</tt>, <tt>&#064;bool(false)</tt>, <tt>&#064;str(12345)</tt>, <tt>&#064;str(true)</tt>.</p>
 
 <span id="not"></span>
 
@@ -347,11 +349,11 @@ the preprocessor. Example:</p>
 
 <p>would result in <tt>[ &quot;bar&quot; ]</tt>.</p>
 
-<span id="isBool"></span><span id="isInt"></span><span id="isString"></span><span id="isArray"></span><span id="isObject"></span>
+<span id="isBool"></span><span id="isInt"></span><span id="isDouble"></span><span id="isString"></span><span id="isArray"></span><span id="isObject"></span>
 
-<h3 id="testing-type-of-a-value">Testing type of a value <tt>&#064;isBool, &#064;isInt, &#064;isString, &#064;isArray, &#064;isObject</tt> <a href="#testing-type-of-a-value" class="headerLink">#</a></h3>
+<h3 id="testing-type-of-a-value">Testing type of a value <tt>&#064;isBool, &#064;isInt, &#064;isDouble, &#064;isString, &#064;isArray, &#064;isObject</tt> <a href="#testing-type-of-a-value" class="headerLink">#</a></h3>
 
-<p>These five macro allow you to check if the parameter is of a certain type (boolean, integer, string, array or an object respectively).</p>
+<p>These six macros allow you to check if the parameter is of a certain type (boolean, integer, string, array or an object respectively).</p>
 
 <p><strong>Parameters:</strong></p>
 
