@@ -31,14 +31,6 @@ Mcrouter `stats` command also supports optional `group` parameter. It is passed 
 Group parameter controls which stats will be returned. Valid group names:
 * **all**
   Returns all the stats.
-* **cmd**
-  Returns number of requests received and sent.
-* **cmd-in**
-  Returns number of requests received.
-* **cmd-out**
-  Returns number of requests sent.
-* **cmd-error**
-  Returns number of requests failed.
 * **servers**
   This is a special group, not included in any of above.
   Returns state of each server from config, together with additional info per each server. Output example:
