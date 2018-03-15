@@ -130,6 +130,29 @@ Properties:
    Same as described in [FailoverRoute](#failoverroute).
  * `salt` (string, optional): if present, mcrouter will use `hash(salt, client host ID)` instead of client host ID.
 
+### LoadBalancerRoute
+Load balances to a destination from a list of children. The two supported load balancing algorithms are “weighted-hashing” and “two-random-choices”.
+
+In weighted-hashing, requests are hashed between the children taking into account a cached server load for each child.
+
+In two-random-choices, two children are chosen at random and the child with the lowest load is selected.
+
+In both algorithms, the load for each child is cached from a previous response and has a configurable expiry time. On expiry it will be reset to the configured default server load.
+ 
+Properties:
+ * `children`
+   List of child route handles.
+ * `salt` (string, optional, default empty)
+   Specifies salt to be added to key before hashing
+ * `load_ttl_ms` (int, optional, default 100ms)
+   Expiration time in ms before a childs cached server load will be reset to default_server_load_percent
+ * `default_server_load_percent` (int, optional, default 50)
+   Default server load of each child
+ * `failover_count` (int, optional, default 1)
+   Number of times to route the request. This is currently only supported in weighted-hashing.
+ * `algorithm` (string, optional, default weighted-hashing)
+   Algorithm that will be used to load balance. Supports “weighted-hashing” and “two-random-choices”.
+
 ### MigrateRoute
 This route handle changes behavior based on Migration mode.
  1. Before migration starts, sends all requests to `from` route handle.
