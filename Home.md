@@ -69,4 +69,4 @@ Engineering discussions and support: https://www.facebook.com/groups/mcrouter
 ## License
 Copyright (c) 2015, Facebook, Inc. All rights reserved.
 
-Licensed under a BSD license: https://github.com/facebook/mcrouter/blob/master/LICENSE
+Licensed under a the MIT license: https://github.com/facebook/mcrouter/blob/master/LICENSE
