@@ -27,7 +27,8 @@ There are two ways to fine tune timeouts in a geographically distributed setup. 
 - `--cluster-pools-timeout=<N>` (_cluster_pools_timeout_ms_) Destination timeout for cluster pools in ms.
 - `--regional-pools-timeout=<N>` (_regional_pools_timeout_ms_) Destination timeout for regional pools in ms.
 
-A better way is to specify `region` and `cluster` pool settings. These are compared to the components of the default route (i.e. `/some_region/some_cluster/`). Depending on whether we're in the same cluster as the pool, same region, or a different region entirely, one of the following timeouts is in effect:
+There is a way to fine tune timeouts in a geographically distributed setup.
+You can specify `region` and `cluster` pool settings. These are compared to the components of the default route (i.e. `/some_region/some_cluster/`). Depending on whether we're in the same cluster as the pool, same region, or a different region entirely, one of the following timeouts is in effect:
 - `--cross-region-timeout-ms=<N>` Timeout for talking to pools in another region.
 - `--cross-cluster-timeout-ms=<N>` Timeout for talking to pools within the same region but a different cluster.
 - `--within-cluster-timeout-ms=<N>` Timeout for talking to pools within the same cluster.
