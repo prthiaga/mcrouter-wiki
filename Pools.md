@@ -5,7 +5,7 @@ For detailed configuration, see [[PoolRoute|List-of-Route-Handles#poolroute]].
 ### Hash functions
 A hash function is specified with `hash` pool property.
 - "ch3" ("consistent hash, version 3") is the consistent hashing algorithm used by mcrouter. This is the default hash function for pools. The underlying algorithm is [furc_hash()](https://github.com/facebook/mcrouter/blob/master/mcrouter/lib/fbi/hash.c#L151). The [[routing part of the key|Key syntax]] is hashed and the request is set to the resulting index in the pool.
-- "wch3" is "weighted ch3". It allows specifying weights for each host (each weight is in the range [0.0, 1.0]). Adjusting weights is useful for selectively moving traffic between hosts and for balancing the load more evenly than the default consistent hashing distribution. Weights are listed in a "hash_weights" property as an array of the same length as "servers".
+- "wch3" is "weighted ch3". It allows specifying weights for each host (each weight is in the range [0.0, 1.0]). Adjusting weights is useful for selectively moving traffic between hosts and for balancing the load more evenly than the default consistent hashing distribution. Weights are listed in a "weights" property as an array of the same length as "servers".
 - "crc32" hash sends the request to host index [crc32](http://wiki.osdev.org/CRC32)(routing_key) % pool_size.
 - [HostIdRoute](List-of-Route-Handles#hostidroute) doesn't look at the key at all, instead always sending to hostid % pool_size, where hostid is some unique index associated with mcrouter's _local_ host. As a result, a single client will always talk to the same HostIdRoute destination, but two different clients will likely talk to different destinations.
 
