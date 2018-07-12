@@ -527,7 +527,7 @@ the preprocessor. Example:</p>
   <span class="no">&#x201c;dictionary&#x201d;</span><span class="o">:</span> <span class="o">&#123;</span>
     <span class="no">&#x201c;foo&#x201d;</span><span class="o">:</span> <span class="no">&#x201c;bar&#x201d;</span>
   <span class="o">&#125;,</span>
-  <span class="no">&#x201c;key&#x201d;</span><span class="o">:</span> <span class="mi">0</span>
+  <span class="no">&#x201c;key&#x201d;</span><span class="o">:</span> <span class="mi">&#x201c;foo&#x201d;</span>
 <span class="o">&#125;</span></pre></div>
 
 <p>would result in <tt>&#x201d;bar&#x201d;</tt>.</p>
